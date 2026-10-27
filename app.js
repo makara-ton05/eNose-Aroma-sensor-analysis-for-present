@@ -878,6 +878,67 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       });
     }
 
+    // Toggle Show/Hide for the Sensor Vector Box (ปุ่มเปิด-ปิดตัวกล่องเวกเตอร์เซ็นเซอร์)
+    const sensorVectorAsideBox = document.getElementById('sensorVectorAsideBox');
+    const btnToggleSensorVectorBox = document.getElementById('btnToggleSensorVectorBox');
+    const btnCloseSensorVectorBox = document.getElementById('btnCloseSensorVectorBox');
+    const btnFloatingOpenVectorBox = document.getElementById('btnFloatingOpenVectorBox');
+    const toggleSensorVectorBoxLabel = document.getElementById('toggleSensorVectorBoxLabel');
+
+    function setSensorVectorBoxOpen(isOpen) {
+      if (!sensorVectorAsideBox) return;
+      if (isOpen) {
+        sensorVectorAsideBox.classList.remove('box-collapsed');
+        if (btnToggleSensorVectorBox) {
+          btnToggleSensorVectorBox.classList.add('btn-box-open');
+          btnToggleSensorVectorBox.classList.remove('btn-box-closed');
+          btnToggleSensorVectorBox.setAttribute('aria-expanded', 'true');
+        }
+        if (toggleSensorVectorBoxLabel) {
+          toggleSensorVectorBoxLabel.textContent = 'ซ่อนกล่องเวกเตอร์';
+        }
+        if (btnFloatingOpenVectorBox) {
+          btnFloatingOpenVectorBox.classList.add('hidden');
+        }
+      } else {
+        sensorVectorAsideBox.classList.add('box-collapsed');
+        if (btnToggleSensorVectorBox) {
+          btnToggleSensorVectorBox.classList.remove('btn-box-open');
+          btnToggleSensorVectorBox.classList.add('btn-box-closed');
+          btnToggleSensorVectorBox.setAttribute('aria-expanded', 'false');
+        }
+        if (toggleSensorVectorBoxLabel) {
+          toggleSensorVectorBoxLabel.textContent = 'เปิดกล่องเวกเตอร์';
+        }
+        if (btnFloatingOpenVectorBox) {
+          btnFloatingOpenVectorBox.classList.remove('hidden');
+        }
+      }
+      setTimeout(function () {
+        const plotEl = document.getElementById('plotly3dContainer');
+        if (plotEl && window.Plotly && Plotly.Plots) {
+          Plotly.Plots.resize(plotEl);
+        }
+      }, 60);
+    }
+
+    if (btnToggleSensorVectorBox) {
+      btnToggleSensorVectorBox.addEventListener('click', function () {
+        const isCurrentlyCollapsed = sensorVectorAsideBox && sensorVectorAsideBox.classList.contains('box-collapsed');
+        setSensorVectorBoxOpen(isCurrentlyCollapsed);
+      });
+    }
+    if (btnCloseSensorVectorBox) {
+      btnCloseSensorVectorBox.addEventListener('click', function () {
+        setSensorVectorBoxOpen(false);
+      });
+    }
+    if (btnFloatingOpenVectorBox) {
+      btnFloatingOpenVectorBox.addEventListener('click', function () {
+        setSensorVectorBoxOpen(true);
+      });
+    }
+
     // Populate Time-Series & FFT Sample Selectors
     const tsSel = document.getElementById('selectTsSample');
     const fftSel = document.getElementById('selectFftSample');

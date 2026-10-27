@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCBT316 eNose Aroma Sensor Analysis — 10 Tea Varieties Dashboard</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Thai', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            ice: {
+              50: '#F0F7FF',
+              100: '#E0F2FE',
+              200: '#BAE6FD',
+              300: '#7DD3FC',
+              500: '#0EA5E9',
+              600: '#0284C7',
+              700: '#0369A1',
+              800: '#075985',
+              900: '#0C4A6E',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="min-h-screen antialiased selection:bg-sky-200 selection:text-sky-900 flex flex-col">
+
+  <!-- ===================================================================== -->
+  <!-- TOP ACADEMIC HEADER (Matching enosearoma-sensor-analysis reference)   -->
+  <!-- ===================================================================== -->
+  <header class="academic-top-header w-full py-5 px-4 sm:px-6 lg:px-8 text-center">
+    <div class="max-w-5xl mx-auto flex flex-col items-center justify-center space-y-1.5">
+      <p class="academic-affiliation text-xs sm:text-sm md:text-base tracking-wide">
+        Department of Biotechnology • Faculty of Science • Mahidol university
+      </p>
+      <h1 class="academic-protocol text-sm sm:text-base md:text-lg text-slate-900">
+        Protocol : Gas-Solid Adsorption and Sorbent Regeneration (R10-S120-P60-F200)
+      </h1>
+      <p class="academic-author text-xs sm:text-sm text-slate-600 pt-0.5">
+        Author : Makara Aiamkham SCBT &nbsp;&nbsp;&nbsp;&nbsp; student id : 6705245
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8 flex-1">
+
+    <!-- Central Dashboard Hero Banner & Section Quick-Jump -->
+    <section class="sci-card rounded-2xl p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="space-y-1.5 text-center md:text-left">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100/90 border border-sky-200 text-sky-800 text-xs font-bold">
+          <span id="dataSourceBadge">● SCBT316 eNose 3D • Aroma Sensor Analytics</span>
+        </div>
+        <h2 class="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight">
+          Electronic Nose Aroma Sensor Dashboard — การจำแนกกลิ่นใบชา 10 ชนิดเชิงคุณภาพและปริมาณ
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600">
+          วิเคราะห์โปรไฟล์สารระเหยใบชา 10 ชนิดด้วย 12 Active MOS Sensors (MQ-9 ถึง TGS-2610; ตัด MQ-136, MQ-3, TGS-2620 ที่ Variance = 0 อัตโนมัติ) พร้อมชดเชย Blank Baseline
+        </p>
+      </div>
+
+      <nav class="flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-semibold shrink-0">
+        <a href="#sec-qualitative" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-600 hover:text-white transition">1. เชิงคุณภาพ (3D PCA)</a>
+        <a href="#sec-quantitative" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-600 hover:text-white transition">2. เชิงปริมาณ (FFT)</a>
+        <a href="#sec-executive" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-600 hover:text-white transition">3. บทสรุปผู้บริหาร</a>
+      </nav>
+    </section>
+
+    <!-- Protocol & Sensor Status KPI Cards -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="sci-card rounded-2xl p-4 flex items-start justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-sky-700">Protocol การวัดสัญญาณ</p>
+          <p class="text-lg font-bold text-slate-900 mt-1">190s × 7 Cycles</p>
+          <p class="text-xs text-slate-600 mt-1">Resting 10s • Sampling 120s • Purging 60s (Flow 200 mL/min)</p>
+        </div>
+        <span class="p-2 rounded-xl bg-sky-50 text-sky-600 border border-sky-100 text-xs font-bold">R10-S120-P60</span>
+      </div>
+
+      <div class="sci-card rounded-2xl p-4 flex items-start justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-sky-700">การคัดกรองเซ็นเซอร์อัตโนมัติ</p>
+          <p class="text-lg font-bold text-slate-900 mt-1">12 / 15 Active Sensors</p>
+          <p class="text-xs text-slate-600 mt-1">ตัด <span class="font-semibold text-rose-600">MQ-136, MQ-3, TGS-2620</span> (Variance = 0) ออกอัตโนมัติ</p>
+        </div>
+        <span class="p-2 rounded-xl bg-rose-50 text-rose-600 border border-rose-100 text-xs font-bold">-3 Inactive</span>
+      </div>
+
+      <div class="sci-card rounded-2xl p-4 flex items-start justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-sky-700">การชดเชย Baseline (Blank)</p>
+          <p class="text-lg font-bold text-slate-900 mt-1">2 Ambient Blanks</p>
+          <p class="text-xs text-slate-600 mt-1">หักลบ <span class="font-medium">Blank_12Oct</span> และ <span class="font-medium">Blank_14Oct</span> (ไม่รวม fit แกน PCA)</p>
+        </div>
+        <span class="p-2 rounded-xl bg-sky-50 text-sky-600 border border-sky-100 text-xs font-bold">ΔBaseline</span>
+      </div>
+
+      <div class="sci-card rounded-2xl p-4 flex items-start justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-sky-700">ประสิทธิภาพการจำแนก (Mid: Cycle 3–5)</p>
+          <p class="text-lg font-bold text-emerald-700 mt-1" id="kpiAccuracy">100.0% (Zero-Overlap)</p>
+          <p class="text-xs text-slate-600 mt-1" id="kpiVariance">PC1–PC3 อธิบายความแปรปรวนรวม 93.02%</p>
+        </div>
+        <span class="p-2 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold" id="kpiFisher">Fisher 8.45</span>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SECTION 1: QUALITATIVE ANALYSIS (3D PCA + Controls + 3 Sub-Tabs)    -->
+    <!-- =================================================================== -->
+    <section id="sec-qualitative" class="space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Part 01 • Qualitative Odor Space Analysis</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ส่วนที่ 1: ข้อมูลเชิงคุณภาพ — 3D Interactive PCA &amp; Active Sensor Vectors</h2>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 bg-white px-3 py-1.5 rounded-xl border border-sky-100 shadow-sm">
+          <span>โหมดปัจจุบัน:</span>
+          <span id="activeModeBadge" class="font-bold text-sky-700">ช่วงกลาง (Mid: Cycle 3–5) [Default]</span>
+        </div>
+      </div>
+
+      <!-- 3D PCA + Filter Controls Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Filter & Control Panel (4 cols on lg) -->
+        <div class="lg:col-span-4 sci-card rounded-2xl overflow-hidden flex flex-col">
+          <div class="sci-card-header px-5 py-3.5 flex items-center justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">แผงควบคุมตัวกรอง &amp; โหมด Cycle</h3>
+              <p class="text-xs text-slate-500">เลือกช่วง Cycle และคลิกเลือกกลุ่มตัวอย่างชา (Active Re-fit PCA)</p>
+            </div>
+            <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-sky-100 text-sky-800" id="selectedCountBadge">10 / 10 ชนิด</span>
+          </div>
+
+          <div class="p-5 space-y-5 flex-1 flex flex-col justify-between">
+            <!-- 1. Cycle Mode Selector (Updated: Early 1-3, Mid 3-5 Default, Late 5-7) -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                1. เลือกโหมดรอบการวัด (Cycle Window Mode)
+              </label>
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" id="btn-mode-early" data-mode="early" class="mode-btn px-3 py-2 text-xs font-semibold rounded-xl border border-sky-200 bg-slate-50 text-slate-700 hover:bg-sky-50 transition text-left">
+                  <div class="font-bold">ช่วงต้น (Early)</div>
+                  <div class="text-[11px] opacity-80">Cycle 1–3 (3 จุด/ตัวอย่าง)</div>
+                </button>
+                <button type="button" id="btn-mode-mid" data-mode="mid" class="mode-btn mode-btn-active px-3 py-2 text-xs font-semibold rounded-xl border border-sky-200 bg-slate-50 text-slate-700 hover:bg-sky-50 transition text-left">
+                  <div class="font-bold flex items-center justify-between">
+                    <span>ช่วงกลาง (Mid)</span>
+                    <span class="text-[10px] px-1.5 py-0.2 bg-white/25 rounded">Default</span>
+                  </div>
+                  <div class="text-[11px] opacity-90">Cycle 3–5 (3 จุด/ตัวอย่าง)</div>
+                </button>
+                <button type="button" id="btn-mode-late" data-mode="late" class="mode-btn px-3 py-2 text-xs font-semibold rounded-xl border border-sky-200 bg-slate-50 text-slate-700 hover:bg-sky-50 transition text-left">
+                  <div class="font-bold">ช่วงท้าย (Late)</div>
+                  <div class="text-[11px] opacity-80">Cycle 5–7 (3 จุด/ตัวอย่าง)</div>
+                </button>
+                <button type="button" id="btn-mode-no_first" data-mode="no_first" class="mode-btn px-3 py-2 text-xs font-semibold rounded-xl border border-sky-200 bg-slate-50 text-slate-700 hover:bg-sky-50 transition text-left">
+                  <div class="font-bold">ตัดรอบแรก</div>
+                  <div class="text-[11px] opacity-80">Cycle 2–7 (6 จุด/ตัวอย่าง)</div>
+                </button>
+              </div>
+            </div>
+
+            <!-- PCA Display Options & Active Re-fit Toggle -->
+            <div class="bg-sky-50/70 border border-sky-100 rounded-xl p-3.5 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-800">ตั้งค่าการแสดงผล 3D PCA Biplot</span>
+                <span class="text-[11px] text-sky-700 font-semibold">Z-Score + SVD</span>
+              </div>
+              <label class="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer">
+                <input type="checkbox" id="chkActiveRefit" checked class="rounded border-sky-300 text-sky-600 focus:ring-sky-500" />
+                <span><strong>Active Re-fit PCA:</strong> คำนวณแกน PCA และ Vector ใหม่ตามกลุ่มชาที่เลือก</span>
+              </label>
+              <label class="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer">
+                <input type="checkbox" id="chkShow3dArea" checked class="rounded border-sky-300 text-sky-600 focus:ring-sky-500" />
+                <span>แสดง <strong>3D Area Highlight</strong> (ขอบเขตพื้นที่ 3 มิติของแต่ละข้อมูล)</span>
+              </label>
+              <label class="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer">
+                <input type="checkbox" id="chkShowVectors" checked class="rounded border-sky-300 text-sky-600 focus:ring-sky-500" />
+                <span>แสดงเส้น <strong>Loading Vectors (หัวลูกศร 3D)</strong> ของเซ็นเซอร์ที่เปิดไว้</span>
+              </label>
+              <label class="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer">
+                <input type="checkbox" id="chkShowSuspectLinks" checked class="rounded border-sky-300 text-sky-600 focus:ring-sky-500" />
+                <span>แสดงเส้นประเชื่อมระยะเบี่ยงเบนของตัวอย่าง <strong>Suspect (DF, EF)</strong></span>
+              </label>
+            </div>
+
+            <!-- 2. Group Quick Presets & 10 Sample Interactive Selector (All data selection happens here) -->
+            <div class="space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-1">
+                <label class="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  2. เลือกกลุ่มใบชา (10 ตัวอย่าง)
+                </label>
+                <div class="flex flex-wrap gap-1">
+                  <button type="button" id="btnSelectAllTeas" class="px-2 py-0.5 text-[11px] font-semibold bg-sky-100 text-sky-800 rounded hover:bg-sky-200 transition">ทั้งหมด</button>
+                  <button type="button" id="btnSelectHojicha" class="px-2 py-0.5 text-[11px] font-semibold bg-amber-100 text-amber-800 rounded hover:bg-amber-200 transition">Hojicha</button>
+                  <button type="button" id="btnSelectMatcha" class="px-2 py-0.5 text-[11px] font-semibold bg-emerald-100 text-emerald-800 rounded hover:bg-emerald-200 transition">Matcha</button>
+                  <button type="button" id="btnSelectSuspectPair" class="px-2 py-0.5 text-[11px] font-semibold bg-rose-100 text-rose-800 rounded hover:bg-rose-200 transition">เทียบ Suspect</button>
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-500">
+                คลิกติ๊กเลือก/ยกเลิก หรือกดปุ่ม <strong>"เฉพาะ"</strong> เพื่อเจาะจงดูข้อมูลตัวอย่างเดียวบนกราฟ 3 มิติ
+              </p>
+
+              <div id="sampleCheckboxContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1.5 max-h-72 overflow-y-auto custom-scrollbar pr-1">
+                <!-- Populated dynamically via app.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 3D Interactive PCA Panel (8 cols on lg — Includes 3D Canvas + Right-Side Sensor Vector Toggle Box) -->
+        <div class="lg:col-span-8 sci-card rounded-2xl overflow-hidden flex flex-col">
+          <div class="sci-card-header px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">3D Interactive PCA Odor Space (3D Area Highlights &amp; 3D Arrowhead Vectors)</h3>
+              <p class="text-xs text-slate-500" id="pcaSubtitle">แสดงขอบเขตพื้นที่ 3 มิติ (3D Area Highlight) ของแต่ละกลุ่มตัวอย่าง พร้อมหัวลูกศรเวกเตอร์เซ็นเซอร์ 3 มิติ</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button type="button" id="btnCamIso" class="px-2.5 py-1 text-xs font-medium rounded-lg border border-sky-200 bg-white text-slate-700 hover:bg-sky-50 transition">มุมมอง 3D มาตรฐาน</button>
+              <button type="button" id="btnCamTop" class="px-2.5 py-1 text-xs font-medium rounded-lg border border-sky-200 bg-white text-slate-700 hover:bg-sky-50 transition">PC1 vs PC2</button>
+              <button type="button" id="btnCamFront" class="px-2.5 py-1 text-xs font-medium rounded-lg border border-sky-200 bg-white text-slate-700 hover:bg-sky-50 transition">PC1 vs PC3</button>
+              <button type="button" id="btnToggleSensorVectorBox" aria-expanded="true" title="เปิด-ปิดกล่องเวกเตอร์เซ็นเซอร์" class="vector-box-toggle-btn btn-box-open inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg border transition">
+                <span>🧭</span>
+                <span id="toggleSensorVectorBoxLabel">ซ่อนกล่องเวกเตอร์</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Main 3D Display Body: Left/Center 3D Plot + Right-Hand Sensor Vector Filter Box -->
+          <div class="flex-1 flex flex-col xl:flex-row min-h-[500px] sm:min-h-[540px] bg-gradient-to-b from-white to-sky-50/40 relative">
+            <!-- Plotly 3D Container -->
+            <div class="relative flex-1 min-w-0 min-h-[440px] sm:min-h-[540px]">
+              <div id="plotly3dContainer" class="w-full h-[440px] sm:h-[540px]"></div>
+              <!-- Floating Quick-Open Button when Sensor Vector Box is hidden -->
+              <button type="button" id="btnFloatingOpenVectorBox" class="hidden absolute top-3 right-3 z-20 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl bg-sky-600 text-white shadow-md hover:bg-sky-700 transition border border-sky-500">
+                <span>🧭 เปิดกล่องเวกเตอร์เซ็นเซอร์</span>
+              </button>
+            </div>
+
+            <!-- Right-Hand Box: Individual Sensor Vector Sliding Toggle Filter (MQ-9 to TGS-2620) -->
+            <aside id="sensorVectorAsideBox" class="sensor-vector-box w-full xl:w-64 shrink-0 p-3.5 flex flex-col justify-between border-t xl:border-t-0 border-sky-100">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between gap-1">
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-900">เวกเตอร์เซ็นเซอร์ (Vectors)</h4>
+                    <p class="text-[10.5px] text-slate-500">เลื่อนสวิตช์เปิด-ปิดรายตัว</p>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <span id="activeSensorVectorCountBadge" class="px-2 py-0.5 text-[10.5px] font-bold rounded bg-sky-100 text-sky-800 border border-sky-200">12 / 12</span>
+                    <button type="button" id="btnCloseSensorVectorBox" title="ปิด/ซ่อนกล่องเวกเตอร์เซ็นเซอร์นี้" class="px-1.5 py-0.5 text-[10.5px] font-bold rounded bg-slate-100 text-slate-600 hover:bg-rose-100 hover:text-rose-700 border border-slate-200 transition">
+                      ✕ ซ่อน
+                    </button>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-1.5">
+                  <button type="button" id="btnSensorVectorsAllOn" class="px-2 py-1 text-[11px] font-semibold rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition">
+                    เปิดทั้งหมด
+                  </button>
+                  <button type="button" id="btnSensorVectorsAllOff" class="px-2 py-1 text-[11px] font-semibold rounded-lg bg-white text-slate-700 border border-sky-200 hover:bg-sky-50 transition">
+                    ปิดทั้งหมด
+                  </button>
+                </div>
+
+                <!-- 12 Active Sensors Toggle List (Ordered top-to-bottom per LabVIEW screenshot) -->
+                <div id="sensorVectorToggleList" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-1.5 max-h-[360px] xl:max-h-[395px] overflow-y-auto custom-scrollbar pr-0.5">
+                  <!-- Populated via app.js -->
+                </div>
+              </div>
+
+              <!-- Inactive Zero-Variance Sensors Footnote (G4=MQ-136, G9=MQ-3, G15=TGS-2620) -->
+              <div class="mt-3 pt-2.5 border-t border-sky-200/70 text-[10.5px] text-slate-500 leading-snug">
+                <div class="font-semibold text-slate-700 mb-0.5">ตัดออกอัตโนมัติ (Variance = 0):</div>
+                <div class="font-mono text-rose-600">• MQ-136 (G4) • MQ-3 (G9) • TGS-2620 (G15)</div>
+              </div>
+            </aside>
+          </div>
+
+          <!-- Bottom Legend & Vector Footnote -->
+          <div class="px-5 py-3 bg-sky-50/60 border-t border-sky-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="font-semibold text-slate-800">สัญลักษณ์ 3D:</span>
+              <span>●/■/◆ จุด Cycle &amp; ขอบเขตพื้นที่ 3 มิติ (3D Area Highlight)</span>
+              <span>▲ หัวลูกศรเวกเตอร์ 3 มิติ (Sensor Arrowhead)</span>
+              <span class="text-rose-600 font-semibold">✕ / ✚ Cross (ตัวอย่าง Suspect)</span>
+            </div>
+            <div class="text-sky-800 font-medium">
+              💡 ลากเมาส์หมุน 360° • เลือกกลุ่มชาในข้อ 2 ด้านซ้าย • เลื่อนเปิด-ปิดเวกเตอร์ในกล่องด้านขวา
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-Analysis Tabs (1. Scree Plot, 2. Odor Radar Chart, 3. 7-Cycle Time-Series & Drift) -->
+      <div class="sci-card rounded-2xl overflow-hidden">
+        <div class="sci-card-header px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 class="text-sm font-bold text-slate-900">ข้อมูลวิเคราะห์ย่อยเชิงลึก (Sub-Analysis Explorer)</h3>
+            <p class="text-xs text-slate-500">เลือกแท็บเพื่อสำรวจความแปรปรวนของแกน PCA, รูปแบบกลิ่น 12 เซ็นเซอร์ (MQ-9 ถึง TGS-2610) และการดริฟต์ของสัญญาณ 7 รอบ</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-1.5">
+            <button type="button" id="subtab-btn-scree" data-subtab="scree" class="subtab-btn subtab-active px-3.5 py-1.5 text-xs font-semibold rounded-xl border border-sky-200 bg-white text-slate-700 hover:bg-sky-50 transition">
+              1. Scree Plot &amp; Explained Variance
+            </button>
+            <button type="button" id="subtab-btn-radar" data-subtab="radar" class="subtab-btn px-3.5 py-1.5 text-xs font-semibold rounded-xl border border-sky-200 bg-white text-slate-700 hover:bg-sky-50 transition">
+              2. Odor Radar Chart (12 เซ็นเซอร์)
+            </button>
+            <button type="button" id="subtab-btn-timeseries" data-subtab="timeseries" class="subtab-btn px-3.5 py-1.5 text-xs font-semibold rounded-xl border border-sky-200 bg-white text-slate-700 hover:bg-sky-50 transition">
+              3. Time-Series Response &amp; Baseline Drift (7 Cycles)
+            </button>
+          </div>
+        </div>
+
+        <!-- Sub-Tab 1: Scree Plot & Cumulative Explained Variance -->
+        <div id="subtab-panel-scree" class="p-5 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-7">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="text-sm font-bold text-slate-800">กราฟ Scree Plot และความแปรปรวนสะสม (PC1–PC10)</h4>
+              <span class="text-xs font-semibold text-sky-700" id="screeSummaryTag">PC1+PC2+PC3 = 93.02%</span>
+            </div>
+            <div class="relative h-72 w-full bg-white p-3 rounded-xl border border-sky-100">
+              <canvas id="chartScree"></canvas>
+            </div>
+          </div>
+          <div class="lg:col-span-5 space-y-3">
+            <h4 class="text-sm font-bold text-slate-800">ค่าน้ำหนักอิทธิพลเซ็นเซอร์สูงสุด (Top Sensor Loadings)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              แสดงขนาดเวกเตอร์ (Loading Magnitude) และชนิดก๊าซเป้าหมายจาก Sensor Data Sheet ของเซ็นเซอร์ที่มีอิทธิพลสูงสุดในโหมดที่เลือก:
+            </p>
+            <div class="overflow-x-auto max-h-60 custom-scrollbar border border-sky-100 rounded-xl">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead class="bg-sky-50 text-slate-700 sticky top-0">
+                  <tr>
+                    <th class="py-2 px-3 font-semibold">Sensor</th>
+                    <th class="py-2 px-3 font-semibold">Target Gas / Response (Datasheet)</th>
+                    <th class="py-2 px-3 font-semibold text-right">PC1</th>
+                    <th class="py-2 px-3 font-semibold text-right">PC2</th>
+                    <th class="py-2 px-3 font-semibold text-right">|Vec|</th>
+                  </tr>
+                </thead>
+                <tbody id="loadingTableBody" class="divide-y divide-sky-50 bg-white">
+                  <!-- Populated via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-Tab 2: Odor Radar Chart -->
+        <div id="subtab-panel-radar" class="p-5 hidden grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-7">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <h4 class="text-sm font-bold text-slate-800">Odor Footprint Radar Chart (เปรียบเทียบโปรไฟล์กลิ่น 12 เซ็นเซอร์)</h4>
+              <div class="flex items-center gap-1.5">
+                <button type="button" id="btnRadarNorm" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-sky-600 text-white">สเกลสัมพัทธ์ (0–100%)</button>
+                <button type="button" id="btnRadarRaw" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-sky-50">ค่าจริงหลังหัก Blank (ΔAUC)</button>
+              </div>
+            </div>
+            <div class="relative h-80 sm:h-96 w-full bg-white p-3 rounded-xl border border-sky-100">
+              <canvas id="chartRadar"></canvas>
+            </div>
+          </div>
+          <div class="lg:col-span-5 space-y-4">
+            <div class="bg-sky-50/70 p-4 rounded-xl border border-sky-100 space-y-2.5">
+              <h4 class="text-sm font-bold text-slate-900">ชุดเปรียบเทียบโปรไฟล์กลิ่นด่วน (Quick Aroma Comparisons)</h4>
+              <p class="text-xs text-slate-600">คลิกปุ่มด้านล่างเพื่อเปรียบเทียบรูปแบบการตอบสนองของเซ็นเซอร์ทั้ง 12 ตัวระหว่างกลุ่มตัวอย่างสำคัญ:</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                <button type="button" id="presetRadarHojichaVsMatcha" class="px-3 py-2 text-xs font-semibold rounded-xl bg-white border border-sky-200 text-slate-800 hover:bg-sky-100 text-left transition">
+                  🔥 Hojicha vs พรีเมียม Matcha
+                  <span class="block text-[10px] text-slate-500">Original/Karigana vs Asahi/Super Premium</span>
+                </button>
+                <button type="button" id="presetRadarInomeSuspect" class="px-3 py-2 text-xs font-semibold rounded-xl bg-white border border-rose-200 text-rose-800 hover:bg-rose-50 text-left transition">
+                  ⚠️ Inome แท้ vs Inome (Suspect)
+                  <span class="block text-[10px] text-rose-600">ตรวจจับการพุ่งผิดปกติของเซ็นเซอร์ TGS-813</span>
+                </button>
+                <button type="button" id="presetRadarHojichaSuspect" class="px-3 py-2 text-xs font-semibold rounded-xl bg-white border border-rose-200 text-rose-800 hover:bg-rose-50 text-left transition">
+                  ⚠️ Original Hojicha vs Suspect
+                  <span class="block text-[10px] text-rose-600">เปรียบเทียบการเบี่ยงเบนที่ MQ-4, MQ-5 และ TGS-2600</span>
+                </button>
+                <button type="button" id="presetRadarAllSelected" class="px-3 py-2 text-xs font-semibold rounded-xl bg-white border border-sky-200 text-slate-800 hover:bg-sky-100 text-left transition">
+                  🔄 แสดงตามที่เลือกไว้ในข้อ 2
+                  <span class="block text-[10px] text-slate-500">ซิงค์กับแผงตัวกรองหลักด้านบน</span>
+                </button>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-sky-100 space-y-2 text-xs text-slate-700 leading-relaxed">
+              <div class="font-bold text-slate-900">จุดสังเกตสำคัญจาก Radar Profile (Mid: Cycle 3–5):</div>
+              <p>• <strong>กลุ่ม Hojicha (E, A):</strong> โดดเด่นที่เซ็นเซอร์ <span class="font-semibold text-amber-700">MQ-2, TGS-2600 และ MQ-7</span> ซึ่งไวต่อสารระเหยจากการคั่วใบชาและก้านชา</p>
+              <p>• <strong>Inome (Suspect) [DF]:</strong> มีค่าตอบสนองที่ <span class="font-semibold text-rose-600">TGS-813 สูงถึง 76.8</span> (สูงกว่า Inome แท้หลายเท่า) บ่งชี้สารไฮโดรคาร์บอนเบา/อัลดีไฮด์จากการออกซิเดชันหรือกลิ่นผิดปกติ</p>
+              <p>• <strong>Original Hojicha (Suspect) [EF]:</strong> สูญเสียสมดุล TGS-2600/MQ-7 ของชาคั่วแท้ และเบี่ยงไปมีค่าสูงที่ <span class="font-semibold text-rose-600">MQ-4 (183.3) และ MQ-5 (133.2)</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-Tab 3: Time-Series Response & Baseline Drift 7 Cycles -->
+        <div id="subtab-panel-timeseries" class="p-5 hidden space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <label for="selectTsSample" class="text-xs font-bold text-slate-700">เลือกตัวอย่างชา:</label>
+              <select id="selectTsSample" class="text-xs font-semibold rounded-xl border border-sky-200 bg-white px-3 py-1.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <!-- Populated via app.js -->
+              </select>
+            </div>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button type="button" id="btnTsViewDrift" class="ts-view-btn subtab-active px-3 py-1.5 text-xs font-semibold rounded-xl border border-sky-200 bg-white text-slate-700">
+                แนวโน้มความเสถียร 7 Cycles (Cycle Drift Trajectory)
+              </button>
+              <button type="button" id="btnTsView190s" class="ts-view-btn px-3 py-1.5 text-xs font-semibold rounded-xl border border-sky-200 bg-white text-slate-700">
+                สัญญาณ 1 รอบ 190 วินาที (R10–S120–P60)
+              </button>
+              <button type="button" id="btnTsViewFull" class="ts-view-btn px-3 py-1.5 text-xs font-semibold rounded-xl border border-sky-200 bg-white text-slate-700">
+                สัญญาณต่อเนื่อง 7 รอบ (1,330 วินาที &amp; Blank)
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div class="lg:col-span-8">
+              <div class="relative h-72 sm:h-80 w-full bg-white p-3 rounded-xl border border-sky-100">
+                <canvas id="chartTimeseries"></canvas>
+              </div>
+            </div>
+            <div class="lg:col-span-4 space-y-3 text-xs text-slate-700">
+              <div class="bg-sky-50/80 p-4 rounded-xl border border-sky-100 space-y-2">
+                <h4 class="text-sm font-bold text-slate-900">การวิเคราะห์ Baseline Drift 7 Cycles</h4>
+                <p class="leading-relaxed">
+                  • <strong>ช่วงต้น (Early: Cycle 1–3):</strong> ผิวเซ็นเซอร์ MOS เพิ่งสัมผัสไอระเหยความเข้มข้นสูงจากสถานะพัก ทำให้เกิด Transient Conditioning ในช่วงรอบแรกๆ ก่อนเริ่มเข้าสู่สมดุลในรอบที่ 3
+                </p>
+                <p class="leading-relaxed">
+                  • <strong>ช่วงกลาง (Mid: Cycle 3–5 [Default]):</strong> อัตราการดูดซับ (Adsorption) ช่วง Sampling 120s และการชะล้าง (Desorption) ช่วง Purging 60s เข้าสู่สมดุลไดนามิก (Dynamic Equilibrium) อธิบายความแปรปรวน PC1–PC3 ได้ถึง <strong>93.02%</strong> และแยกกลุ่มได้ชัดเจน <strong>100% Zero-Overlap</strong>
+                </p>
+                <p class="leading-relaxed">
+                  • <strong>ช่วงท้าย (Late: Cycle 5–7):</strong> สะท้อนความคงตัวของสารระเหยโมเลกุลหนักและการชะล้างพื้นผิวเซ็นเซอร์ในช่วงปลายของการวัดซ้ำ
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SECTION 2: QUANTITATIVE ANALYSIS (190s FFT & Zero-Overlap Summary)  -->
+    <!-- =================================================================== -->
+    <section id="sec-quantitative" class="space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Part 02 • Quantitative Spectral &amp; Classification Analysis</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ส่วนที่ 2: ข้อมูลเชิงปริมาณ — กราฟ FFT Spectral Analysis (190s) &amp; การจำแนกใบชา 10 ชนิด</h2>
+        </div>
+        <span class="px-3 py-1 text-xs font-semibold rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
+          ✓ 100% Zero-Overlap Separability (หลังหัก Blank และกรองสัญญาณรบกวน)
+        </span>
+      </div>
+
+      <!-- FFT Spectral Analysis Card -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 sci-card rounded-2xl overflow-hidden flex flex-col">
+          <div class="sci-card-header px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">FFT Spectral Magnitude Analysis (สัญญาณคาบ 190 วินาที)</h3>
+              <p class="text-xs text-slate-500">วิเคราะห์ความถี่เชิงปริมาณด้วย Hanning Window เพื่อแยกพลังงานจลนศาสตร์การดูดซับกลิ่นออกจากสัญญาณรบกวนความถี่สูง</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <select id="selectFftMode" class="text-xs font-semibold rounded-lg border border-sky-200 bg-white px-2.5 py-1 text-slate-800">
+                <option value="all_samples">เปรียบเทียบใบชา 10 ชนิด (Composite FFT)</option>
+                <option value="single_sample">เจาะลึกเซ็นเซอร์รายตัวอย่าง (MQ / TGS)</option>
+              </select>
+              <select id="selectFftSample" class="hidden text-xs font-semibold rounded-lg border border-sky-200 bg-white px-2.5 py-1 text-slate-800">
+                <!-- Populated via app.js -->
+              </select>
+            </div>
+          </div>
+
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div class="relative h-72 sm:h-80 w-full bg-white p-3 rounded-xl border border-sky-100">
+              <canvas id="chartFft"></canvas>
+            </div>
+            <div class="grid grid-cols-3 gap-3 text-center">
+              <div class="bg-sky-50/70 rounded-xl p-2.5 border border-sky-100">
+                <p class="text-[11px] text-slate-500 font-medium">ความถี่มูลฐาน (Fundamental f₁)</p>
+                <p class="text-sm font-bold text-sky-800">0.0053 Hz (T = 190s)</p>
+              </div>
+              <div class="bg-sky-50/70 rounded-xl p-2.5 border border-sky-100">
+                <p class="text-[11px] text-slate-500 font-medium">ย่านพลังงานสารระเหยหลัก</p>
+                <p class="text-sm font-bold text-sky-800">0.0053 – 0.0421 Hz</p>
+              </div>
+              <div class="bg-emerald-50/70 rounded-xl p-2.5 border border-emerald-100">
+                <p class="text-[11px] text-emerald-700 font-medium">อัตราส่วนสัญญาณต่อการรบกวน (SNR)</p>
+                <p class="text-sm font-bold text-emerald-800">+20.3 ถึง +38.1 dB</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quantitative Separation & Suspect Distance Chart (5 cols) -->
+        <div class="lg:col-span-5 sci-card rounded-2xl overflow-hidden flex flex-col">
+          <div class="sci-card-header px-5 py-3.5">
+            <h3 class="text-sm font-bold text-slate-900">ระยะห่างการแยกกลุ่ม (Inter-Cluster Separation Margin)</h3>
+            <p class="text-xs text-slate-500">อัตราส่วนระยะห่างไปยังกลุ่มที่ใกล้ที่สุดเทียบกับการกระจายตัวภายในกลุ่ม (โหมด Mid: Cycle 3–5)</p>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div class="relative h-72 sm:h-80 w-full bg-white p-3 rounded-xl border border-sky-100">
+              <canvas id="chartSeparation"></canvas>
+            </div>
+            <div class="bg-sky-50/80 rounded-xl p-3 border border-sky-100 text-xs text-slate-700 leading-relaxed">
+              <strong>เกณฑ์ตัดสิน Zero-Overlap:</strong> เมื่อระยะห่างระหว่างจุดศูนย์กลางกลุ่มที่ใกล้ที่สุด (Nearest-Neighbor Distance) มากกว่าการกระจายตัวภายในกลุ่ม (Intra-Cluster Spread) เกิน 2 เท่า จะทำให้ขอบเขตกลุ่มทั้ง 10 ชนิดไม่ซ้อนทับกันเลย
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10 Tea Varieties Classification Summary Table -->
+      <div class="sci-card rounded-2xl overflow-hidden">
+        <div class="sci-card-header px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 class="text-sm font-bold text-slate-900">ตารางสรุปการจำแนกชนิดใบชา 10 ชนิดเชิงปริมาณ (10-Tea Quantitative Classification Summary)</h3>
+            <p class="text-xs text-slate-500">แสดงค่าเด่นเชิงปริมาณจาก FFT, เซ็นเซอร์จำแนกหลัก 3 อันดับแรก (MQ/TGS), ระยะห่างระหว่างกลุ่ม และสถานะ Zero-Overlap ในโหมด Mid (Cycle 3–5)</p>
+          </div>
+          <span class="text-xs font-bold text-sky-700 bg-sky-50 px-3 py-1 rounded-lg border border-sky-200">
+            Accuracy: 100.0% (Mid-Cycle: Cycle 3–5)
+          </span>
+        </div>
+
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="bg-sky-50/90 text-slate-700 border-b border-sky-100">
+              <tr>
+                <th class="py-3 px-4 font-bold">รหัส</th>
+                <th class="py-3 px-4 font-bold">ชื่อตัวอย่างใบชา (Tea Variety)</th>
+                <th class="py-3 px-4 font-bold">กลุ่มประเภท</th>
+                <th class="py-3 px-4 font-bold">Blank อ้างอิง</th>
+                <th class="py-3 px-4 font-bold">เซ็นเซอร์เด่น 3 อันดับ (ΔAUC)</th>
+                <th class="py-3 px-4 font-bold text-right">FFT Peak Mag</th>
+                <th class="py-3 px-4 font-bold text-right">SNR (dB)</th>
+                <th class="py-3 px-4 font-bold text-right">Intra Spread</th>
+                <th class="py-3 px-4 font-bold">กลุ่มใกล้สุด (Δd 3D)</th>
+                <th class="py-3 px-4 font-bold text-center">สถานะการแยกกลุ่ม</th>
+              </tr>
+            </thead>
+            <tbody id="classificationTableBody" class="divide-y divide-sky-100 bg-white">
+              <!-- Populated via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SECTION 3: EXECUTIVE SUMMARY CARD (Chemical Insights & Anomalies)   -->
+    <!-- =================================================================== -->
+    <section id="sec-executive" class="space-y-6 pb-8">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Part 03 • Executive Summary &amp; Chemical Aroma Insights</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ส่วนที่ 3: บทสรุปผลการวิเคราะห์ (Executive Summary Card)</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Card 1: Hojicha vs Premium Matcha Chemical & Aroma Insights -->
+        <div class="sci-card rounded-2xl overflow-hidden flex flex-col">
+          <div class="bg-gradient-to-r from-sky-600 to-sky-700 px-5 py-4 text-white">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-md">Chemical &amp; Aroma Profile</span>
+              <span class="text-lg">🍵</span>
+            </div>
+            <h3 class="text-base font-bold mt-2">1. ความแตกต่างทางเคมีและกลิ่น: Hojicha vs กลุ่มชาพรีเมียม</h3>
+          </div>
+          <div class="p-5 space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed flex-1">
+            <p>
+              • <strong>กลุ่มชาคั่ว Hojicha (Original Hojicha &amp; Karigana ก้าน):</strong> กระบวนการคั่วที่อุณหภูมิสูงก่อให้เกิดปฏิกิริยา Maillard สร้างสารระเหยกลุ่ม <em>Alkylpyrazines</em>, <em>Furans</em> และก๊าซคาร์บอนมอนอกไซด์/ไฮโดรคาร์บอนเบา ส่งผลให้เซ็นเซอร์ <strong>MQ-2 (222.4)</strong>, <strong>TGS-2600 (141.2)</strong> และ <strong>MQ-7 (104.4–124.4)</strong> ตอบสนองสูงโดดเด่น โดย <em>Karigana Hojicha (ก้าน)</em> มีสัดส่วน MQ-7/MQ-2 สูงกว่าใบคั่วล้วนเนื่องจากสารระเหยหวานหอมจากส่วนก้านชา
+            </p>
+            <p>
+              • <strong>กลุ่มมัทฉะเกรดพรีเมียม (Asahi, Super Premium, Yuhi, Inome, Hikari, Ujitanara):</strong> ผ่านการนึ่ง (Steaming) โดยไม่คั่ว จึงรักษาสารกลุ่ม <em>Terpene alcohols (Linalool, Geraniol)</em> และ <em>Green leaf volatiles</em> ทำให้แยกตัวไปตามแนวแกน PC1 และ PC2 อย่างชัดเจน โดย <strong>Asahi</strong> และ <strong>Super Premium</strong> มีความเข้มข้นของไอระเหยรวมสูงสุด ขณะที่ <strong>Ujitanara</strong> มีโปรไฟล์กลิ่นที่นุ่มนวลที่สุด (MQ-2 = 46.7)
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2: Suspect Sample Anomaly Detection -->
+        <div class="sci-card rounded-2xl overflow-hidden flex flex-col border-rose-200">
+          <div class="bg-gradient-to-r from-rose-600 to-rose-700 px-5 py-4 text-white">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-md">Quality Control &amp; Anomaly Detection</span>
+              <span class="text-lg">🔍</span>
+            </div>
+            <h3 class="text-base font-bold mt-2">2. การตรวจจับความผิดปกติของตัวอย่างต้องสงสัย (Suspect)</h3>
+          </div>
+          <div class="p-5 space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed flex-1">
+            <div class="p-3 rounded-xl bg-rose-50 border border-rose-100">
+              <p class="font-bold text-rose-900">⚠️ Inome (Suspect) [รหัส DF] vs Inome แท้ [รหัส D]:</p>
+              <p class="text-xs text-rose-800 mt-1">
+                แยกตัวห่างออกจาก Inome แท้ในปริภูมิ 3D PCA (Cycle 3–5) ถึง <strong>Δd = 4.401</strong> โดยมีสัญญาณพุ่งสูงผิดปกติที่เซ็นเซอร์ <strong>TGS-813 (76.83)</strong> ซึ่งไวต่อก๊าซไฮโดรคาร์บอนเบาและสารระเหยจากการออกซิเดชัน สะท้อนถึงการเสื่อมสภาพจากการเก็บรักษาหรือการปนเปื้อนกลิ่นแปลกปลอม
+              </p>
+            </div>
+            <div class="p-3 rounded-xl bg-rose-50 border border-rose-100">
+              <p class="font-bold text-rose-900">⚠️ Original Hojicha (Suspect) [รหัส EF] vs แท้ [รหัส E]:</p>
+              <p class="text-xs text-rose-800 mt-1">
+                เบี่ยงเบนออกจาก Original Hojicha แท้ด้วยระยะห่าง <strong>Δd = 4.650</strong> โดยสูญเสียเอกลักษณ์ TGS-2600/MQ-7 ของชาคั่วแท้ แต่กลับมีค่า <strong>MQ-4 (183.33)</strong> และ <strong>MQ-5 (133.23)</strong> สูงขึ้นแทน บ่งชี้ว่าเป็นใบชาคนละล็อตการคั่วหรือเกรดวัตถุดิบที่แตกต่างกันอย่างชัดเจน
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Mid-Cycle Stability & FFT Spectral Efficiency -->
+        <div class="sci-card rounded-2xl overflow-hidden flex flex-col">
+          <div class="bg-gradient-to-r from-sky-700 to-teal-700 px-5 py-4 text-white">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-md">Signal Processing &amp; Chemometrics</span>
+              <span class="text-lg">📈</span>
+            </div>
+            <h3 class="text-base font-bold mt-2">3. ความเสถียรช่วง Mid-Cycle (Cycle 3–5) และประสิทธิภาพของ FFT</h3>
+          </div>
+          <div class="p-5 space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed flex-1">
+            <p>
+              • <strong>การเปรียบเทียบโหมดรอบการวัด (Early 1–3, Mid 3–5, Late 5–7):</strong> ในช่วงต้น (Cycle 1–3) เซ็นเซอร์ยังได้รับผลจาก <em>First-Cycle Conditioning Effect</em> เมื่อเข้าสู่ <strong>ช่วงกลาง (Mid-Cycle: Cycle 3–5)</strong> อัตราการดูดซับและชะล้างก๊าซจะเข้าสู่สมดุลไดนามิก อธิบายความแปรปรวนสะสม 3 แกนแรกได้สูงถึง <strong>93.02%</strong> และให้การจำแนกกลุ่มที่ชัดเจน
+            </p>
+            <p>
+              • <strong>ประสิทธิภาพของ FFT บนสัญญาณ 190 วินาที:</strong> การแปลงฟูเรียร์ (Hanning-Windowed FFT) ช่วยรวบรวมพลังงานจลนศาสตร์ของคาบการวัด 190s (ความถี่หลัก <strong>0.0053 Hz</strong> และฮาร์มอนิกต่ำ) และกรองสัญญาณรบกวนความถี่สูง (&gt;0.10 Hz) ออกไป ทำให้ได้ค่า <strong>SNR สูงถึง +20.3 ถึง +38.1 dB</strong> ยืนยันความถูกต้องของการจำแนกใบชาทั้ง 10 ชนิดอย่างสมบูรณ์แบบ
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- BOTTOM ACADEMIC FOOTER (Matching enosearoma-sensor-analysis reference)-->
+  <!-- ===================================================================== -->
+  <footer class="academic-footer w-full py-6 px-4 sm:px-6 lg:px-8 text-center mt-auto">
+    <div class="max-w-4xl mx-auto flex flex-col items-center justify-center space-y-1">
+      <p class="text-sm sm:text-base font-bold text-slate-900">
+        SCBT316 Medicinal plants &amp; Industrial processing
+      </p>
+      <p class="text-xs sm:text-sm text-slate-600">
+        Submitted to Asst. Prof. Dr. Sutthichai Boonprasop (Mahidol University)
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
