@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -842,7 +842,10 @@ body {
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="chem-eq-badge rounded-xl p-3 space-y-1">
-              <div class="text-[11px] font-sans font-bold text-amber-800 uppercase">1. สมการตัวอย่าง Standard (Abs)</div>
+              <div class="flex items-center justify-between gap-1">
+                <div class="text-[11px] font-sans font-bold text-amber-800 uppercase">1. สมการตัวอย่าง Standard (Abs)</div>
+                <span class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-amber-100 text-amber-900 border border-amber-300">R² = 0.9999</span>
+              </div>
               <div class="text-sm sm:text-base font-bold text-slate-900">y = 0.0045x + 0.0798</div>
               <div class="text-[11px] font-sans text-slate-600 pt-1">
                 • <strong>10x (Abs = 0.5546):</strong> x = <span class="font-mono font-bold text-slate-900">105.5184 ppm</span><br/>
@@ -855,7 +858,10 @@ body {
             </div>
 
             <div class="chem-eq-badge rounded-xl p-3 space-y-1">
-              <div class="text-[11px] font-sans font-bold text-sky-800 uppercase">2. สมการ Standard หักลบ Blank (Abs - Blank)</div>
+              <div class="flex items-center justify-between gap-1">
+                <div class="text-[11px] font-sans font-bold text-sky-800 uppercase">2. สมการ Standard หักลบ Blank (Abs - Blank)</div>
+                <span class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-sky-100 text-sky-900 border border-sky-300">R² = 0.9999</span>
+              </div>
               <div class="text-sm sm:text-base font-bold text-sky-900">y = 0.0045x + 0.0309</div>
               <div class="text-[11px] font-sans text-slate-600 pt-1">
                 • <strong>10x (Abs = 0.5546):</strong> x = <span class="font-mono font-bold text-slate-900">116.3851 ppm</span><br/>
@@ -884,7 +890,10 @@ body {
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="chem-eq-badge rounded-xl p-3 space-y-1">
-              <div class="text-[11px] font-sans font-bold text-rose-800 uppercase">1. สมการตัวอย่าง Standard (Abs)</div>
+              <div class="flex items-center justify-between gap-1">
+                <div class="text-[11px] font-sans font-bold text-rose-800 uppercase">1. สมการตัวอย่าง Standard (Abs)</div>
+                <span class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-rose-100 text-rose-900 border border-rose-300">R² = 0.9993</span>
+              </div>
               <div class="text-sm sm:text-base font-bold text-slate-900">y = 0.0047x + 0.064</div>
               <div class="text-[11px] font-sans text-slate-600 pt-1">
                 • <strong>10x (Abs = 0.5094):</strong> x = <span class="font-mono font-bold text-slate-900">94.7600 ppm</span><br/>
@@ -897,7 +906,10 @@ body {
             </div>
 
             <div class="chem-eq-badge rounded-xl p-3 space-y-1">
-              <div class="text-[11px] font-sans font-bold text-purple-800 uppercase">2. สมการ Standard หักลบ Blank (Abs - Blank)</div>
+              <div class="flex items-center justify-between gap-1">
+                <div class="text-[11px] font-sans font-bold text-purple-800 uppercase">2. สมการ Standard หักลบ Blank (Abs - Blank)</div>
+                <span class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-purple-100 text-purple-900 border border-purple-300">R² = 0.9993</span>
+              </div>
               <div class="text-sm sm:text-base font-bold text-purple-900">y = 0.0047x - 0.0077</div>
               <div class="text-[11px] font-sans text-slate-600 pt-1">
                 • <strong>10x (Abs = 0.5094):</strong> x = <span class="font-mono font-bold text-slate-900">110.0150 ppm</span><br/>
@@ -912,24 +924,24 @@ body {
         </div>
       </div>
 
-      <!-- Merged Calibration Curve Card: Standard (Abs) + Standard - Blank (Abs - Blank) in the SAME Graph -->
+      <!-- Merged Calibration Curve Card: Hojicha vs Suspect 10x & Hojicha vs Suspect 100x with R² -->
       <div class="sci-card rounded-2xl overflow-hidden">
         <div class="sci-card-header px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
           <div>
             <h3 class="text-sm font-bold text-slate-900">
-              กราฟมาตรฐานผสาน "ตัวอย่าง Standard (Abs)" และ "ตัวอย่าง Standard ที่หักลบออกด้วย Blank (Abs - Blank)" ในกราฟเดียวกัน
+              กราฟมาตรฐานผสานข้อมูล Hojicha [E] vs Suspect [EF] แยกตามระดับการเจือจาง (10x และ 100x) พร้อมค่า R²
             </h3>
             <p class="text-xs text-slate-500">
-              แสดงเส้นสมการถดถอยเชิงเส้นทั้งสองชุดพร้อมกันบนกราฟเดียว พร้อมจุดตัวอย่างจริงที่ระดับเจือจาง 10x (▲/★) และ 100x (▲/★)
+              ผสานเส้นสมการ Standard (Abs) และ Standard หักลบ Blank (Abs - Blank) ของทั้ง Hojicha (R² = 0.9999) และ Suspect Hojicha (R² = 0.9993) เปรียบเทียบกันในกราฟเดียว
             </p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
-            <button type="button" id="btnChemViewDual" class="chem-view-btn-active px-3 py-1.5 text-xs font-semibold rounded-xl border border-sky-200 bg-white text-slate-700 hover:bg-sky-50 transition">
-              กราฟคู่แยก Hojicha vs Suspect (ผสาน Standard &amp; หัก Blank ในกราฟเดียว)
-            </button>
-            <button type="button" id="btnChemViewCombined" class="px-3 py-1.5 text-xs font-semibold rounded-xl border border-sky-200 bg-white text-slate-700 hover:bg-sky-50 transition">
-              กราฟเดียวรวมทั้ง 4 เส้น (Overlay ทั้ง Hojicha &amp; Suspect)
-            </button>
+            <span class="px-2.5 py-1 text-xs font-bold rounded-xl bg-amber-50 text-amber-900 border border-amber-200 font-mono">
+              Hojicha [E]: R² = 0.9999
+            </span>
+            <span class="px-2.5 py-1 text-xs font-bold rounded-xl bg-rose-50 text-rose-900 border border-rose-200 font-mono">
+              Suspect [EF]: R² = 0.9993
+            </span>
             <label class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-sky-50/80 rounded-xl border border-sky-200 cursor-pointer">
               <input type="checkbox" id="chkChemShowHighConc" class="rounded border-sky-300 text-sky-600 focus:ring-sky-500" />
               <span>แสดงจุด 200 &amp; 400 ppm (ช่วงอิ่มตัว)</span>
@@ -938,31 +950,71 @@ body {
         </div>
 
         <div class="p-5 space-y-4">
-          <!-- Mode A: Dual Side-by-Side (Default) — Each chart merges Standard and Standard - Blank -->
+          <!-- Dual Side-by-Side Comparison: Chart 1 (Hojicha vs Suspect 10x) & Chart 2 (Hojicha vs Suspect 100x) -->
           <div id="chemDualChartsPanel" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white p-3.5 rounded-xl border border-amber-200/80 shadow-sm">
+            <!-- Chart 1: Hojicha vs Suspect 10x -->
+            <div class="bg-white p-3.5 rounded-xl border border-amber-200/80 shadow-sm space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-sky-100">
+                <div>
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-amber-800">Comparison Graph 01 • Dilution 10x</span>
+                  <h4 class="text-sm font-bold text-slate-900">1. กราฟมาตรฐาน Hojicha vs Suspect 10x</h4>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+                  <span class="px-2 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-200 font-bold">Hojicha R² = 0.9999</span>
+                  <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-900 border border-rose-200 font-bold">Suspect R² = 0.9993</span>
+                </div>
+              </div>
               <div class="relative h-80 sm:h-96 w-full">
-                <canvas id="chartChemHojicha"></canvas>
+                <canvas id="chartChem10x"></canvas>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px]">
+                <div class="p-2 rounded-lg bg-amber-50/70 border border-amber-200/80 text-slate-700">
+                  <strong class="text-amber-900">★ Hojicha [E] 10x (Abs = 0.5546):</strong><br/>
+                  • Standard: <span class="font-mono font-bold">x = 105.52 ppm</span> (<span class="font-mono font-bold text-amber-800">1,055.18 ppm</span>)<br/>
+                  • หัก Blank: <span class="font-mono font-bold">x = 116.39 ppm</span> (<span class="font-mono font-bold text-sky-800">1,163.85 ppm</span>)
+                </div>
+                <div class="p-2 rounded-lg bg-rose-50/70 border border-rose-200/80 text-slate-700">
+                  <strong class="text-rose-900">◆ Suspect [EF] 10x (Abs = 0.5094):</strong><br/>
+                  • Standard: <span class="font-mono font-bold">x = 94.76 ppm</span> (<span class="font-mono font-bold text-rose-800">947.60 ppm</span>)<br/>
+                  • หัก Blank: <span class="font-mono font-bold">x = 110.02 ppm</span> (<span class="font-mono font-bold text-purple-800">1,100.15 ppm</span>)
+                </div>
               </div>
             </div>
-            <div class="bg-white p-3.5 rounded-xl border border-rose-200/80 shadow-sm">
-              <div class="relative h-80 sm:h-96 w-full">
-                <canvas id="chartChemSuspect"></canvas>
-              </div>
-            </div>
-          </div>
 
-          <!-- Mode B: Single Combined Chart overlaying all 4 calibration curves -->
-          <div id="chemCombinedChartPanel" class="hidden bg-white p-4 rounded-xl border border-sky-200 shadow-sm">
-            <div class="relative h-96 sm:h-[440px] w-full">
-              <canvas id="chartChemCombined"></canvas>
+            <!-- Chart 2: Hojicha vs Suspect 100x -->
+            <div class="bg-white p-3.5 rounded-xl border border-sky-200/90 shadow-sm space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-sky-100">
+                <div>
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-sky-800">Comparison Graph 02 • Dilution 100x</span>
+                  <h4 class="text-sm font-bold text-slate-900">2. กราฟมาตรฐาน Hojicha vs Suspect 100x</h4>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+                  <span class="px-2 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-200 font-bold">Hojicha R² = 0.9999</span>
+                  <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-900 border border-rose-200 font-bold">Suspect R² = 0.9993</span>
+                </div>
+              </div>
+              <div class="relative h-80 sm:h-96 w-full">
+                <canvas id="chartChem100x"></canvas>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px]">
+                <div class="p-2 rounded-lg bg-amber-50/70 border border-amber-200/80 text-slate-700">
+                  <strong class="text-amber-900">★ Hojicha [E] 100x (Abs = 0.1410):</strong><br/>
+                  • Standard: <span class="font-mono font-bold">x = 13.60 ppm</span> (<span class="font-mono font-bold text-amber-800">1,360.00 ppm</span>)<br/>
+                  • หัก Blank: <span class="font-mono font-bold">x = 24.47 ppm</span> (<span class="font-mono font-bold text-sky-800">2,446.70 ppm</span>)
+                </div>
+                <div class="p-2 rounded-lg bg-rose-50/70 border border-rose-200/80 text-slate-700">
+                  <strong class="text-rose-900">◆ Suspect [EF] 100x (Abs = 0.1469):</strong><br/>
+                  • Standard: <span class="font-mono font-bold">x = 17.63 ppm</span> (<span class="font-mono font-bold text-rose-800">1,763.00 ppm</span>)<br/>
+                  • หัก Blank: <span class="font-mono font-bold">x = 32.89 ppm</span> (<span class="font-mono font-bold text-purple-800">3,289.00 ppm</span>)
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Mathematical Proof Note on Vertical Shift vs Horizontal Sample Shift -->
           <div class="bg-sky-50/80 rounded-xl p-3.5 border border-sky-100 text-xs text-slate-700 leading-relaxed flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
-              <strong>หลักการผสานสมการ Standard vs Standard หักลบ Blank:</strong> การหักค่า Blank ออกจากชุด Standard ทำให้ความชัน (Slope <code class="font-mono">m</code>) คงเดิม (<code class="font-mono">0.0045</code> ใน Hojicha และ <code class="font-mono">0.0047</code> ใน Suspect Hojicha) แต่จุดตัดแกน Y (Intercept <code class="font-mono">c</code>) เลื่อนลงเท่ากับค่าเฉลี่ย Blank (<code class="font-mono">Δc = -0.0489</code> และ <code class="font-mono">-0.0717</code> ตามลำดับ) ส่งผลให้เส้นตรงทั้งสองขนานกันในกราฟเดียว และทำให้การคำนวณความเข้มข้น <code class="font-mono">x</code> ของตัวอย่าง 10x / 100x ชดเชยผลกระทบของตัวทำละลายและพื้นหลังเพลทได้อย่างแม่นยำ
+              <strong>หลักการผสานสมการ Standard vs Standard หักลบ Blank พร้อมค่าสัมประสิทธิ์การตัดสินใจ (R²):</strong> กราฟมาตรฐานของ <strong>Hojicha [E]</strong> มีความแม่นยำเชิงเส้นสูงมากที่ <code class="font-mono font-bold">R² = 0.9999</code> (<code class="font-mono">y = 0.0045x + 0.0798</code> และหัก Blank <code class="font-mono">y = 0.0045x + 0.0309</code>) ขณะที่ <strong>Suspect Hojicha [EF]</strong> มีค่า <code class="font-mono font-bold">R² = 0.9993</code> (<code class="font-mono">y = 0.0047x + 0.064</code> และหัก Blank <code class="font-mono">y = 0.0047x - 0.0077</code>) โดยการหักค่า Blank ทำให้จุดตัดแกน Y เลื่อนลงเท่ากับค่าเฉลี่ย Blank (<code class="font-mono">Δc = -0.0489</code> และ <code class="font-mono">-0.0717</code>) โดยไม่เปลี่ยนค่าความชันและค่า <code class="font-mono">R²</code>
             </div>
           </div>
         </div>
@@ -1146,9 +1198,9 @@ body {
           </div>
           <div class="p-5 space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed flex-1">
             <div class="p-3 rounded-xl bg-amber-50 border border-amber-200">
-              <p class="font-bold text-amber-900">🧪 การผสานสมการ Standard &amp; Standard หักลบ Blank (735 nm):</p>
+              <p class="font-bold text-amber-900">🧪 การผสานกราฟมาตรฐาน Hojicha vs Suspect (10x &amp; 100x) พร้อมค่า R² (735 nm):</p>
               <p class="text-xs text-amber-900 mt-1">
-                เมื่อผสานกราฟมาตรฐานของ <strong>Hojicha (E)</strong> (<code class="font-mono">y = 0.0045x + 0.0798</code> และหัก Blank <code class="font-mono">y = 0.0045x + 0.0309</code>) เทียบกับ <strong>Suspect Hojicha (EF)</strong> (<code class="font-mono">y = 0.0047x + 0.064</code> และหัก Blank <code class="font-mono">y = 0.0047x - 0.0077</code>) พบว่าที่ระดับเจือจาง 10x ชา Hojicha แท้มีความเข้มข้นสารสำคัญสูงกว่าอย่างชัดเจน (<code class="font-mono">1,055.18 / 1,163.85 ppm</code> เทียบกับ <code class="font-mono">947.60 / 1,100.15 ppm</code>)
+                เมื่อผสานกราฟมาตรฐานของ <strong>Hojicha (E)</strong> (<code class="font-mono">y = 0.0045x + 0.0798</code> และหัก Blank <code class="font-mono">y = 0.0045x + 0.0309</code>, <strong>R² = 0.9999</strong>) เทียบกับ <strong>Suspect Hojicha (EF)</strong> (<code class="font-mono">y = 0.0047x + 0.064</code> และหัก Blank <code class="font-mono">y = 0.0047x - 0.0077</code>, <strong>R² = 0.9993</strong>) ในกราฟเปรียบเทียบ <strong>10x</strong> และ <strong>100x</strong> พบว่าที่ระดับเจือจาง 10x ชา Hojicha แท้มีความเข้มข้นสารสำคัญสูงกว่าอย่างชัดเจน (<code class="font-mono">1,055.18 / 1,163.85 ppm</code> เทียบกับ <code class="font-mono">947.60 / 1,100.15 ppm</code>)
               </p>
             </div>
             <div class="p-3 rounded-xl bg-rose-50 border border-rose-100">
@@ -1230,13 +1282,11 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
   let chartTsInstance = null;
   let chartFftInstance = null;
   let chartSepInstance = null;
-  let chartChemHojichaInstance = null;
-  let chartChemSuspectInstance = null;
-  let chartChemCombinedInstance = null;
+  let chartChem10xInstance = null;
+  let chartChem100xInstance = null;
   let chartChemConcBarInstance = null;
   let chartChemMeaLinkInstance = null;
 
-  let chemViewMode = 'dual'; // 'dual' or 'combined'
   let chemShowHighConc = false; // false = 0-125 ppm linear range, true = 0-400 ppm full range
   let chemBarScaleMode = 'diluted'; // 'diluted' (dilute 10 & 100) or 'raw_x' (direct x from equation)
 
@@ -1259,15 +1309,19 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       blankAvg: 0.04886666666666667,
       colorStd: '#D97706',
       colorBlank: '#0284C7',
+      rSquare: 0.9999,
+      rSquareExact: 0.999917,
       eqStd: {
         formula: 'y = 0.0045x + 0.0798',
         slope: 0.0045,
-        intercept: 0.0798
+        intercept: 0.0798,
+        rSquare: 0.9999
       },
       eqBlank: {
         formula: 'y = 0.0045x + 0.0309',
         slope: 0.0045,
-        intercept: 0.0309
+        intercept: 0.0309,
+        rSquare: 0.9999
       },
       standards: [
         { conc: 400, label: '400', repA: 0.7851, repB: 0.7951, repC: 0.7741, avg: 0.7847666666666667, absBlank: 0.7359, inLinearFit: false },
@@ -1322,15 +1376,19 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       blankAvg: 0.07166666666666667,
       colorStd: '#E11D48',
       colorBlank: '#7C3AED',
+      rSquare: 0.9993,
+      rSquareExact: 0.999340,
       eqStd: {
         formula: 'y = 0.0047x + 0.064',
         slope: 0.0047,
-        intercept: 0.064
+        intercept: 0.064,
+        rSquare: 0.9993
       },
       eqBlank: {
         formula: 'y = 0.0047x - 0.0077',
         slope: 0.0047,
-        intercept: -0.0077
+        intercept: -0.0077,
+        rSquare: 0.9993
       },
       standards: [
         { conc: 400, label: '400', repA: 0.7370, repB: 0.7648, repC: 0.7926, avg: 0.7648, absBlank: 0.69313, inLinearFit: false },
@@ -2430,32 +2488,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       renderFftChart();
     });
 
-    // Section 3: GC-MS / Chemical Standard vs Blank-Subtracted Controls
-    const btnChemViewDual = document.getElementById('btnChemViewDual');
-    const btnChemViewCombined = document.getElementById('btnChemViewCombined');
-    const panelChemDual = document.getElementById('chemDualChartsPanel');
-    const panelChemCombined = document.getElementById('chemCombinedChartPanel');
-
-    if (btnChemViewDual && btnChemViewCombined) {
-      btnChemViewDual.addEventListener('click', function () {
-        chemViewMode = 'dual';
-        btnChemViewDual.classList.add('chem-view-btn-active');
-        btnChemViewCombined.classList.remove('chem-view-btn-active');
-        if (panelChemDual) panelChemDual.classList.remove('hidden');
-        if (panelChemCombined) panelChemCombined.classList.add('hidden');
-        renderChemCalibrationCharts();
-      });
-
-      btnChemViewCombined.addEventListener('click', function () {
-        chemViewMode = 'combined';
-        btnChemViewCombined.classList.add('chem-view-btn-active');
-        btnChemViewDual.classList.remove('chem-view-btn-active');
-        if (panelChemDual) panelChemDual.classList.add('hidden');
-        if (panelChemCombined) panelChemCombined.classList.remove('hidden');
-        renderChemCalibrationCharts();
-      });
-    }
-
+    // Section 3: GC-MS / Chemical Standard vs Blank-Subtracted Controls (Hojicha vs Suspect 10x & 100x)
     const chkChemShowHighConc = document.getElementById('chkChemShowHighConc');
     if (chkChemShowHighConc) {
       chkChemShowHighConc.addEventListener('change', function (e) {
@@ -3200,90 +3233,115 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   // =========================================================================
   // SECTION 3: GC-MS & UV-Vis 735 nm Chemical Standard vs Blank-Subtracted
+  // Merged Hojicha vs Suspect 10x & Hojicha vs Suspect 100x with R²
   // Coupled with 3D PCA & MEA (Multi-Sensor Electronic Nose Array)
   // =========================================================================
 
-  function buildSingleTeaCalibrationDatasets(teaObj, includeHighConc) {
-    const filteredStds = teaObj.standards
-      .filter(function (s) { return includeHighConc || s.inLinearFit; })
-      .slice()
-      .sort(function (a, b) { return a.conc - b.conc; });
-
+  function buildDilutionComparisonCalibrationDatasets(dilutionKey, includeHighConc) {
+    const hoj = GCMS_CHEMICAL_DATA.hojicha;
+    const susp = GCMS_CHEMICAL_DATA.suspect;
+    const dilLabel = dilutionKey === 'd10x' ? '10x' : '100x';
     const maxX = includeHighConc ? 400 : 125;
 
-    // 1. Measured Standard Points (Abs)
-    const stdPoints = filteredStds.map(function (s) {
-      return { x: s.conc, y: Number(s.avg.toFixed(6)), label: 'Conc ' + s.label + ' ppm' };
-    });
+    function getFilteredStds(teaObj) {
+      return teaObj.standards
+        .filter(function (s) { return includeHighConc || s.inLinearFit; })
+        .slice()
+        .sort(function (a, b) { return a.conc - b.conc; });
+    }
 
-    // 2. Measured Standard - Blank Points (Abs - Blank)
-    const blankSubPoints = filteredStds.map(function (s) {
-      return { x: s.conc, y: Number(s.absBlank.toFixed(6)), label: 'Conc ' + s.label + ' ppm (หัก Blank)' };
-    });
+    const hojStds = getFilteredStds(hoj);
+    const suspStds = getFilteredStds(susp);
 
-    // 3. Linear Regression Line for Standard: y = m*x + c (0 to maxX)
-    const lineStd = [
-      { x: 0, y: Number(teaObj.eqStd.intercept.toFixed(5)) },
-      { x: maxX, y: Number((teaObj.eqStd.slope * maxX + teaObj.eqStd.intercept).toFixed(5)) }
+    // 1. Hojicha (E) Standard Points & Regression Line (R² = 0.9999)
+    const hojStdPoints = hojStds.map(function (s) {
+      return { x: s.conc, y: Number(s.avg.toFixed(6)), rSquare: hoj.eqStd.rSquare };
+    });
+    const hojLineStd = [
+      { x: 0, y: Number(hoj.eqStd.intercept.toFixed(5)), rSquare: hoj.eqStd.rSquare },
+      { x: maxX, y: Number((hoj.eqStd.slope * maxX + hoj.eqStd.intercept).toFixed(5)), rSquare: hoj.eqStd.rSquare }
     ];
 
-    // 4. Linear Regression Line for Standard - Blank: y = m*x + c_blank (0 to maxX)
-    const lineBlank = [
-      { x: 0, y: Number(teaObj.eqBlank.intercept.toFixed(5)) },
-      { x: maxX, y: Number((teaObj.eqBlank.slope * maxX + teaObj.eqBlank.intercept).toFixed(5)) }
+    // 2. Hojicha (E) Standard - Blank Points & Regression Line (R² = 0.9999)
+    const hojBlankPoints = hojStds.map(function (s) {
+      return { x: s.conc, y: Number(s.absBlank.toFixed(6)), rSquare: hoj.eqBlank.rSquare };
+    });
+    const hojLineBlank = [
+      { x: 0, y: Number(hoj.eqBlank.intercept.toFixed(5)), rSquare: hoj.eqBlank.rSquare },
+      { x: maxX, y: Number((hoj.eqBlank.slope * maxX + hoj.eqBlank.intercept).toFixed(5)), rSquare: hoj.eqBlank.rSquare }
     ];
 
-    // 5. Unknown Sample Points (10x & 100x) projected on Standard Equation
-    const samplePtsStd = [
+    // 3. Suspect Hojicha (EF) Standard Points & Regression Line (R² = 0.9993)
+    const suspStdPoints = suspStds.map(function (s) {
+      return { x: s.conc, y: Number(s.avg.toFixed(6)), rSquare: susp.eqStd.rSquare };
+    });
+    const suspLineStd = [
+      { x: 0, y: Number(susp.eqStd.intercept.toFixed(5)), rSquare: susp.eqStd.rSquare },
+      { x: maxX, y: Number((susp.eqStd.slope * maxX + susp.eqStd.intercept).toFixed(5)), rSquare: susp.eqStd.rSquare }
+    ];
+
+    // 4. Suspect Hojicha (EF) Standard - Blank Points & Regression Line (R² = 0.9993)
+    const suspBlankPoints = suspStds.map(function (s) {
+      return { x: s.conc, y: Number(s.absBlank.toFixed(6)), rSquare: susp.eqBlank.rSquare };
+    });
+    const suspLineBlank = [
+      { x: 0, y: Number(susp.eqBlank.intercept.toFixed(5)), rSquare: susp.eqBlank.rSquare },
+      { x: maxX, y: Number((susp.eqBlank.slope * maxX + susp.eqBlank.intercept).toFixed(5)), rSquare: susp.eqBlank.rSquare }
+    ];
+
+    // 5. Unknown Sample Points for the specific dilution (10x or 100x)
+    const hojSamp = hoj.samples[dilutionKey];
+    const suspSamp = susp.samples[dilutionKey];
+
+    const hojSamplePts = [
       {
-        x: teaObj.samples.d10x.xStd,
-        y: Number(teaObj.samples.d10x.avg.toFixed(6)),
-        sampleLabel: teaObj.shortName + ' Sample 10x (สมการ Standard)',
-        dilutedPpm: teaObj.samples.d10x.diluteStd
+        x: hojSamp.xStd,
+        y: Number(hojSamp.avg.toFixed(6)),
+        sampleLabel: 'Hojicha [E] ' + dilLabel + ' (สมการ Standard, R²=' + hoj.eqStd.rSquare.toFixed(4) + ')',
+        dilutedPpm: hojSamp.diluteStd
       },
       {
-        x: teaObj.samples.d100x.xStd,
-        y: Number(teaObj.samples.d100x.avg.toFixed(6)),
-        sampleLabel: teaObj.shortName + ' Sample 100x (สมการ Standard)',
-        dilutedPpm: teaObj.samples.d100x.diluteStd
+        x: hojSamp.xBlank,
+        y: Number(hojSamp.avg.toFixed(6)),
+        sampleLabel: 'Hojicha [E] ' + dilLabel + ' (สมการหัก Blank, R²=' + hoj.eqBlank.rSquare.toFixed(4) + ')',
+        dilutedPpm: hojSamp.diluteBlank
       }
     ];
 
-    // 6. Unknown Sample Points (10x & 100x) projected on Standard - Blank Equation
-    const samplePtsBlank = [
+    const suspSamplePts = [
       {
-        x: teaObj.samples.d10x.xBlank,
-        y: Number(teaObj.samples.d10x.avg.toFixed(6)),
-        sampleLabel: teaObj.shortName + ' Sample 10x (สมการหัก Blank)',
-        dilutedPpm: teaObj.samples.d10x.diluteBlank
+        x: suspSamp.xStd,
+        y: Number(suspSamp.avg.toFixed(6)),
+        sampleLabel: 'Suspect [EF] ' + dilLabel + ' (สมการ Standard, R²=' + susp.eqStd.rSquare.toFixed(4) + ')',
+        dilutedPpm: suspSamp.diluteStd
       },
       {
-        x: teaObj.samples.d100x.xBlank,
-        y: Number(teaObj.samples.d100x.avg.toFixed(6)),
-        sampleLabel: teaObj.shortName + ' Sample 100x (สมการหัก Blank)',
-        dilutedPpm: teaObj.samples.d100x.diluteBlank
+        x: suspSamp.xBlank,
+        y: Number(suspSamp.avg.toFixed(6)),
+        sampleLabel: 'Suspect [EF] ' + dilLabel + ' (สมการหัก Blank, R²=' + susp.eqBlank.rSquare.toFixed(4) + ')',
+        dilutedPpm: suspSamp.diluteBlank
       }
     ];
 
     return [
       {
         type: 'scatter',
-        label: 'จุดวัด Standard (Abs)',
-        data: stdPoints,
-        backgroundColor: teaObj.colorStd,
+        label: 'Hojicha [E] จุดวัด Standard (Abs)',
+        data: hojStdPoints,
+        backgroundColor: hoj.colorStd,
         borderColor: '#FFFFFF',
         borderWidth: 1.5,
-        pointRadius: 6,
-        pointHoverRadius: 8,
+        pointRadius: 5.5,
+        pointHoverRadius: 7.5,
         pointStyle: 'circle',
         showLine: false
       },
       {
         type: 'line',
-        label: 'สมการ Standard (' + teaObj.eqStd.formula + ')',
-        data: lineStd,
-        borderColor: teaObj.colorStd,
-        backgroundColor: teaObj.colorStd + '18',
+        label: 'Hojicha [E] Standard: ' + hoj.eqStd.formula + ' (R² = ' + hoj.eqStd.rSquare.toFixed(4) + ')',
+        data: hojLineStd,
+        borderColor: hoj.colorStd,
+        backgroundColor: hoj.colorStd + '18',
         borderWidth: 2.5,
         pointRadius: 0,
         fill: false,
@@ -3291,23 +3349,46 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       },
       {
         type: 'scatter',
-        label: 'จุดวัด Standard หักลบ Blank (Abs - Blank)',
-        data: blankSubPoints,
-        backgroundColor: teaObj.colorBlank,
+        label: 'Hojicha [E] จุดวัดหักลบ Blank (Abs - Blank)',
+        data: hojBlankPoints,
+        backgroundColor: hoj.colorBlank,
         borderColor: '#FFFFFF',
         borderWidth: 1.5,
-        pointRadius: 6,
-        pointHoverRadius: 8,
+        pointRadius: 5.5,
+        pointHoverRadius: 7.5,
         pointStyle: 'rectRot',
         showLine: false
       },
       {
         type: 'line',
-        label: 'สมการหักลบ Blank (' + teaObj.eqBlank.formula + ')',
-        data: lineBlank,
-        borderColor: teaObj.colorBlank,
+        label: 'Hojicha [E] หัก Blank: ' + hoj.eqBlank.formula + ' (R² = ' + hoj.eqBlank.rSquare.toFixed(4) + ')',
+        data: hojLineBlank,
+        borderColor: hoj.colorBlank,
         borderDash: [6, 4],
-        backgroundColor: teaObj.colorBlank + '15',
+        backgroundColor: hoj.colorBlank + '15',
+        borderWidth: 2.2,
+        pointRadius: 0,
+        fill: false,
+        tension: 0
+      },
+      {
+        type: 'scatter',
+        label: 'Suspect [EF] จุดวัด Standard (Abs)',
+        data: suspStdPoints,
+        backgroundColor: susp.colorStd,
+        borderColor: '#FFFFFF',
+        borderWidth: 1.5,
+        pointRadius: 5.5,
+        pointHoverRadius: 7.5,
+        pointStyle: 'triangle',
+        showLine: false
+      },
+      {
+        type: 'line',
+        label: 'Suspect [EF] Standard: ' + susp.eqStd.formula + ' (R² = ' + susp.eqStd.rSquare.toFixed(4) + ')',
+        data: suspLineStd,
+        borderColor: susp.colorStd,
+        backgroundColor: susp.colorStd + '18',
         borderWidth: 2.5,
         pointRadius: 0,
         fill: false,
@@ -3315,26 +3396,50 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       },
       {
         type: 'scatter',
-        label: 'Sample 10x & 100x (คำนวณจาก Standard)',
-        data: samplePtsStd,
-        backgroundColor: '#0F172A',
-        borderColor: teaObj.colorStd,
-        borderWidth: 2.5,
-        pointRadius: 8,
-        pointHoverRadius: 10,
-        pointStyle: 'triangle',
+        label: 'Suspect [EF] จุดวัดหักลบ Blank (Abs - Blank)',
+        data: suspBlankPoints,
+        backgroundColor: susp.colorBlank,
+        borderColor: '#FFFFFF',
+        borderWidth: 1.5,
+        pointRadius: 5.5,
+        pointHoverRadius: 7.5,
+        pointStyle: 'rect',
+        showLine: false
+      },
+      {
+        type: 'line',
+        label: 'Suspect [EF] หัก Blank: ' + susp.eqBlank.formula + ' (R² = ' + susp.eqBlank.rSquare.toFixed(4) + ')',
+        data: suspLineBlank,
+        borderColor: susp.colorBlank,
+        borderDash: [4, 4],
+        backgroundColor: susp.colorBlank + '15',
+        borderWidth: 2.2,
+        pointRadius: 0,
+        fill: false,
+        tension: 0
+      },
+      {
+        type: 'scatter',
+        label: '★ จุดตัวอย่าง Hojicha [E] ' + dilLabel + ' (Standard & หัก Blank)',
+        data: hojSamplePts,
+        backgroundColor: '#F59E0B',
+        borderColor: '#0F172A',
+        borderWidth: 2,
+        pointRadius: 8.5,
+        pointHoverRadius: 11,
+        pointStyle: 'star',
         showLine: false
       },
       {
         type: 'scatter',
-        label: 'Sample 10x & 100x (คำนวณจาก Standard - Blank)',
-        data: samplePtsBlank,
-        backgroundColor: '#10B981',
-        borderColor: '#065F46',
+        label: '◆ จุดตัวอย่าง Suspect [EF] ' + dilLabel + ' (Standard & หัก Blank)',
+        data: suspSamplePts,
+        backgroundColor: '#F43F5E',
+        borderColor: '#0F172A',
         borderWidth: 2,
-        pointRadius: 8,
-        pointHoverRadius: 10,
-        pointStyle: 'star',
+        pointRadius: 8.5,
+        pointHoverRadius: 11,
+        pointStyle: 'rectRot',
         showLine: false
       }
     ];
@@ -3354,7 +3459,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         },
         legend: {
           position: 'top',
-          labels: { boxWidth: 11, font: { size: 10.5 } }
+          labels: { boxWidth: 10, font: { size: 10 } }
         },
         tooltip: {
           callbacks: {
@@ -3363,7 +3468,8 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
               if (raw.sampleLabel) {
                 return raw.sampleLabel + ': x = ' + Number(raw.x).toFixed(2) + ' ppm, Abs = ' + Number(raw.y).toFixed(4) + ' (สุทธิ = ' + Number(raw.dilutedPpm).toFixed(2) + ' ppm)';
               }
-              return ctx.dataset.label + ': Conc = ' + Number(raw.x).toFixed(1) + ' ppm, Signal = ' + Number(raw.y).toFixed(4);
+              const r2Suffix = raw.rSquare ? ' | R² = ' + Number(raw.rSquare).toFixed(4) : '';
+              return ctx.dataset.label + ': Conc = ' + Number(raw.x).toFixed(1) + ' ppm, Signal = ' + Number(raw.y).toFixed(4) + r2Suffix;
             }
           }
         }
@@ -3395,65 +3501,37 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
   }
 
   function renderChemCalibrationCharts() {
-    const hoj = GCMS_CHEMICAL_DATA.hojicha;
-    const susp = GCMS_CHEMICAL_DATA.suspect;
+    const el10x = document.getElementById('chartChem10x');
+    const el100x = document.getElementById('chartChem100x');
 
-    if (chemViewMode === 'dual') {
-      const elHoj = document.getElementById('chartChemHojicha');
-      const elSusp = document.getElementById('chartChemSuspect');
-      if (elHoj) {
-        const ctxH = elHoj.getContext('2d');
-        if (chartChemHojichaInstance) chartChemHojichaInstance.destroy();
-        chartChemHojichaInstance = new Chart(ctxH, {
-          type: 'scatter',
-          data: {
-            datasets: buildSingleTeaCalibrationDatasets(hoj, chemShowHighConc)
-          },
-          options: getCalibrationChartOptions(
-            'Hojicha แท้ (รหัส E) — ผสานกราฟ Standard (Abs) และ Standard หักลบ Blank (Abs - Blank)',
-            chemShowHighConc
-          )
-        });
-      }
+    if (el10x) {
+      const ctx10 = el10x.getContext('2d');
+      if (chartChem10xInstance) chartChem10xInstance.destroy();
+      chartChem10xInstance = new Chart(ctx10, {
+        type: 'scatter',
+        data: {
+          datasets: buildDilutionComparisonCalibrationDatasets('d10x', chemShowHighConc)
+        },
+        options: getCalibrationChartOptions(
+          'Hojicha vs Suspect 10x — ผสานกราฟมาตรฐาน (Standard & หัก Blank) พร้อมค่า R² (0.9999 vs 0.9993)',
+          chemShowHighConc
+        )
+      });
+    }
 
-      if (elSusp) {
-        const ctxS = elSusp.getContext('2d');
-        if (chartChemSuspectInstance) chartChemSuspectInstance.destroy();
-        chartChemSuspectInstance = new Chart(ctxS, {
-          type: 'scatter',
-          data: {
-            datasets: buildSingleTeaCalibrationDatasets(susp, chemShowHighConc)
-          },
-          options: getCalibrationChartOptions(
-            'Suspect Hojicha (รหัส EF) — ผสานกราฟ Standard (Abs) และ Standard หักลบ Blank (Abs - Blank)',
-            chemShowHighConc
-          )
-        });
-      }
-    } else {
-      const elComb = document.getElementById('chartChemCombined');
-      if (elComb) {
-        const ctxC = elComb.getContext('2d');
-        if (chartChemCombinedInstance) chartChemCombinedInstance.destroy();
-
-        const dsHoj = buildSingleTeaCalibrationDatasets(hoj, chemShowHighConc).map(function (d) {
-          return Object.assign({}, d, { label: '[Hojicha E] ' + d.label });
-        });
-        const dsSusp = buildSingleTeaCalibrationDatasets(susp, chemShowHighConc).map(function (d) {
-          return Object.assign({}, d, { label: '[Suspect EF] ' + d.label });
-        });
-
-        chartChemCombinedInstance = new Chart(ctxC, {
-          type: 'scatter',
-          data: {
-            datasets: dsHoj.concat(dsSusp)
-          },
-          options: getCalibrationChartOptions(
-            'กราฟรวมเปรียบเทียบ Hojicha (E) vs Suspect Hojicha (EF): ทั้ง Standard (Abs) และ Standard หักลบ Blank (Abs - Blank)',
-            chemShowHighConc
-          )
-        });
-      }
+    if (el100x) {
+      const ctx100 = el100x.getContext('2d');
+      if (chartChem100xInstance) chartChem100xInstance.destroy();
+      chartChem100xInstance = new Chart(ctx100, {
+        type: 'scatter',
+        data: {
+          datasets: buildDilutionComparisonCalibrationDatasets('d100x', chemShowHighConc)
+        },
+        options: getCalibrationChartOptions(
+          'Hojicha vs Suspect 100x — ผสานกราฟมาตรฐาน (Standard & หัก Blank) พร้อมค่า R² (0.9999 vs 0.9993)',
+          chemShowHighConc
+        )
+      });
     }
   }
 
@@ -3743,4 +3821,3 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 </script>
 </body>
 </html>
-
