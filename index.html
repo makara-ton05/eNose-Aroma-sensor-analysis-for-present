@@ -691,7 +691,7 @@
               กราฟมาตรฐานผสานข้อมูล Hojicha [E] vs Suspect [EF] แยกตามระดับการเจือจาง (10x และ 100x) พร้อมค่า R²
             </h3>
             <p class="text-xs text-slate-500">
-              ผสานเส้นสมการ Standard (Abs) และ Standard หักลบ Blank (Abs - Blank) ของทั้ง Hojicha (R² = 0.9999) และ Suspect Hojicha (R² = 0.9993) เปรียบเทียบกันในกราฟเดียว
+              แบ่งกราฟมาตรฐานแต่ละระดับการเจือจาง (10x และ 100x) ออกเป็น 2 กราฟย่อยที่กดสลับเลือกดูได้ระหว่าง (1) Standard และ (2) Standard - หัก Blank (ช่วง Linear Fit 0–100 ppm)
             </p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
@@ -701,17 +701,13 @@
             <span class="px-2.5 py-1 text-xs font-bold rounded-xl bg-rose-50 text-rose-900 border border-rose-200 font-mono">
               Suspect [EF]: R² = 0.9993
             </span>
-            <label class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-sky-50/80 rounded-xl border border-sky-200 cursor-pointer">
-              <input type="checkbox" id="chkChemShowHighConc" class="rounded border-sky-300 text-sky-600 focus:ring-sky-500" />
-              <span>แสดงจุด 200 &amp; 400 ppm (ช่วงอิ่มตัว)</span>
-            </label>
           </div>
         </div>
 
         <div class="p-5 space-y-4">
           <!-- Dual Side-by-Side Comparison: Chart 1 (Hojicha vs Suspect 10x) & Chart 2 (Hojicha vs Suspect 100x) -->
           <div id="chemDualChartsPanel" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- Chart 1: Hojicha vs Suspect 10x -->
+            <!-- Chart 1: Hojicha vs Suspect 10x (Selectable Sub-Charts: 1. Standard | 2. Standard - หัก Blank) -->
             <div class="bg-white p-3.5 rounded-xl border border-amber-200/80 shadow-sm space-y-2.5">
               <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-sky-100">
                 <div>
@@ -723,6 +719,20 @@
                   <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-900 border border-rose-200 font-bold">Suspect R² = 0.9993</span>
                 </div>
               </div>
+
+              <!-- Sub-chart Selector Buttons for 10x -->
+              <div class="flex flex-wrap items-center gap-1.5 bg-sky-50/70 p-1.5 rounded-xl border border-sky-100">
+                <button type="button" id="btnChem10xStd" class="chem-view-btn-active flex-1 px-2.5 py-1.5 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
+                  1. Hojicha vs suspect 10x (Standard)
+                </button>
+                <button type="button" id="btnChem10xBlank" class="flex-1 px-2.5 py-1.5 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
+                  2. Hojicha vs suspect 10x (Standard - หัก Blank)
+                </button>
+              </div>
+              <div id="chem10xSubChartBadge" class="text-[11px] font-mono font-semibold text-amber-900 bg-amber-50/70 px-2.5 py-1 rounded-lg border border-amber-200/70">
+                กำลังแสดงกราฟย่อยที่ 1: Hojicha vs suspect 10x (Standard) — y = 0.0045x + 0.0798 (R² = 0.9999) vs y = 0.0047x + 0.064 (R² = 0.9993)
+              </div>
+
               <div class="relative h-80 sm:h-96 w-full">
                 <canvas id="chartChem10x"></canvas>
               </div>
@@ -740,7 +750,7 @@
               </div>
             </div>
 
-            <!-- Chart 2: Hojicha vs Suspect 100x -->
+            <!-- Chart 2: Hojicha vs Suspect 100x (Selectable Sub-Charts: 1. Standard | 2. Standard - หัก Blank) -->
             <div class="bg-white p-3.5 rounded-xl border border-sky-200/90 shadow-sm space-y-2.5">
               <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-sky-100">
                 <div>
@@ -752,6 +762,20 @@
                   <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-900 border border-rose-200 font-bold">Suspect R² = 0.9993</span>
                 </div>
               </div>
+
+              <!-- Sub-chart Selector Buttons for 100x -->
+              <div class="flex flex-wrap items-center gap-1.5 bg-sky-50/70 p-1.5 rounded-xl border border-sky-100">
+                <button type="button" id="btnChem100xStd" class="chem-view-btn-active flex-1 px-2.5 py-1.5 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
+                  1. Hojicha vs suspect 100x (Standard)
+                </button>
+                <button type="button" id="btnChem100xBlank" class="flex-1 px-2.5 py-1.5 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
+                  2. Hojicha vs suspect 100x (Standard - หัก Blank)
+                </button>
+              </div>
+              <div id="chem100xSubChartBadge" class="text-[11px] font-mono font-semibold text-sky-900 bg-sky-50/80 px-2.5 py-1 rounded-lg border border-sky-200/80">
+                กำลังแสดงกราฟย่อยที่ 1: Hojicha vs suspect 100x (Standard) — y = 0.0045x + 0.0798 (R² = 0.9999) vs y = 0.0047x + 0.064 (R² = 0.9993)
+              </div>
+
               <div class="relative h-80 sm:h-96 w-full">
                 <canvas id="chartChem100x"></canvas>
               </div>
@@ -773,7 +797,7 @@
           <!-- Mathematical Proof Note on Vertical Shift vs Horizontal Sample Shift -->
           <div class="bg-sky-50/80 rounded-xl p-3.5 border border-sky-100 text-xs text-slate-700 leading-relaxed flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
-              <strong>หลักการผสานสมการ Standard vs Standard หักลบ Blank พร้อมค่าสัมประสิทธิ์การตัดสินใจ (R²):</strong> กราฟมาตรฐานของ <strong>Hojicha [E]</strong> มีความแม่นยำเชิงเส้นสูงมากที่ <code class="font-mono font-bold">R² = 0.9999</code> (<code class="font-mono">y = 0.0045x + 0.0798</code> และหัก Blank <code class="font-mono">y = 0.0045x + 0.0309</code>) ขณะที่ <strong>Suspect Hojicha [EF]</strong> มีค่า <code class="font-mono font-bold">R² = 0.9993</code> (<code class="font-mono">y = 0.0047x + 0.064</code> และหัก Blank <code class="font-mono">y = 0.0047x - 0.0077</code>) โดยการหักค่า Blank ทำให้จุดตัดแกน Y เลื่อนลงเท่ากับค่าเฉลี่ย Blank (<code class="font-mono">Δc = -0.0489</code> และ <code class="font-mono">-0.0717</code>) โดยไม่เปลี่ยนค่าความชันและค่า <code class="font-mono">R²</code>
+              <strong>หลักการเปรียบเทียบกราฟย่อย Standard vs Standard - หัก Blank (ช่วง Linear Fit 0–100 ppm):</strong> กราฟมาตรฐานของ <strong>Hojicha [E]</strong> มีค่า <code class="font-mono font-bold">R² = 0.9999</code> (<code class="font-mono">y = 0.0045x + 0.0798</code> และหัก Blank <code class="font-mono">y = 0.0045x + 0.0309</code>) ขณะที่ <strong>Suspect Hojicha [EF]</strong> มีค่า <code class="font-mono font-bold">R² = 0.9993</code> (<code class="font-mono">y = 0.0047x + 0.064</code> และหัก Blank <code class="font-mono">y = 0.0047x - 0.0077</code>) โดยสามารถกดปุ่มด้านบนของแต่ละกราฟเพื่อสลับดูระหว่างกราฟย่อย <strong>(1) Standard</strong> และ <strong>(2) Standard - หัก Blank</strong> ได้อย่างอิสระ
             </div>
           </div>
         </div>
@@ -912,6 +936,267 @@
                 <!-- Populated via app.js -->
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- INTERACTIVE HS-SPME-GC-MS, OAV & SENSORY EXPLORER (TEAS A–H)      -->
+      <!-- Updated from HS-SPME-GC-MS Analysis Report .xlsx                  -->
+      <!-- ================================================================= -->
+      <div id="spmeGcmsExplorerCard" class="sci-card rounded-2xl overflow-hidden">
+        <div class="sci-card-header px-5 py-4 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-sky-600">
+              HS-SPME-GC-MS Headspace Volatile Profiling • OAV Proxy • Sensory Evaluation (Scale 0–5)
+            </span>
+            <h3 class="text-base sm:text-lg font-bold text-slate-900">
+              ฐานข้อมูลการวิเคราะห์สารให้กลิ่นระเหยด้วย HS-SPME-GC-MS, ค่า OAV Proxy และผลประเมินทางประสาทสัมผัส (ชา A–H)
+            </h3>
+            <p class="text-xs text-slate-500">
+              เปรียบเทียบสารประกอบไอระเหยในผงชาแห้ง (Dry Powder) และน้ำชาชง (Brew Water) หลังตัดสาร Background (Match Quality ≥ 80, Library: W10N14.L) พร้อมค่า OAV Proxy และคะแนน Sensory (Clear vs Latte)
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-1.5">
+            <button type="button" id="btnSpmeTabSummary" class="chem-view-btn-active px-3 py-1.5 text-xs font-bold rounded-xl border border-sky-200 bg-white text-slate-700 transition">
+              📊 1. ตารางสรุป HS-SPME-GC-MS &amp; Sensory (A–H)
+            </button>
+            <button type="button" id="btnSpmeTabExplorer" class="px-3 py-1.5 text-xs font-bold rounded-xl border border-sky-200 bg-white text-slate-700 transition">
+              🔬 2. เจาะลึกรายตัวอย่างชา A–H (OAV, Peak Table &amp; Sensory)
+            </button>
+            <button type="button" id="btnSpmeTabExcluded" class="px-3 py-1.5 text-xs font-bold rounded-xl border border-sky-200 bg-white text-slate-700 transition">
+              🗑️ 3. สาร Background ที่ตัดออก (86 รายการ)
+            </button>
+          </div>
+        </div>
+
+        <div class="p-5 space-y-5">
+          <!-- TAB 1: SUMMARY TABLE (DRY POWDER & BREW WATER) + SENSORY SUMMARY (A-H) -->
+          <div id="spmePanelSummary" class="space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="text-xs font-bold text-slate-800">
+                ตารางที่ 1: สรุปผลวิเคราะห์ HS-SPME-GC-MS ของใบชาทั้ง 8 ชนิด (A–H) แยกตามสถานะตัวอย่าง (Dry Powder &amp; Brew Water)
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button type="button" id="btnSpmeSumFilterAll" class="chem-view-btn-active px-2.5 py-1 text-[11px] font-semibold rounded-lg border border-sky-200 bg-white text-slate-700">
+                  แสดงทั้งหมด (Dry + Brew)
+                </button>
+                <button type="button" id="btnSpmeSumFilterDry" class="px-2.5 py-1 text-[11px] font-semibold rounded-lg border border-sky-200 bg-white text-slate-700">
+                  🫖 เฉพาะผงชาแห้ง (Dry Powder)
+                </button>
+                <button type="button" id="btnSpmeSumFilterBrew" class="px-2.5 py-1 text-[11px] font-semibold rounded-lg border border-sky-200 bg-white text-slate-700">
+                  🌊 เฉพาะน้ำชาชง (Brew Water)
+                </button>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto custom-scrollbar rounded-xl border border-sky-100">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead class="bg-sky-50/90 text-slate-700 border-b border-sky-100">
+                  <tr>
+                    <th class="py-2.5 px-3 font-bold">รหัส</th>
+                    <th class="py-2.5 px-3 font-bold">ชื่อตัวอย่างชา</th>
+                    <th class="py-2.5 px-3 font-bold">ประเภทการสกัด</th>
+                    <th class="py-2.5 px-3 font-bold">ไฟล์ข้อมูล (Data File)</th>
+                    <th class="py-2.5 px-3 font-bold text-center">Total Peaks</th>
+                    <th class="py-2.5 px-3 font-bold text-center">Qual ≥ 80</th>
+                    <th class="py-2.5 px-3 font-bold">Top Aroma 1 (สูงสุดตาม OAV)</th>
+                    <th class="py-2.5 px-3 font-bold">Top Aroma 2</th>
+                    <th class="py-2.5 px-3 font-bold">Top Aroma 3</th>
+                    <th class="py-2.5 px-3 font-bold">Dominant Aroma Character</th>
+                  </tr>
+                </thead>
+                <tbody id="spmeSummaryTableBody" class="divide-y divide-sky-100 bg-white">
+                  <!-- Populated via app.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Sensory Test Summary Table (Scale 0-5) -->
+            <div class="space-y-2 pt-2">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="text-xs font-bold text-slate-800">
+                  ตารางที่ 2: สรุปผลการทดสอบทางประสาทสัมผัส (Sensory Test Summary | Scale 0–5) เปรียบเทียบน้ำชาชงใส (Clear Brew Water) vs ชานม (Latte)
+                </div>
+                <span class="px-2.5 py-0.5 text-[11px] font-semibold rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  Sensory Evaluation Scale 0–5
+                </span>
+              </div>
+              <div class="overflow-x-auto custom-scrollbar rounded-xl border border-sky-100">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead class="bg-sky-50/90 text-slate-700 border-b border-sky-100">
+                    <tr>
+                      <th class="py-2.5 px-3 font-bold">รหัส</th>
+                      <th class="py-2.5 px-3 font-bold">ชื่อตัวอย่างชา</th>
+                      <th class="py-2.5 px-3 font-bold">บุคลิกกลิ่นหลักจากผงชาแห้ง (OAV)</th>
+                      <th class="py-2.5 px-3 font-bold">🌊 Clear Sensory Characters (น้ำชาชง P1)</th>
+                      <th class="py-2.5 px-3 font-bold text-center">Clear Overall ⭐</th>
+                      <th class="py-2.5 px-3 font-bold">🥛 Latte Sensory Characters (ชานม)</th>
+                      <th class="py-2.5 px-3 font-bold text-center">Latte Overall ⭐</th>
+                    </tr>
+                  </thead>
+                  <tbody id="spmeSensorySummaryTableBody" class="divide-y divide-sky-100 bg-white">
+                    <!-- Populated via app.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: INDIVIDUAL TEA DEEP-DIVE EXPLORER (A-H) -->
+          <div id="spmePanelExplorer" class="hidden space-y-5">
+            <!-- Controls Bar: Select Tea (A-H) & Select Phase (Dry Powder / Brew Water) -->
+            <div class="flex flex-wrap items-center justify-between gap-3 bg-sky-50/80 p-3.5 rounded-xl border border-sky-100">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-bold text-slate-700">เลือกตัวอย่างชา (A–H):</span>
+                <div id="spmeTeaBtnGroup" class="flex flex-wrap items-center gap-1.5">
+                  <!-- Populated via app.js -->
+                </div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button type="button" id="btnSpmePhaseDry" class="chem-view-btn-active px-3 py-1.5 text-xs font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
+                  🫖 Dry Powder (ผงชาแห้ง)
+                </button>
+                <button type="button" id="btnSpmePhaseBrew" class="px-3 py-1.5 text-xs font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
+                  🌊 Brew Water (น้ำชาชง)
+                </button>
+              </div>
+            </div>
+
+            <!-- Selected Tea Instrument & Aroma Character Banner -->
+            <div id="spmeExplorerMetaBanner" class="grid grid-cols-1 md:grid-cols-4 gap-3">
+              <!-- Populated via app.js -->
+            </div>
+
+            <!-- Charts Row: OAV Bar Chart + Sensory Radar Chart (Clear vs Latte) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <div class="lg:col-span-7 bg-white p-4 rounded-xl border border-sky-100 shadow-sm space-y-2">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <h4 id="spmeOavChartTitle" class="text-sm font-bold text-slate-900">กราฟค่ากิจกรรมกลิ่น OAV Proxy (Odor Activity Value)</h4>
+                    <p class="text-[11px] text-slate-500">OAV Proxy = (Area% / Odor Threshold Reference) × 100 (แสดงสเกลลอการิทึม log₁₀(OAV + 1) เพื่อเปรียบเทียบสารเด่น)</p>
+                  </div>
+                  <span id="spmeOavCountBadge" class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-amber-50 text-amber-900 border border-amber-200">OAV Compounds</span>
+                </div>
+                <div class="relative h-72 sm:h-80 w-full">
+                  <canvas id="chartSpmeOav"></canvas>
+                </div>
+              </div>
+
+              <div class="lg:col-span-5 bg-white p-4 rounded-xl border border-sky-100 shadow-sm space-y-2">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <h4 id="spmeSensoryChartTitle" class="text-sm font-bold text-slate-900">กราฟเรดาร์ประสาทสัมผัส (Sensory Profile: Clear vs Latte)</h4>
+                    <p class="text-[11px] text-slate-500">เปรียบเทียบคะแนนประสาทสัมผัส (Scale 0–5) ระหว่างน้ำชาชงใส (P1) และชานม (Latte)</p>
+                  </div>
+                  <span id="spmeSensoryOverallBadge" class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-sky-50 text-sky-900 border border-sky-200">Overall ⭐</span>
+                </div>
+                <div class="relative h-72 sm:h-80 w-full">
+                  <canvas id="chartSpmeSensory"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tables Row: OAV Summary Table + GC-MS Peak Table (Qual >= 80) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <!-- OAV Table (5 cols) -->
+              <div class="lg:col-span-5 bg-white rounded-xl border border-sky-100 shadow-sm overflow-hidden flex flex-col">
+                <div class="px-4 py-3 bg-sky-50/70 border-b border-sky-100 flex items-center justify-between">
+                  <h4 class="text-xs font-bold text-slate-900">ตาราง OAV Summary (Odor Activity Value Proxy)</h4>
+                  <span class="text-[11px] font-mono text-sky-700 font-semibold">OAV &gt; 1 = ส่งผลต่อกลิ่นชัดเจน</span>
+                </div>
+                <div class="overflow-x-auto custom-scrollbar max-h-96">
+                  <table class="w-full text-left border-collapse text-xs">
+                    <thead class="bg-slate-50 text-slate-700 border-b border-sky-100 sticky top-0">
+                      <tr>
+                        <th class="py-2 px-2.5 font-bold">#</th>
+                        <th class="py-2 px-2.5 font-bold">สารให้กลิ่น (Compound)</th>
+                        <th class="py-2 px-2.5 font-bold text-right">Area%</th>
+                        <th class="py-2 px-2.5 font-bold text-right">Threshold</th>
+                        <th class="py-2 px-2.5 font-bold text-right">OAV Proxy</th>
+                        <th class="py-2 px-2.5 font-bold">กลิ่น (Descriptor)</th>
+                        <th class="py-2 px-2.5 font-bold text-center">ระดับ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="spmeOavTableBody" class="divide-y divide-sky-100 bg-white">
+                      <!-- Populated via app.js -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- GC-MS Peak Table Qual >= 80 (7 cols) -->
+              <div class="lg:col-span-7 bg-white rounded-xl border border-sky-100 shadow-sm overflow-hidden flex flex-col">
+                <div class="px-4 py-3 bg-sky-50/70 border-b border-sky-100 flex items-center justify-between">
+                  <h4 id="spmePeakTableTitle" class="text-xs font-bold text-slate-900">ตาราง GC-MS Peak Table (Background Removed + Match Quality ≥ 80)</h4>
+                  <span id="spmePeakCountBadge" class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Qual ≥ 80</span>
+                </div>
+                <div class="overflow-x-auto custom-scrollbar max-h-96">
+                  <table class="w-full text-left border-collapse text-xs">
+                    <thead class="bg-slate-50 text-slate-700 border-b border-sky-100 sticky top-0">
+                      <tr>
+                        <th class="py-2 px-2.5 font-bold">Pk#</th>
+                        <th class="py-2 px-2.5 font-bold text-right">RT (min)</th>
+                        <th class="py-2 px-2.5 font-bold">ชื่อสารเคมี (Compound Name)</th>
+                        <th class="py-2 px-2.5 font-bold text-right">Area%</th>
+                        <th class="py-2 px-2.5 font-bold text-center">Qual</th>
+                        <th class="py-2 px-2.5 font-bold font-mono">CAS#</th>
+                        <th class="py-2 px-2.5 font-bold">Aroma Descriptor</th>
+                        <th class="py-2 px-2.5 font-bold text-right">OAV Proxy</th>
+                      </tr>
+                    </thead>
+                    <tbody id="spmePeakTableBody" class="divide-y divide-sky-100 bg-white">
+                      <!-- Populated via app.js -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: EXCLUDED BACKGROUND COMPOUNDS TABLE -->
+          <div id="spmePanelExcluded" class="hidden space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h4 class="text-xs font-bold text-slate-900">ตารางสารปนเปื้อนพื้นหลังและตัวทำละลายที่ถูกคัดกรองออก (Excluded Background Compounds — 86 รายการ)</h4>
+                <p class="text-[11px] text-slate-500">ได้แก่ Column Bleed (Silicone/Siloxane), Solvent/Lab Blank (Ethanol), Ubiquitous Lab Terpene/Aldehyde และ Fatty Acid Contamination</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <label for="selectSpmeBgFilter" class="text-xs font-semibold text-slate-700">กรองตามตัวอย่างชา:</label>
+                <select id="selectSpmeBgFilter" class="text-xs font-semibold rounded-lg border border-sky-200 bg-white px-2.5 py-1.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                  <option value="ALL">แสดงทั้งหมด (ชา A–H • 86 รายการ)</option>
+                  <option value="A">A — Karigane Hojicha</option>
+                  <option value="B">B — Hikari</option>
+                  <option value="C">C — Asahi</option>
+                  <option value="D">D — Inome</option>
+                  <option value="E">E — Original Hojicha</option>
+                  <option value="F">F — Yuhi</option>
+                  <option value="G">G — Super Premium</option>
+                  <option value="H">H — Ujitanara</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto custom-scrollbar max-h-96 rounded-xl border border-sky-100">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead class="bg-sky-50/90 text-slate-700 border-b border-sky-100 sticky top-0">
+                  <tr>
+                    <th class="py-2.5 px-3 font-bold">ตัวอย่างชา (Tea Sample)</th>
+                    <th class="py-2.5 px-3 font-bold">ประเภท (Sample Type)</th>
+                    <th class="py-2.5 px-3 font-bold text-center">Pk#</th>
+                    <th class="py-2.5 px-3 font-bold text-right">RT (min)</th>
+                    <th class="py-2.5 px-3 font-bold text-right">Area%</th>
+                    <th class="py-2.5 px-3 font-bold">ชื่อสารที่ถูกตัดออก (Compound Name)</th>
+                    <th class="py-2.5 px-3 font-bold font-mono">CAS#</th>
+                    <th class="py-2.5 px-3 font-bold text-center">Qual</th>
+                    <th class="py-2.5 px-3 font-bold">สาเหตุที่ตัดออก (Background Category)</th>
+                  </tr>
+                </thead>
+                <tbody id="spmeExcludedTableBody" class="divide-y divide-sky-100 bg-white">
+                  <!-- Populated via app.js -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
