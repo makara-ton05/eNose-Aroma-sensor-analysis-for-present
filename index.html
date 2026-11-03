@@ -63,20 +63,21 @@
     <section class="sci-card rounded-2xl p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="space-y-1.5 text-center md:text-left">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100/90 border border-sky-200 text-sky-800 text-xs font-bold">
-          <span id="dataSourceBadge">● SCBT316 eNose 3D • Aroma Sensor Analytics</span>
+          <span id="dataSourceBadge">● SCBT316 eNose 3D • Aroma Sensor &amp; GC-MS Chemical Analytics</span>
         </div>
         <h2 class="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight">
-          Electronic Nose Aroma Sensor Dashboard — การจำแนกกลิ่นใบชา 10 ชนิดเชิงคุณภาพและปริมาณ
+          Electronic Nose Aroma Sensor Dashboard — การจำแนกกลิ่นใบชา 10 ชนิดเชิงคุณภาพ ปริมาณ และสารเคมี (PCA • FFT • GC-MS / MEA)
         </h2>
         <p class="text-xs sm:text-sm text-slate-600">
-          วิเคราะห์โปรไฟล์สารระเหยใบชา 10 ชนิดด้วย 12 Active MOS Sensors (MQ-9 ถึง TGS-2610; ตัด MQ-136, MQ-3, TGS-2620 ที่ Variance = 0 อัตโนมัติ) พร้อมชดเชย Blank Baseline
+          วิเคราะห์โปรไฟล์สารระเหยใบชา 10 ชนิดด้วย 12 Active MOS Sensors (MQ-9 ถึง TGS-2610; ตัด MQ-136, MQ-3, TGS-2620 ที่ Variance = 0 อัตโนมัติ) เชื่อมโยงผลวิเคราะห์สารเคมี Hojicha vs Suspect Hojicha (Standard &amp; Standard - Blank)
         </p>
       </div>
 
       <nav class="flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-semibold shrink-0">
         <a href="#sec-qualitative" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-600 hover:text-white transition">1. เชิงคุณภาพ (3D PCA)</a>
         <a href="#sec-quantitative" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-600 hover:text-white transition">2. เชิงปริมาณ (FFT)</a>
-        <a href="#sec-executive" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-600 hover:text-white transition">3. บทสรุปผู้บริหาร</a>
+        <a href="#sec-gcms-chemical" class="px-3.5 py-2 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-600 hover:text-white transition">3. วิเคราะห์สารเคมี GC-MS &amp; PCA/MEA</a>
+        <a href="#sec-executive" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-600 hover:text-white transition">4. บทสรุปผู้บริหาร</a>
       </nav>
     </section>
 
@@ -103,8 +104,8 @@
       <div class="sci-card rounded-2xl p-4 flex items-start justify-between">
         <div>
           <p class="text-xs font-semibold uppercase tracking-wider text-sky-700">การชดเชย Baseline (Blank)</p>
-          <p class="text-lg font-bold text-slate-900 mt-1">2 Ambient Blanks</p>
-          <p class="text-xs text-slate-600 mt-1">หักลบ <span class="font-medium">Blank_12Oct</span> และ <span class="font-medium">Blank_14Oct</span> (ไม่รวม fit แกน PCA)</p>
+          <p class="text-lg font-bold text-slate-900 mt-1">2 Ambient Blanks + Plate Blank</p>
+          <p class="text-xs text-slate-600 mt-1">หักลบ <span class="font-medium">Blank_12Oct / 14Oct</span> (eNose) และ <span class="font-medium">Abs - Blank</span> (735 nm)</p>
         </div>
         <span class="p-2 rounded-xl bg-sky-50 text-sky-600 border border-sky-100 text-xs font-bold">ΔBaseline</span>
       </div>
@@ -563,12 +564,314 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- SECTION 3: EXECUTIVE SUMMARY CARD (Chemical Insights & Anomalies)   -->
+    <!-- SECTION 3: GC-MS / UV-VIS 735 nm CHEMICAL ASSAY & PCA / MEA LINK    -->
+    <!-- =================================================================== -->
+    <section id="sec-gcms-chemical" class="space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Part 03 • GC-MS &amp; Spectrophotometric Chemical Analysis Coupled with PCA &amp; MEA</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">
+            ส่วนที่ 3: การวิเคราะห์สารเคมี (GC-MS / 735 nm Calibration) — Hojicha [E] vs Suspect Hojicha [EF] เชื่อมโยงกับ PCA &amp; MEA
+          </h2>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 text-xs font-semibold rounded-xl bg-amber-50 text-amber-800 border border-amber-200">
+            COR96fc UV Transparent • λ = 735 nm (10 flashes, Settle 300 ms)
+          </span>
+          <button type="button" id="btnJumpPcaHojichaPair" class="px-3 py-1 text-xs font-bold rounded-xl bg-sky-600 text-white hover:bg-sky-700 shadow-sm transition">
+            🚀 คลิกดูคู่ Hojicha (E vs EF) บน 3D PCA
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary KPI & Calibration Equation Comparison Cards (Hojicha E vs Suspect Hojicha EF) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Hojicha (E) Summary Card -->
+        <div class="sci-card chem-card-hojicha rounded-2xl p-5 space-y-4">
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-900 text-[11px] font-bold">
+                <span>● ตัวอย่างอ้างอิงชาคั่วแท้ (Authentic Reference)</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900 mt-1">Original Hojicha (รหัส E) — Plate Area F1–H12</h3>
+              <p class="text-xs text-slate-500">วันที่วัด: 2026-10-29 12:50:08 • อุณหภูมิ: 25.8 °C • ค่าเฉลี่ย Blank = 0.048867</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 font-mono text-xs font-bold">Code: E</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="chem-eq-badge rounded-xl p-3 space-y-1">
+              <div class="text-[11px] font-sans font-bold text-amber-800 uppercase">1. สมการตัวอย่าง Standard (Abs)</div>
+              <div class="text-sm sm:text-base font-bold text-slate-900">y = 0.0045x + 0.0798</div>
+              <div class="text-[11px] font-sans text-slate-600 pt-1">
+                • <strong>10x (Abs = 0.5546):</strong> x = <span class="font-mono font-bold text-slate-900">105.5184 ppm</span><br/>
+                → คิดย้อนกลับ (dilute 10) = <span class="font-mono font-bold text-amber-800">1,055.184 ppm (μg/mL)</span>
+              </div>
+              <div class="text-[11px] font-sans text-slate-600">
+                • <strong>100x (Abs = 0.1410):</strong> x = <span class="font-mono font-bold text-slate-900">13.6000 ppm</span><br/>
+                → คิดย้อนกลับ (dilute 100) = <span class="font-mono font-bold text-amber-800">1,360.000 ppm (μg/mL)</span>
+              </div>
+            </div>
+
+            <div class="chem-eq-badge rounded-xl p-3 space-y-1">
+              <div class="text-[11px] font-sans font-bold text-sky-800 uppercase">2. สมการ Standard หักลบ Blank (Abs - Blank)</div>
+              <div class="text-sm sm:text-base font-bold text-sky-900">y = 0.0045x + 0.0309</div>
+              <div class="text-[11px] font-sans text-slate-600 pt-1">
+                • <strong>10x (Abs = 0.5546):</strong> x = <span class="font-mono font-bold text-slate-900">116.3851 ppm</span><br/>
+                → คิดย้อนกลับ (dilute 10) = <span class="font-mono font-bold text-sky-800">1,163.851 ppm (μg/mL)</span>
+              </div>
+              <div class="text-[11px] font-sans text-slate-600">
+                • <strong>100x (Abs = 0.1410):</strong> x = <span class="font-mono font-bold text-slate-900">24.4670 ppm</span><br/>
+                → คิดย้อนกลับ (dilute 100) = <span class="font-mono font-bold text-sky-800">2,446.700 ppm (μg/mL)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Suspect Hojicha (EF) Summary Card -->
+        <div class="sci-card chem-card-suspect rounded-2xl p-5 space-y-4">
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-rose-100 text-rose-900 text-[11px] font-bold">
+                <span>⚠️ ตัวอย่างต้องสงสัย (Suspect / Adulterated or Oxidized Lot)</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900 mt-1">Suspect Hojicha (รหัส EF) — Plate Area B1–D12</h3>
+              <p class="text-xs text-slate-500">วันที่วัด: 2026-10-29 12:33:19 • อุณหภูมิ: 25.2 °C • ค่าเฉลี่ย Blank = 0.071670</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 font-mono text-xs font-bold">Code: EF</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="chem-eq-badge rounded-xl p-3 space-y-1">
+              <div class="text-[11px] font-sans font-bold text-rose-800 uppercase">1. สมการตัวอย่าง Standard (Abs)</div>
+              <div class="text-sm sm:text-base font-bold text-slate-900">y = 0.0047x + 0.064</div>
+              <div class="text-[11px] font-sans text-slate-600 pt-1">
+                • <strong>10x (Abs = 0.5094):</strong> x = <span class="font-mono font-bold text-slate-900">94.7600 ppm</span><br/>
+                → คิดย้อนกลับ (dilute 10) = <span class="font-mono font-bold text-rose-800">947.600 ppm (μg/mL)</span>
+              </div>
+              <div class="text-[11px] font-sans text-slate-600">
+                • <strong>100x (Abs = 0.1469):</strong> x = <span class="font-mono font-bold text-slate-900">17.6300 ppm</span><br/>
+                → คิดย้อนกลับ (dilute 100) = <span class="font-mono font-bold text-rose-800">1,763.000 ppm (μg/mL)</span>
+              </div>
+            </div>
+
+            <div class="chem-eq-badge rounded-xl p-3 space-y-1">
+              <div class="text-[11px] font-sans font-bold text-purple-800 uppercase">2. สมการ Standard หักลบ Blank (Abs - Blank)</div>
+              <div class="text-sm sm:text-base font-bold text-purple-900">y = 0.0047x - 0.0077</div>
+              <div class="text-[11px] font-sans text-slate-600 pt-1">
+                • <strong>10x (Abs = 0.5094):</strong> x = <span class="font-mono font-bold text-slate-900">110.0150 ppm</span><br/>
+                → คิดย้อนกลับ (dilute 10) = <span class="font-mono font-bold text-purple-800">1,100.150 ppm (μg/mL)</span>
+              </div>
+              <div class="text-[11px] font-sans text-slate-600">
+                • <strong>100x (Abs = 0.1469):</strong> x = <span class="font-mono font-bold text-slate-900">32.8900 ppm</span><br/>
+                → คิดย้อนกลับ (dilute 100) = <span class="font-mono font-bold text-purple-800">3,289.000 ppm (μg/mL)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Merged Calibration Curve Card: Standard (Abs) + Standard - Blank (Abs - Blank) in the SAME Graph -->
+      <div class="sci-card rounded-2xl overflow-hidden">
+        <div class="sci-card-header px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 class="text-sm font-bold text-slate-900">
+              กราฟมาตรฐานผสาน "ตัวอย่าง Standard (Abs)" และ "ตัวอย่าง Standard ที่หักลบออกด้วย Blank (Abs - Blank)" ในกราฟเดียวกัน
+            </h3>
+            <p class="text-xs text-slate-500">
+              แสดงเส้นสมการถดถอยเชิงเส้นทั้งสองชุดพร้อมกันบนกราฟเดียว พร้อมจุดตัวอย่างจริงที่ระดับเจือจาง 10x (▲/★) และ 100x (▲/★)
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" id="btnChemViewDual" class="chem-view-btn-active px-3 py-1.5 text-xs font-semibold rounded-xl border border-sky-200 bg-white text-slate-700 hover:bg-sky-50 transition">
+              กราฟคู่แยก Hojicha vs Suspect (ผสาน Standard &amp; หัก Blank ในกราฟเดียว)
+            </button>
+            <button type="button" id="btnChemViewCombined" class="px-3 py-1.5 text-xs font-semibold rounded-xl border border-sky-200 bg-white text-slate-700 hover:bg-sky-50 transition">
+              กราฟเดียวรวมทั้ง 4 เส้น (Overlay ทั้ง Hojicha &amp; Suspect)
+            </button>
+            <label class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-sky-50/80 rounded-xl border border-sky-200 cursor-pointer">
+              <input type="checkbox" id="chkChemShowHighConc" class="rounded border-sky-300 text-sky-600 focus:ring-sky-500" />
+              <span>แสดงจุด 200 &amp; 400 ppm (ช่วงอิ่มตัว)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="p-5 space-y-4">
+          <!-- Mode A: Dual Side-by-Side (Default) — Each chart merges Standard and Standard - Blank -->
+          <div id="chemDualChartsPanel" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white p-3.5 rounded-xl border border-amber-200/80 shadow-sm">
+              <div class="relative h-80 sm:h-96 w-full">
+                <canvas id="chartChemHojicha"></canvas>
+              </div>
+            </div>
+            <div class="bg-white p-3.5 rounded-xl border border-rose-200/80 shadow-sm">
+              <div class="relative h-80 sm:h-96 w-full">
+                <canvas id="chartChemSuspect"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mode B: Single Combined Chart overlaying all 4 calibration curves -->
+          <div id="chemCombinedChartPanel" class="hidden bg-white p-4 rounded-xl border border-sky-200 shadow-sm">
+            <div class="relative h-96 sm:h-[440px] w-full">
+              <canvas id="chartChemCombined"></canvas>
+            </div>
+          </div>
+
+          <!-- Mathematical Proof Note on Vertical Shift vs Horizontal Sample Shift -->
+          <div class="bg-sky-50/80 rounded-xl p-3.5 border border-sky-100 text-xs text-slate-700 leading-relaxed flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+              <strong>หลักการผสานสมการ Standard vs Standard หักลบ Blank:</strong> การหักค่า Blank ออกจากชุด Standard ทำให้ความชัน (Slope <code class="font-mono">m</code>) คงเดิม (<code class="font-mono">0.0045</code> ใน Hojicha และ <code class="font-mono">0.0047</code> ใน Suspect Hojicha) แต่จุดตัดแกน Y (Intercept <code class="font-mono">c</code>) เลื่อนลงเท่ากับค่าเฉลี่ย Blank (<code class="font-mono">Δc = -0.0489</code> และ <code class="font-mono">-0.0717</code> ตามลำดับ) ส่งผลให้เส้นตรงทั้งสองขนานกันในกราฟเดียว และทำให้การคำนวณความเข้มข้น <code class="font-mono">x</code> ของตัวอย่าง 10x / 100x ชดเชยผลกระทบของตัวทำละลายและพื้นหลังเพลทได้อย่างแม่นยำ
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bar Chart Comparison (10x & 100x) + Multi-Modal Correlation with PCA & MEA -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left 5 cols: Quantitative Concentration Bar Chart (10x vs 100x) -->
+        <div class="lg:col-span-5 sci-card rounded-2xl overflow-hidden flex flex-col">
+          <div class="sci-card-header px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">เปรียบเทียบความเข้มข้นสารสำคัญ (10x vs 100x)</h3>
+              <p class="text-xs text-slate-500">เทียบผลคำนวณจากสมการ Standard และสมการหักลบ Blank (ppm / μg/mL)</p>
+            </div>
+            <div class="flex items-center gap-1">
+              <button type="button" id="btnChemBarDiluted" class="chem-view-btn-active px-2.5 py-1 text-[11px] font-semibold rounded-lg border border-sky-200 bg-white text-slate-700">
+                สุทธิ (คูณ Dilution)
+              </button>
+              <button type="button" id="btnChemBarRawX" class="px-2.5 py-1 text-[11px] font-semibold rounded-lg border border-sky-200 bg-white text-slate-700">
+                ค่า x ในสมการ
+              </button>
+            </div>
+          </div>
+
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div class="relative h-72 sm:h-80 w-full bg-white p-3 rounded-xl border border-sky-100">
+              <canvas id="chartChemConcBar"></canvas>
+            </div>
+            <div class="bg-amber-50/70 rounded-xl p-3 border border-amber-200/80 text-xs text-slate-700 leading-relaxed space-y-1">
+              <div class="font-bold text-amber-900">ข้อค้นพบสำคัญจากระดับการเจือจาง 10x vs 100x:</div>
+              <p>
+                • <strong>ที่ความเข้มข้นหลัก 10x (อยู่ในช่วงกลางกราฟมาตรฐาน Abs ≈ 0.51–0.55):</strong> <strong>Hojicha แท้ (E)</strong> มีความเข้มข้นสารสำคัญสูงกว่า Suspect Hojicha (EF) ทั้งในสมการ Standard (<code class="font-mono font-bold">1,055.18 vs 947.60 ppm</code>, สูงกว่า +11.35%) และสมการหักลบ Blank (<code class="font-mono font-bold">1,163.85 vs 1,100.15 ppm</code>)
+              </p>
+              <p>
+                • <strong>ที่ความเข้มข้นเจือจางสูง 100x (ใกล้ขีดจำกัดล่าง Abs ≈ 0.141–0.147):</strong> Suspect Hojicha มีค่าพื้นหลัง Blank สูงกว่า (<code class="font-mono">0.0717 vs 0.0489</code>) และมีความแปรปรวนในซ้ำ A สูง (<code class="font-mono">0.1702</code>) ทำให้เมื่อคูณปัจจัยเจือจาง 100 เท่า เกิดการขยายสัญญาณรบกวนพื้นหลังสูงขึ้น (<code class="font-mono">1,763 / 3,289 ppm</code>)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 7 cols: Multi-Modal Synthesis linking GC-MS / Chemical Assay with PCA & MEA Sensors -->
+        <div class="lg:col-span-7 sci-card rounded-2xl overflow-hidden flex flex-col">
+          <div class="sci-card-header px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">การเชื่อมโยงผลวิเคราะห์สารเคมี (GC-MS / 735 nm) เข้ากับ 3D PCA และอาร์เรย์เซ็นเซอร์ MEA</h3>
+              <p class="text-xs text-slate-500">บูรณาการความเข้มข้นสารเคมีในเฟสของเหลว/สารสกัด เข้ากับโปรไฟล์ไอระเหยจาก Multi-Sensor Electronic Nose Array (12 MOS Sensors)</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-lg bg-sky-100 text-sky-800 text-[11px] font-bold">GC-MS + PCA + MEA Synthesis</span>
+          </div>
+
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div class="relative h-72 sm:h-80 w-full bg-white p-3 rounded-xl border border-sky-100">
+              <canvas id="chartChemMeaLink"></canvas>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-amber-50/80 border border-amber-200 text-slate-700 space-y-1">
+                <div class="font-bold text-amber-900">1. เอกลักษณ์เคมี Hojicha แท้ [E]</div>
+                <p class="leading-relaxed">
+                  ที่ระดับ <strong>10x</strong> มีความเข้มข้นสารประกอบฟีนอลิกและสารคั่ว Maillard สุทธิสูงกว่า (<code class="font-mono">1,055.18 / 1,163.85 ppm</code>) สอดคล้องกับสัญญาณ <strong>MEA</strong> ที่เด่นในกลุ่ม <span class="font-semibold text-amber-800">MQ-2 (222.4), TGS-2600 (141.2) และ MQ-7 (124.4)</span> ซึ่งตรวจจับ <em>Alkylpyrazines</em> และ <em>Furans</em> จากการคั่วใบชาแท้
+                </p>
+              </div>
+
+              <div class="p-3 rounded-xl bg-rose-50/80 border border-rose-200 text-slate-700 space-y-1">
+                <div class="font-bold text-rose-900">2. ความผิดปกติใน Suspect [EF]</div>
+                <p class="leading-relaxed">
+                  มีเนื้อสารหลักที่ 10x ต่ำกว่า (<code class="font-mono">947.60 ppm</code>) แต่มีค่า Baseline Blank สูงกว่าถึง <strong>+46.7%</strong> (<code class="font-mono">0.0717 vs 0.0489</code>) สอดคล้องกับการปนเปื้อนสารไฮโดรคาร์บอนเบาและผลิตภัณฑ์ออกซิเดชันที่ทำให้เซ็นเซอร์ <span class="font-semibold text-rose-700">MQ-4 (183.3), MQ-5 (133.2) และ TGS-813 (100.7)</span> พุ่งสูงผิดปกติ
+                </p>
+              </div>
+
+              <div class="p-3 rounded-xl bg-sky-50/80 border border-sky-200 text-slate-700 space-y-1">
+                <div class="font-bold text-sky-900">3. การแยกกลุ่มบน 3D PCA &amp; FFT</div>
+                <p class="leading-relaxed">
+                  ความแตกต่างทั้งเชิงปริมาณสารเคมี (735 nm / GC-MS) และสัดส่วนเวกเตอร์เซ็นเซอร์ MEA ส่งผลให้ <strong>E</strong> และ <strong>EF</strong> แยกออกจากกันในปริภูมิ <strong>3D PCA (Cycle 3–5)</strong> ด้วยระยะห่างถึง <code class="font-mono font-bold text-sky-800">Δd = 4.650</code> และมีแอมพลิจูด <strong>FFT (0.0053 Hz)</strong> ต่างกันอย่างมีนัยสำคัญ (<code class="font-mono">143.02 vs 117.78</code>)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full Raw Microplate Data Tables (Hojicha E & Suspect Hojicha EF from .xlsx) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Table 1: Hojicha (E) Raw Replicates & Blank-Subtracted Data -->
+        <div class="sci-card rounded-2xl overflow-hidden">
+          <div class="sci-card-header px-5 py-3.5 flex items-center justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">ตารางข้อมูลดิบ Hojicha (รหัส E) — 96-Well UV Plate (F1–H12)</h3>
+              <p class="text-xs text-slate-500">แสดงค่าการดูดกลืนแสงที่ 735 nm ทั้ง 3 ซ้ำ (A, B, C), ค่าเฉลี่ย Standard (Abs) และค่าที่หักลบด้วย Blank (Abs - Blank)</p>
+            </div>
+            <span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-amber-100 text-amber-900">25.8 °C</span>
+          </div>
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead class="bg-sky-50/90 text-slate-700 border-b border-sky-100">
+                <tr>
+                  <th class="py-2.5 px-3 font-bold">ความเข้มข้น / ตัวอย่าง</th>
+                  <th class="py-2.5 px-3 font-bold text-center">สถานะช่วงวัด</th>
+                  <th class="py-2.5 px-3 font-bold text-right">ซ้ำ A</th>
+                  <th class="py-2.5 px-3 font-bold text-right">ซ้ำ B</th>
+                  <th class="py-2.5 px-3 font-bold text-right">ซ้ำ C</th>
+                  <th class="py-2.5 px-3 font-bold text-right text-amber-900 bg-amber-50/60">Avg Standard (Abs)</th>
+                  <th class="py-2.5 px-3 font-bold text-right text-sky-900 bg-sky-50/60">Standard - Blank</th>
+                </tr>
+              </thead>
+              <tbody id="chemTableBodyHojicha" class="divide-y divide-sky-100 bg-white">
+                <!-- Populated via app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Table 2: Suspect Hojicha (EF) Raw Replicates & Blank-Subtracted Data -->
+        <div class="sci-card rounded-2xl overflow-hidden">
+          <div class="sci-card-header px-5 py-3.5 flex items-center justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">ตารางข้อมูลดิบ Suspect Hojicha (รหัส EF) — 96-Well UV Plate (B1–D12)</h3>
+              <p class="text-xs text-slate-500">แสดงค่าการดูดกลืนแสงที่ 735 nm ทั้ง 3 ซ้ำ (A, B, C), ค่าเฉลี่ย Standard (Abs) และค่าที่หักลบด้วย Blank (Abs - Blank)</p>
+            </div>
+            <span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-rose-100 text-rose-900">25.2 °C</span>
+          </div>
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead class="bg-sky-50/90 text-slate-700 border-b border-sky-100">
+                <tr>
+                  <th class="py-2.5 px-3 font-bold">ความเข้มข้น / ตัวอย่าง</th>
+                  <th class="py-2.5 px-3 font-bold text-center">สถานะช่วงวัด</th>
+                  <th class="py-2.5 px-3 font-bold text-right">ซ้ำ A</th>
+                  <th class="py-2.5 px-3 font-bold text-right">ซ้ำ B</th>
+                  <th class="py-2.5 px-3 font-bold text-right">ซ้ำ C</th>
+                  <th class="py-2.5 px-3 font-bold text-right text-rose-900 bg-rose-50/60">Avg Standard (Abs)</th>
+                  <th class="py-2.5 px-3 font-bold text-right text-purple-900 bg-purple-50/60">Standard - Blank</th>
+                </tr>
+              </thead>
+              <tbody id="chemTableBodySuspect" class="divide-y divide-sky-100 bg-white">
+                <!-- Populated via app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SECTION 4: EXECUTIVE SUMMARY CARD (Chemical Insights & Anomalies)   -->
     <!-- =================================================================== -->
     <section id="sec-executive" class="space-y-6 pb-8">
       <div>
-        <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Part 03 • Executive Summary &amp; Chemical Aroma Insights</span>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ส่วนที่ 3: บทสรุปผลการวิเคราะห์ (Executive Summary Card)</h2>
+        <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Part 04 • Executive Summary &amp; Multi-Modal Chemical Aroma Insights</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ส่วนที่ 4: บทสรุปผลการวิเคราะห์บูรณาการ (Executive Summary Card)</h2>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -591,26 +894,26 @@
           </div>
         </div>
 
-        <!-- Card 2: Suspect Sample Anomaly Detection -->
+        <!-- Card 2: Suspect Sample Anomaly Detection & GC-MS / 735 nm Calibration -->
         <div class="sci-card rounded-2xl overflow-hidden flex flex-col border-rose-200">
           <div class="bg-gradient-to-r from-rose-600 to-rose-700 px-5 py-4 text-white">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-md">Quality Control &amp; Anomaly Detection</span>
+              <span class="text-[11px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-md">GC-MS / 735 nm &amp; MEA Anomaly Detection</span>
               <span class="text-lg">🔍</span>
             </div>
-            <h3 class="text-base font-bold mt-2">2. การตรวจจับความผิดปกติของตัวอย่างต้องสงสัย (Suspect)</h3>
+            <h3 class="text-base font-bold mt-2">2. การบูรณาการผล GC-MS / เคมีวิเคราะห์ เข้ากับ PCA &amp; MEA ของ Hojicha vs Suspect</h3>
           </div>
           <div class="p-5 space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed flex-1">
-            <div class="p-3 rounded-xl bg-rose-50 border border-rose-100">
-              <p class="font-bold text-rose-900">⚠️ Inome (Suspect) [รหัส DF] vs Inome แท้ [รหัส D]:</p>
-              <p class="text-xs text-rose-800 mt-1">
-                แยกตัวห่างออกจาก Inome แท้ในปริภูมิ 3D PCA (Cycle 3–5) ถึง <strong>Δd = 4.401</strong> โดยมีสัญญาณพุ่งสูงผิดปกติที่เซ็นเซอร์ <strong>TGS-813 (76.83)</strong> ซึ่งไวต่อก๊าซไฮโดรคาร์บอนเบาและสารระเหยจากการออกซิเดชัน สะท้อนถึงการเสื่อมสภาพจากการเก็บรักษาหรือการปนเปื้อนกลิ่นแปลกปลอม
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200">
+              <p class="font-bold text-amber-900">🧪 การผสานสมการ Standard &amp; Standard หักลบ Blank (735 nm):</p>
+              <p class="text-xs text-amber-900 mt-1">
+                เมื่อผสานกราฟมาตรฐานของ <strong>Hojicha (E)</strong> (<code class="font-mono">y = 0.0045x + 0.0798</code> และหัก Blank <code class="font-mono">y = 0.0045x + 0.0309</code>) เทียบกับ <strong>Suspect Hojicha (EF)</strong> (<code class="font-mono">y = 0.0047x + 0.064</code> และหัก Blank <code class="font-mono">y = 0.0047x - 0.0077</code>) พบว่าที่ระดับเจือจาง 10x ชา Hojicha แท้มีความเข้มข้นสารสำคัญสูงกว่าอย่างชัดเจน (<code class="font-mono">1,055.18 / 1,163.85 ppm</code> เทียบกับ <code class="font-mono">947.60 / 1,100.15 ppm</code>)
               </p>
             </div>
             <div class="p-3 rounded-xl bg-rose-50 border border-rose-100">
-              <p class="font-bold text-rose-900">⚠️ Original Hojicha (Suspect) [รหัส EF] vs แท้ [รหัส E]:</p>
+              <p class="font-bold text-rose-900">⚠️ เชื่อมโยงสู่ 3D PCA (Δd = 4.650) และเซ็นเซอร์ MEA:</p>
               <p class="text-xs text-rose-800 mt-1">
-                เบี่ยงเบนออกจาก Original Hojicha แท้ด้วยระยะห่าง <strong>Δd = 4.650</strong> โดยสูญเสียเอกลักษณ์ TGS-2600/MQ-7 ของชาคั่วแท้ แต่กลับมีค่า <strong>MQ-4 (183.33)</strong> และ <strong>MQ-5 (133.23)</strong> สูงขึ้นแทน บ่งชี้ว่าเป็นใบชาคนละล็อตการคั่วหรือเกรดวัตถุดิบที่แตกต่างกันอย่างชัดเจน
+                <strong>Suspect Hojicha [EF]</strong> สูญเสียความเข้มข้นสารคั่วหลักและสูญเสียสมดุลเซ็นเซอร์ <strong>TGS-2600 (ลดลงเหลือ 115.0)</strong> แต่กลับมีสัญญาณพุ่งสูงที่ <strong>MQ-4 (183.33), MQ-5 (133.23) และ TGS-813 (100.68)</strong> เช่นเดียวกับ <strong>Inome Suspect [DF]</strong> ที่แยกตัวห่างออกไป <strong>Δd = 4.401</strong> ยืนยันประสิทธิภาพการคัดกรองคุณภาพแบบ Multi-Modal
               </p>
             </div>
           </div>

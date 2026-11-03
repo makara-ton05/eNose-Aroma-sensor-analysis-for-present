@@ -30,6 +30,145 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
   let chartTsInstance = null;
   let chartFftInstance = null;
   let chartSepInstance = null;
+  let chartChemHojichaInstance = null;
+  let chartChemSuspectInstance = null;
+  let chartChemCombinedInstance = null;
+  let chartChemConcBarInstance = null;
+  let chartChemMeaLinkInstance = null;
+
+  let chemViewMode = 'dual'; // 'dual' or 'combined'
+  let chemShowHighConc = false; // false = 0-125 ppm linear range, true = 0-400 ppm full range
+  let chemBarScaleMode = 'diluted'; // 'diluted' (dilute 10 & 100) or 'raw_x' (direct x from equation)
+
+  // Complete GC-MS & UV-Vis 735 nm Microplate Standard vs Blank-Subtracted Dataset from .xlsx
+  const GCMS_CHEMICAL_DATA = {
+    hojicha: {
+      id: 'E',
+      name: 'Hojicha (Original Hojicha แท้)',
+      shortName: 'Hojicha (E)',
+      plate: '[COR96fc UV transparent] - Coming 96 Flat Transparent [COR96fc UV transparent]',
+      lid: 'No lid',
+      humidity: 'No humidity cassette',
+      mode: 'Absorbance',
+      plateArea: 'F1-H12',
+      wavelengthNm: 735,
+      flashes: 10,
+      settleTimeMs: 300,
+      startTime: '2026-10-29 12:50:08',
+      tempC: 25.8,
+      blankAvg: 0.04886666666666667,
+      colorStd: '#D97706',
+      colorBlank: '#0284C7',
+      eqStd: {
+        formula: 'y = 0.0045x + 0.0798',
+        slope: 0.0045,
+        intercept: 0.0798
+      },
+      eqBlank: {
+        formula: 'y = 0.0045x + 0.0309',
+        slope: 0.0045,
+        intercept: 0.0309
+      },
+      standards: [
+        { conc: 400, label: '400', repA: 0.7851, repB: 0.7951, repC: 0.7741, avg: 0.7847666666666667, absBlank: 0.7359, inLinearFit: false },
+        { conc: 200, label: '200', repA: 0.6987, repB: 0.6733, repC: 0.7045, avg: 0.6921666666666666, absBlank: 0.6433, inLinearFit: false },
+        { conc: 100, label: '100', repA: 0.5202, repB: 0.5441, repC: 0.5158, avg: 0.5267, absBlank: 0.477833, inLinearFit: true },
+        { conc: 50, label: '50', repA: 0.2959, repB: 0.3262, repC: 0.2937, avg: 0.305267, absBlank: 0.2564, inLinearFit: true },
+        { conc: 25, label: '25', repA: 0.1905, repB: 0.1797, repC: 0.1989, avg: 0.1897, absBlank: 0.140833, inLinearFit: true },
+        { conc: 12.5, label: '12.5', repA: 0.1379, repB: 0.1346, repC: 0.1364, avg: 0.1363, absBlank: 0.087433, inLinearFit: true },
+        { conc: 0, label: '0 (Blank)', repA: 0.0510, repB: 0.0487, repC: 0.0469, avg: 0.048867, absBlank: 0.0, inLinearFit: true }
+      ],
+      samples: {
+        d10x: {
+          label: '10x',
+          dilationFactor: 10,
+          repA: 0.5511,
+          repB: 0.5721,
+          repC: 0.5407,
+          avg: 0.5546333333333334,
+          xStd: 105.5184,
+          diluteStd: 1055.184,
+          xBlank: 116.3851,
+          diluteBlank: 1163.851
+        },
+        d100x: {
+          label: '100x',
+          dilationFactor: 100,
+          repA: 0.1376,
+          repB: 0.1445,
+          repC: 0.1409,
+          avg: 0.141,
+          xStd: 13.6,
+          diluteStd: 1360.0,
+          xBlank: 24.467,
+          diluteBlank: 2446.7
+        }
+      }
+    },
+    suspect: {
+      id: 'EF',
+      name: 'Suspect Hojicha (ตัวอย่างต้องสงสัย)',
+      shortName: 'Suspect Hojicha (EF)',
+      plate: '[COR96fc UV transparent] - Coming 96 Flat Transparent [COR96fc UV transparent]',
+      lid: 'No lid',
+      humidity: 'No humidity cassette',
+      mode: 'Absorbance',
+      plateArea: 'B1-D12',
+      wavelengthNm: 735,
+      flashes: 10,
+      settleTimeMs: 300,
+      startTime: '2026-10-29 12:33:19',
+      tempC: 25.2,
+      blankAvg: 0.07166666666666667,
+      colorStd: '#E11D48',
+      colorBlank: '#7C3AED',
+      eqStd: {
+        formula: 'y = 0.0047x + 0.064',
+        slope: 0.0047,
+        intercept: 0.064
+      },
+      eqBlank: {
+        formula: 'y = 0.0047x - 0.0077',
+        slope: 0.0047,
+        intercept: -0.0077
+      },
+      standards: [
+        { conc: 400, label: '400', repA: 0.7370, repB: 0.7648, repC: 0.7926, avg: 0.7648, absBlank: 0.69313, inLinearFit: false },
+        { conc: 200, label: '200', repA: 0.7078, repB: 0.7154, repC: 0.6796, avg: 0.7009333333333334, absBlank: 0.62926, inLinearFit: false },
+        { conc: 100, label: '100', repA: 0.5083, repB: 0.5067, repC: 0.6009, avg: 0.53863, absBlank: 0.46696, inLinearFit: true },
+        { conc: 50, label: '50', repA: 0.2857, repB: 0.2950, repC: 0.3001, avg: 0.2936, absBlank: 0.22193, inLinearFit: true },
+        { conc: 25, label: '25', repA: 0.1926, repB: 0.1761, repC: 0.1902, avg: 0.1863, absBlank: 0.11463, inLinearFit: true },
+        { conc: 12.5, label: '12.5', repA: 0.1202, repB: 0.1284, repC: 0.1209, avg: 0.12317, absBlank: 0.0515, inLinearFit: true },
+        { conc: 0, label: '0 (Blank)', repA: 0.0614, repB: 0.0858, repC: 0.0678, avg: 0.07167, absBlank: 0.0, inLinearFit: true }
+      ],
+      samples: {
+        d10x: {
+          label: '10x',
+          dilationFactor: 10,
+          repA: 0.5157,
+          repB: 0.5111,
+          repC: 0.5013,
+          avg: 0.50937,
+          xStd: 94.76,
+          diluteStd: 947.6,
+          xBlank: 110.015,
+          diluteBlank: 1100.15
+        },
+        d100x: {
+          label: '100x',
+          dilationFactor: 100,
+          repA: 0.1702,
+          repB: 0.1346,
+          repC: 0.1358,
+          avg: 0.14687,
+          xStd: 17.63,
+          diluteStd: 1763.0,
+          xBlank: 32.89,
+          diluteBlank: 3289.0
+        }
+      }
+    }
+  };
 
   // Ordered 15-sensor mapping (Top to Bottom per reference UI & LabVIEW Sensor Data Sheet)
   const FULL_SENSOR_CATALOG = [
@@ -1090,6 +1229,68 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     document.getElementById('selectFftSample').addEventListener('change', function () {
       renderFftChart();
     });
+
+    // Section 3: GC-MS / Chemical Standard vs Blank-Subtracted Controls
+    const btnChemViewDual = document.getElementById('btnChemViewDual');
+    const btnChemViewCombined = document.getElementById('btnChemViewCombined');
+    const panelChemDual = document.getElementById('chemDualChartsPanel');
+    const panelChemCombined = document.getElementById('chemCombinedChartPanel');
+
+    if (btnChemViewDual && btnChemViewCombined) {
+      btnChemViewDual.addEventListener('click', function () {
+        chemViewMode = 'dual';
+        btnChemViewDual.classList.add('chem-view-btn-active');
+        btnChemViewCombined.classList.remove('chem-view-btn-active');
+        if (panelChemDual) panelChemDual.classList.remove('hidden');
+        if (panelChemCombined) panelChemCombined.classList.add('hidden');
+        renderChemCalibrationCharts();
+      });
+
+      btnChemViewCombined.addEventListener('click', function () {
+        chemViewMode = 'combined';
+        btnChemViewCombined.classList.add('chem-view-btn-active');
+        btnChemViewDual.classList.remove('chem-view-btn-active');
+        if (panelChemDual) panelChemDual.classList.add('hidden');
+        if (panelChemCombined) panelChemCombined.classList.remove('hidden');
+        renderChemCalibrationCharts();
+      });
+    }
+
+    const chkChemShowHighConc = document.getElementById('chkChemShowHighConc');
+    if (chkChemShowHighConc) {
+      chkChemShowHighConc.addEventListener('change', function (e) {
+        chemShowHighConc = e.target.checked;
+        renderChemCalibrationCharts();
+      });
+    }
+
+    const btnChemBarDiluted = document.getElementById('btnChemBarDiluted');
+    const btnChemBarRawX = document.getElementById('btnChemBarRawX');
+    if (btnChemBarDiluted && btnChemBarRawX) {
+      btnChemBarDiluted.addEventListener('click', function () {
+        chemBarScaleMode = 'diluted';
+        btnChemBarDiluted.classList.add('chem-view-btn-active');
+        btnChemBarRawX.classList.remove('chem-view-btn-active');
+        renderChemConcBarChart();
+      });
+      btnChemBarRawX.addEventListener('click', function () {
+        chemBarScaleMode = 'raw_x';
+        btnChemBarRawX.classList.add('chem-view-btn-active');
+        btnChemBarDiluted.classList.remove('chem-view-btn-active');
+        renderChemConcBarChart();
+      });
+    }
+
+    const btnJumpPcaHojichaPair = document.getElementById('btnJumpPcaHojichaPair');
+    if (btnJumpPcaHojichaPair) {
+      btnJumpPcaHojichaPair.addEventListener('click', function () {
+        setSampleSelection(['A', 'E', 'EF']);
+        const secQual = document.getElementById('sec-qualitative');
+        if (secQual) {
+          secQual.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
   }
 
   function setTsView(mode, btnId) {
@@ -1797,6 +1998,517 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     }
   }
 
+  // =========================================================================
+  // SECTION 3: GC-MS & UV-Vis 735 nm Chemical Standard vs Blank-Subtracted
+  // Coupled with 3D PCA & MEA (Multi-Sensor Electronic Nose Array)
+  // =========================================================================
+
+  function buildSingleTeaCalibrationDatasets(teaObj, includeHighConc) {
+    const filteredStds = teaObj.standards
+      .filter(function (s) { return includeHighConc || s.inLinearFit; })
+      .slice()
+      .sort(function (a, b) { return a.conc - b.conc; });
+
+    const maxX = includeHighConc ? 400 : 125;
+
+    // 1. Measured Standard Points (Abs)
+    const stdPoints = filteredStds.map(function (s) {
+      return { x: s.conc, y: Number(s.avg.toFixed(6)), label: 'Conc ' + s.label + ' ppm' };
+    });
+
+    // 2. Measured Standard - Blank Points (Abs - Blank)
+    const blankSubPoints = filteredStds.map(function (s) {
+      return { x: s.conc, y: Number(s.absBlank.toFixed(6)), label: 'Conc ' + s.label + ' ppm (หัก Blank)' };
+    });
+
+    // 3. Linear Regression Line for Standard: y = m*x + c (0 to maxX)
+    const lineStd = [
+      { x: 0, y: Number(teaObj.eqStd.intercept.toFixed(5)) },
+      { x: maxX, y: Number((teaObj.eqStd.slope * maxX + teaObj.eqStd.intercept).toFixed(5)) }
+    ];
+
+    // 4. Linear Regression Line for Standard - Blank: y = m*x + c_blank (0 to maxX)
+    const lineBlank = [
+      { x: 0, y: Number(teaObj.eqBlank.intercept.toFixed(5)) },
+      { x: maxX, y: Number((teaObj.eqBlank.slope * maxX + teaObj.eqBlank.intercept).toFixed(5)) }
+    ];
+
+    // 5. Unknown Sample Points (10x & 100x) projected on Standard Equation
+    const samplePtsStd = [
+      {
+        x: teaObj.samples.d10x.xStd,
+        y: Number(teaObj.samples.d10x.avg.toFixed(6)),
+        sampleLabel: teaObj.shortName + ' Sample 10x (สมการ Standard)',
+        dilutedPpm: teaObj.samples.d10x.diluteStd
+      },
+      {
+        x: teaObj.samples.d100x.xStd,
+        y: Number(teaObj.samples.d100x.avg.toFixed(6)),
+        sampleLabel: teaObj.shortName + ' Sample 100x (สมการ Standard)',
+        dilutedPpm: teaObj.samples.d100x.diluteStd
+      }
+    ];
+
+    // 6. Unknown Sample Points (10x & 100x) projected on Standard - Blank Equation
+    const samplePtsBlank = [
+      {
+        x: teaObj.samples.d10x.xBlank,
+        y: Number(teaObj.samples.d10x.avg.toFixed(6)),
+        sampleLabel: teaObj.shortName + ' Sample 10x (สมการหัก Blank)',
+        dilutedPpm: teaObj.samples.d10x.diluteBlank
+      },
+      {
+        x: teaObj.samples.d100x.xBlank,
+        y: Number(teaObj.samples.d100x.avg.toFixed(6)),
+        sampleLabel: teaObj.shortName + ' Sample 100x (สมการหัก Blank)',
+        dilutedPpm: teaObj.samples.d100x.diluteBlank
+      }
+    ];
+
+    return [
+      {
+        type: 'scatter',
+        label: 'จุดวัด Standard (Abs)',
+        data: stdPoints,
+        backgroundColor: teaObj.colorStd,
+        borderColor: '#FFFFFF',
+        borderWidth: 1.5,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        pointStyle: 'circle',
+        showLine: false
+      },
+      {
+        type: 'line',
+        label: 'สมการ Standard (' + teaObj.eqStd.formula + ')',
+        data: lineStd,
+        borderColor: teaObj.colorStd,
+        backgroundColor: teaObj.colorStd + '18',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        fill: false,
+        tension: 0
+      },
+      {
+        type: 'scatter',
+        label: 'จุดวัด Standard หักลบ Blank (Abs - Blank)',
+        data: blankSubPoints,
+        backgroundColor: teaObj.colorBlank,
+        borderColor: '#FFFFFF',
+        borderWidth: 1.5,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        pointStyle: 'rectRot',
+        showLine: false
+      },
+      {
+        type: 'line',
+        label: 'สมการหักลบ Blank (' + teaObj.eqBlank.formula + ')',
+        data: lineBlank,
+        borderColor: teaObj.colorBlank,
+        borderDash: [6, 4],
+        backgroundColor: teaObj.colorBlank + '15',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        fill: false,
+        tension: 0
+      },
+      {
+        type: 'scatter',
+        label: 'Sample 10x & 100x (คำนวณจาก Standard)',
+        data: samplePtsStd,
+        backgroundColor: '#0F172A',
+        borderColor: teaObj.colorStd,
+        borderWidth: 2.5,
+        pointRadius: 8,
+        pointHoverRadius: 10,
+        pointStyle: 'triangle',
+        showLine: false
+      },
+      {
+        type: 'scatter',
+        label: 'Sample 10x & 100x (คำนวณจาก Standard - Blank)',
+        data: samplePtsBlank,
+        backgroundColor: '#10B981',
+        borderColor: '#065F46',
+        borderWidth: 2,
+        pointRadius: 8,
+        pointHoverRadius: 10,
+        pointStyle: 'star',
+        showLine: false
+      }
+    ];
+  }
+
+  function getCalibrationChartOptions(titleText, includeHighConc) {
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: {
+          display: Boolean(titleText),
+          text: titleText,
+          font: { size: 12, weight: 'bold' },
+          color: '#0F172A',
+          padding: { bottom: 8 }
+        },
+        legend: {
+          position: 'top',
+          labels: { boxWidth: 11, font: { size: 10.5 } }
+        },
+        tooltip: {
+          callbacks: {
+            label: function (ctx) {
+              const raw = ctx.raw || {};
+              if (raw.sampleLabel) {
+                return raw.sampleLabel + ': x = ' + Number(raw.x).toFixed(2) + ' ppm, Abs = ' + Number(raw.y).toFixed(4) + ' (สุทธิ = ' + Number(raw.dilutedPpm).toFixed(2) + ' ppm)';
+              }
+              return ctx.dataset.label + ': Conc = ' + Number(raw.x).toFixed(1) + ' ppm, Signal = ' + Number(raw.y).toFixed(4);
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          min: 0,
+          max: includeHighConc ? 420 : 130,
+          title: {
+            display: true,
+            text: 'ความเข้มข้น Concentration x (ppm / μg/mL)',
+            font: { size: 11, weight: 'bold' }
+          },
+          grid: { color: '#E0F2FE' }
+        },
+        y: {
+          min: -0.04,
+          max: includeHighConc ? 0.90 : 0.68,
+          title: {
+            display: true,
+            text: 'ค่าการดูดกลืนแสง Absorbance @ 735 nm (Abs & Abs - Blank)',
+            font: { size: 11, weight: 'bold' }
+          },
+          grid: { color: '#E0F2FE' }
+        }
+      }
+    };
+  }
+
+  function renderChemCalibrationCharts() {
+    const hoj = GCMS_CHEMICAL_DATA.hojicha;
+    const susp = GCMS_CHEMICAL_DATA.suspect;
+
+    if (chemViewMode === 'dual') {
+      const elHoj = document.getElementById('chartChemHojicha');
+      const elSusp = document.getElementById('chartChemSuspect');
+      if (elHoj) {
+        const ctxH = elHoj.getContext('2d');
+        if (chartChemHojichaInstance) chartChemHojichaInstance.destroy();
+        chartChemHojichaInstance = new Chart(ctxH, {
+          type: 'scatter',
+          data: {
+            datasets: buildSingleTeaCalibrationDatasets(hoj, chemShowHighConc)
+          },
+          options: getCalibrationChartOptions(
+            'Hojicha แท้ (รหัส E) — ผสานกราฟ Standard (Abs) และ Standard หักลบ Blank (Abs - Blank)',
+            chemShowHighConc
+          )
+        });
+      }
+
+      if (elSusp) {
+        const ctxS = elSusp.getContext('2d');
+        if (chartChemSuspectInstance) chartChemSuspectInstance.destroy();
+        chartChemSuspectInstance = new Chart(ctxS, {
+          type: 'scatter',
+          data: {
+            datasets: buildSingleTeaCalibrationDatasets(susp, chemShowHighConc)
+          },
+          options: getCalibrationChartOptions(
+            'Suspect Hojicha (รหัส EF) — ผสานกราฟ Standard (Abs) และ Standard หักลบ Blank (Abs - Blank)',
+            chemShowHighConc
+          )
+        });
+      }
+    } else {
+      const elComb = document.getElementById('chartChemCombined');
+      if (elComb) {
+        const ctxC = elComb.getContext('2d');
+        if (chartChemCombinedInstance) chartChemCombinedInstance.destroy();
+
+        const dsHoj = buildSingleTeaCalibrationDatasets(hoj, chemShowHighConc).map(function (d) {
+          return Object.assign({}, d, { label: '[Hojicha E] ' + d.label });
+        });
+        const dsSusp = buildSingleTeaCalibrationDatasets(susp, chemShowHighConc).map(function (d) {
+          return Object.assign({}, d, { label: '[Suspect EF] ' + d.label });
+        });
+
+        chartChemCombinedInstance = new Chart(ctxC, {
+          type: 'scatter',
+          data: {
+            datasets: dsHoj.concat(dsSusp)
+          },
+          options: getCalibrationChartOptions(
+            'กราฟรวมเปรียบเทียบ Hojicha (E) vs Suspect Hojicha (EF): ทั้ง Standard (Abs) และ Standard หักลบ Blank (Abs - Blank)',
+            chemShowHighConc
+          )
+        });
+      }
+    }
+  }
+
+  // Render Bar Chart comparing 10x and 100x Quantified Concentrations (Standard vs Blank-Subtracted)
+  function renderChemConcBarChart() {
+    const el = document.getElementById('chartChemConcBar');
+    if (!el) return;
+    const ctx = el.getContext('2d');
+    if (chartChemConcBarInstance) chartChemConcBarInstance.destroy();
+
+    const hoj = GCMS_CHEMICAL_DATA.hojicha;
+    const susp = GCMS_CHEMICAL_DATA.suspect;
+    const isDiluted = chemBarScaleMode === 'diluted';
+
+    const labels = isDiluted
+      ? ['Sample 10x → คิดย้อนกลับ (dilute 10)', 'Sample 100x → คิดย้อนกลับ (dilute 100)']
+      : ['Sample 10x (ค่า x จากสมการโดยตรง)', 'Sample 100x (ค่า x จากสมการโดยตรง)'];
+
+    const hojStdVals = isDiluted
+      ? [hoj.samples.d10x.diluteStd, hoj.samples.d100x.diluteStd]
+      : [hoj.samples.d10x.xStd, hoj.samples.d100x.xStd];
+
+    const hojBlankVals = isDiluted
+      ? [hoj.samples.d10x.diluteBlank, hoj.samples.d100x.diluteBlank]
+      : [hoj.samples.d10x.xBlank, hoj.samples.d100x.xBlank];
+
+    const suspStdVals = isDiluted
+      ? [susp.samples.d10x.diluteStd, susp.samples.d100x.diluteStd]
+      : [susp.samples.d10x.xStd, susp.samples.d100x.xStd];
+
+    const suspBlankVals = isDiluted
+      ? [susp.samples.d10x.diluteBlank, susp.samples.d100x.diluteBlank]
+      : [susp.samples.d10x.xBlank, susp.samples.d100x.xBlank];
+
+    chartChemConcBarInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Hojicha (E) — สมการ Standard',
+            data: hojStdVals,
+            backgroundColor: 'rgba(217, 119, 6, 0.85)',
+            borderColor: '#B45309',
+            borderWidth: 1,
+            borderRadius: 6
+          },
+          {
+            label: 'Hojicha (E) — สมการหักลบ Blank',
+            data: hojBlankVals,
+            backgroundColor: 'rgba(2, 132, 199, 0.85)',
+            borderColor: '#0369A1',
+            borderWidth: 1,
+            borderRadius: 6
+          },
+          {
+            label: 'Suspect Hojicha (EF) — สมการ Standard',
+            data: suspStdVals,
+            backgroundColor: 'rgba(225, 29, 72, 0.85)',
+            borderColor: '#BE123C',
+            borderWidth: 1,
+            borderRadius: 6
+          },
+          {
+            label: 'Suspect Hojicha (EF) — สมการหักลบ Blank',
+            data: suspBlankVals,
+            backgroundColor: 'rgba(124, 58, 237, 0.85)',
+            borderColor: '#6D28D9',
+            borderWidth: 1,
+            borderRadius: 6
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { boxWidth: 11, font: { size: 10.5 } }
+          },
+          tooltip: {
+            callbacks: {
+              label: function (c) {
+                return c.dataset.label + ': ' + Number(c.raw).toFixed(3) + ' ppm (μg/mL)';
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: isDiluted ? 'ความเข้มข้นสุทธิ (ppm / μg/mL)' : 'ค่า x จากสมการกราฟมาตรฐาน (ppm / μg/mL)',
+              font: { size: 11, weight: 'bold' }
+            },
+            grid: { color: '#E0F2FE' }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  }
+
+  // Render Multi-Modal Correlation Chart linking Chemical Assay (735 nm / GC-MS) with PCA & MEA Sensors
+  function renderChemMeaCorrelationChart() {
+    const el = document.getElementById('chartChemMeaLink');
+    if (!el) return;
+    const ctx = el.getContext('2d');
+    if (chartChemMeaLinkInstance) chartChemMeaLinkInstance.destroy();
+
+    const modeObj = appData.pca_modes[currentMode] || appData.pca_modes['mid'];
+    const rawE = modeObj.radar_raw['E'] || {};
+    const rawEF = modeObj.radar_raw['EF'] || {};
+
+    const labels = [
+      'Chem 10x Std (÷10 ppm)',
+      'Chem 10x Blank-Sub (÷10 ppm)',
+      'Chem 100x Blank-Sub (÷15 ppm)',
+      'MEA: MQ-2 (Pyrazines/Volatiles)',
+      'MEA: TGS-2600 (Roasted Smoke/CO)',
+      'MEA: MQ-7 (CO/Maillard)',
+      'MEA: MQ-4 (Methane/HC Shift)',
+      'MEA: MQ-5 (LPG/Hydrocarbon)',
+      'MEA: TGS-813 (Light HC Anomaly)'
+    ];
+
+    const dataE = [
+      Number((GCMS_CHEMICAL_DATA.hojicha.samples.d10x.diluteStd / 10).toFixed(2)),
+      Number((GCMS_CHEMICAL_DATA.hojicha.samples.d10x.diluteBlank / 10).toFixed(2)),
+      Number((GCMS_CHEMICAL_DATA.hojicha.samples.d100x.diluteBlank / 15).toFixed(2)),
+      rawE['MQ-2'] || 222.36,
+      rawE['TGS-2600'] || 141.22,
+      rawE['MQ-7'] || 124.41,
+      rawE['MQ-4'] || 101.69,
+      rawE['MQ-5'] || 105.29,
+      rawE['TGS-813'] || 28.68
+    ];
+
+    const dataEF = [
+      Number((GCMS_CHEMICAL_DATA.suspect.samples.d10x.diluteStd / 10).toFixed(2)),
+      Number((GCMS_CHEMICAL_DATA.suspect.samples.d10x.diluteBlank / 10).toFixed(2)),
+      Number((GCMS_CHEMICAL_DATA.suspect.samples.d100x.diluteBlank / 15).toFixed(2)),
+      rawEF['MQ-2'] || 217.37,
+      rawEF['TGS-2600'] || 114.99,
+      rawEF['MQ-7'] || 130.82,
+      rawEF['MQ-4'] || 183.33,
+      rawEF['MQ-5'] || 133.23,
+      rawEF['TGS-813'] || 100.68
+    ];
+
+    chartChemMeaLinkInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Hojicha แท้ (รหัส E) — โปรไฟล์เคมี & เซ็นเซอร์ MEA',
+            data: dataE,
+            backgroundColor: 'rgba(180, 83, 9, 0.85)',
+            borderColor: '#92400E',
+            borderWidth: 1,
+            borderRadius: 5
+          },
+          {
+            label: 'Suspect Hojicha (รหัส EF) — โปรไฟล์เคมี & เซ็นเซอร์ MEA',
+            data: dataEF,
+            backgroundColor: 'rgba(244, 63, 94, 0.85)',
+            borderColor: '#BE123C',
+            borderWidth: 1,
+            borderRadius: 5
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { boxWidth: 12, font: { size: 10.5 } }
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'ระดับความเข้มข้นเคมีเทียบเคียง & ค่าการตอบสนองของเซ็นเซอร์ MEA (ΔAUC)',
+              font: { size: 10.5, weight: 'bold' }
+            },
+            grid: { color: '#E0F2FE' }
+          },
+          y: {
+            ticks: { font: { size: 10.5, weight: '600' } },
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  }
+
+  // Populate Raw Plate Data & Calibration Tables in Section 3
+  function renderChemRawTables() {
+    const tbodyHoj = document.getElementById('chemTableBodyHojicha');
+    const tbodySusp = document.getElementById('chemTableBodySuspect');
+
+    function populatePlateTable(tbody, teaObj) {
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      teaObj.standards.forEach(function (row) {
+        const tr = document.createElement('tr');
+        tr.className = row.inLinearFit ? 'hover:bg-sky-50/70 transition' : 'bg-slate-50/80 text-slate-500 hover:bg-slate-100/70 transition';
+        const fitBadge = row.inLinearFit
+          ? '<span class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-50 text-emerald-700 border border-emerald-200">Linear Fit</span>'
+          : '<span class="px-1.5 py-0.5 text-[10px] font-semibold rounded bg-amber-50 text-amber-700 border border-amber-200">Saturation</span>';
+
+        tr.innerHTML =
+          '<td class="py-2 px-3 font-mono font-bold text-slate-800">' + row.label + ' ppm</td>' +
+          '<td class="py-2 px-3 text-center">' + fitBadge + '</td>' +
+          '<td class="py-2 px-3 text-right font-mono">' + row.repA.toFixed(4) + '</td>' +
+          '<td class="py-2 px-3 text-right font-mono">' + row.repB.toFixed(4) + '</td>' +
+          '<td class="py-2 px-3 text-right font-mono">' + row.repC.toFixed(4) + '</td>' +
+          '<td class="py-2 px-3 text-right font-mono font-bold text-amber-800 bg-amber-50/40">' + row.avg.toFixed(6) + '</td>' +
+          '<td class="py-2 px-3 text-right font-mono font-bold text-sky-800 bg-sky-50/40">' + row.absBlank.toFixed(6) + '</td>';
+        tbody.appendChild(tr);
+      });
+
+      // Append Sample 10x and 100x rows
+      ['d10x', 'd100x'].forEach(function (k) {
+        const smp = teaObj.samples[k];
+        const absSubBlank = smp.avg - teaObj.blankAvg;
+        const tr = document.createElement('tr');
+        tr.className = 'bg-sky-50/70 font-semibold border-t border-sky-200 hover:bg-sky-100/60 transition';
+        tr.innerHTML =
+          '<td class="py-2.5 px-3 font-mono font-bold text-sky-900">Sample ' + smp.label + '</td>' +
+          '<td class="py-2.5 px-3 text-center"><span class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-sky-600 text-white">Unknown (' + smp.label + ')</span></td>' +
+          '<td class="py-2.5 px-3 text-right font-mono text-slate-700">' + smp.repA.toFixed(4) + '</td>' +
+          '<td class="py-2.5 px-3 text-right font-mono text-slate-700">' + smp.repB.toFixed(4) + '</td>' +
+          '<td class="py-2.5 px-3 text-right font-mono text-slate-700">' + smp.repC.toFixed(4) + '</td>' +
+          '<td class="py-2.5 px-3 text-right font-mono font-bold text-amber-900 bg-amber-100/50">' + smp.avg.toFixed(6) + '</td>' +
+          '<td class="py-2.5 px-3 text-right font-mono font-bold text-sky-900 bg-sky-100/50">' + absSubBlank.toFixed(6) + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    populatePlateTable(tbodyHoj, GCMS_CHEMICAL_DATA.hojicha);
+    populatePlateTable(tbodySusp, GCMS_CHEMICAL_DATA.suspect);
+  }
+
   function updateDashboard() {
     const modeObj = appData.pca_modes[currentMode];
     const pcaState = getCurrentPcaState();
@@ -1815,11 +2527,15 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     render3dPca(pcaState);
     updateSubTabs();
     renderFftChart();
+    renderChemCalibrationCharts();
+    renderChemConcBarChart();
+    renderChemMeaCorrelationChart();
   }
 
   window.addEventListener('DOMContentLoaded', async function () {
     initControls();
     renderClassificationSummary();
+    renderChemRawTables();
     updateDashboard();
     await trySyncExternalJson();
   });
