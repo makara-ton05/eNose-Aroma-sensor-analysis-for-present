@@ -2877,13 +2877,13 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
           const tr = document.createElement('tr');
           tr.className = 'hover:bg-sky-50/70 transition';
           tr.innerHTML =
-            '<td class="py-2 px-2.5 font-mono font-bold text-slate-700">' + item.rank + '</td>' +
+            '<td class="py-2 px-2.5 text-center font-mono font-bold text-slate-700">' + item.rank + '</td>' +
             '<td class="py-2 px-2.5 font-semibold text-slate-900">' + item.compound + '</td>' +
-            '<td class="py-2 px-2.5 text-right font-mono">' + Number(item.area).toFixed(2) + '%</td>' +
-            '<td class="py-2 px-2.5 text-right font-mono text-slate-500">' + item.threshold + '</td>' +
-            '<td class="py-2 px-2.5 text-right font-mono font-bold text-amber-800">' + Number(item.oav).toFixed(2) + '</td>' +
             '<td class="py-2 px-2.5 text-slate-700">' + item.desc + '</td>' +
-            '<td class="py-2 px-2.5 text-center"><span class="px-1.5 py-0.5 text-[10px] font-bold rounded border ' + sigClass + '">' + item.sig + '</span></td>';
+            '<td class="py-2 px-2.5 text-center"><span class="px-1.5 py-0.5 text-[10px] font-bold rounded border ' + sigClass + '">' + item.sig + '</span></td>' +
+            '<td class="py-2 px-2.5 text-right font-mono font-bold text-amber-800">' + Number(item.oav).toFixed(2) + '</td>' +
+            '<td class="py-2 px-2.5 text-right font-mono">' + Number(item.area).toFixed(2) + '%</td>' +
+            '<td class="py-2 px-2.5 text-right font-mono text-slate-500">' + item.threshold + '</td>';
           oavTbody.appendChild(tr);
         });
       }
