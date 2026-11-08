@@ -44,7 +44,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
   let spmeSumFilter = 'dry_powder'; // 'dry_powder' or 'brew_water'
   let spmeActiveTea = 'E'; // 'A'..'H'
   let spmeActivePhase = 'dry_powder'; // 'dry_powder' or 'brew_water'
-  let spmePeakFilter = 'all'; // 'all' or 'oav_only'
+  let spmePeakFilter = 'oav_only'; // Default: 'oav_only' ('2. แสดง Peak ที่มีค่า OAV Proxy และ Aroma Descriper ปรากฎ')
   let spmePeakTableOpen = true;
 
   // Complete GC-MS & UV-Vis 735 nm Microplate Standard vs Blank-Subtracted Dataset from .xlsx (Linear Range 0-100 ppm)
@@ -3044,6 +3044,24 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   window.addEventListener('DOMContentLoaded', async function () {
     initControls();
+    if (window.innerWidth < 640) {
+      const btnCloseVec = document.getElementById('btnCloseSensorVectorBox');
+      if (btnCloseVec) btnCloseVec.click();
+    }
+    window.addEventListener('resize', function () {
+      const plotEl = document.getElementById('plotly3dContainer');
+      if (plotEl && window.Plotly && Plotly.Plots) {
+        Plotly.Plots.resize(plotEl);
+      }
+    });
+    window.addEventListener('orientationchange', function () {
+      setTimeout(function () {
+        const plotEl = document.getElementById('plotly3dContainer');
+        if (plotEl && window.Plotly && Plotly.Plots) {
+          Plotly.Plots.resize(plotEl);
+        }
+      }, 200);
+    });
     renderClassificationSummary();
     renderSpmeSummaryTables();
     renderSpmeTeaExplorer();

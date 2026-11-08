@@ -2,7 +2,11 @@
 <html lang="th" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#F0F7FF" />
   <title>SCBT316 eNose Aroma Sensor Analysis — 10 Tea Varieties Dashboard</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
@@ -999,10 +1003,10 @@
                   <span id="spmePeakCountBadge" class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Qual ≥ 80</span>
                 </div>
                 <div class="flex flex-wrap items-center gap-1.5">
-                  <button type="button" id="btnSpmePeakFilterAll" class="chem-view-btn-active px-2.5 py-1 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
+                  <button type="button" id="btnSpmePeakFilterAll" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
                     1. แสดง Peak ที่ตรวจจับได้ทั้งหมด
                   </button>
-                  <button type="button" id="btnSpmePeakFilterOav" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
+                  <button type="button" id="btnSpmePeakFilterOav" class="chem-view-btn-active px-2.5 py-1 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
                     2. แสดง Peak ที่มีค่า OAV Proxy และ Aroma Descriper ปรากฎ
                   </button>
                   <button type="button" id="btnToggleSpmePeakTable" aria-expanded="true" class="vector-box-toggle-btn btn-box-open px-2.5 py-1 text-[11px] font-bold rounded-lg border transition">

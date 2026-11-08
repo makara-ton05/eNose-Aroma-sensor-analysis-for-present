@@ -237,3 +237,57 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #0284C7;
 }
+
+/* ==========================================================================
+   Mobile & Touch Responsiveness (Android Chrome & iOS Safari / iPhone)
+   ========================================================================== */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+button,
+select,
+input,
+label,
+a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(2, 132, 199, 0.12);
+}
+
+.custom-scrollbar {
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+  .academic-top-header {
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
+  }
+
+  .sci-card {
+    border-radius: 1rem;
+  }
+
+  .sci-card-header {
+    padding: 0.75rem 0.875rem;
+  }
+
+  #plotly3dContainer {
+    height: 360px !important;
+    min-height: 340px !important;
+  }
+
+  table th,
+  table td {
+    white-space: nowrap;
+  }
+}

@@ -2,7 +2,11 @@
 <html lang="th" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#F0F7FF" />
   <title>SCBT316 eNose Aroma Sensor Analysis — 10 Tea Varieties Dashboard</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
@@ -274,6 +278,60 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #0284C7;
+}
+
+/* ==========================================================================
+   Mobile & Touch Responsiveness (Android Chrome & iOS Safari / iPhone)
+   ========================================================================== */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+button,
+select,
+input,
+label,
+a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(2, 132, 199, 0.12);
+}
+
+.custom-scrollbar {
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+  .academic-top-header {
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
+  }
+
+  .sci-card {
+    border-radius: 1rem;
+  }
+
+  .sci-card-header {
+    padding: 0.75rem 0.875rem;
+  }
+
+  #plotly3dContainer {
+    height: 360px !important;
+    min-height: 340px !important;
+  }
+
+  table th,
+  table td {
+    white-space: nowrap;
+  }
 }
 
 </style>
@@ -1240,10 +1298,10 @@ body {
                   <span id="spmePeakCountBadge" class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Qual ≥ 80</span>
                 </div>
                 <div class="flex flex-wrap items-center gap-1.5">
-                  <button type="button" id="btnSpmePeakFilterAll" class="chem-view-btn-active px-2.5 py-1 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
+                  <button type="button" id="btnSpmePeakFilterAll" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
                     1. แสดง Peak ที่ตรวจจับได้ทั้งหมด
                   </button>
-                  <button type="button" id="btnSpmePeakFilterOav" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
+                  <button type="button" id="btnSpmePeakFilterOav" class="chem-view-btn-active px-2.5 py-1 text-[11px] font-bold rounded-lg border border-sky-200 bg-white text-slate-700 transition">
                     2. แสดง Peak ที่มีค่า OAV Proxy และ Aroma Descriper ปรากฎ
                   </button>
                   <button type="button" id="btnToggleSpmePeakTable" aria-expanded="true" class="vector-box-toggle-btn btn-box-open px-2.5 py-1 text-[11px] font-bold rounded-lg border transition">
@@ -1527,7 +1585,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
   let spmeSumFilter = 'dry_powder'; // 'dry_powder' or 'brew_water'
   let spmeActiveTea = 'E'; // 'A'..'H'
   let spmeActivePhase = 'dry_powder'; // 'dry_powder' or 'brew_water'
-  let spmePeakFilter = 'all'; // 'all' or 'oav_only'
+  let spmePeakFilter = 'oav_only'; // Default: 'oav_only' ('2. แสดง Peak ที่มีค่า OAV Proxy และ Aroma Descriper ปรากฎ')
   let spmePeakTableOpen = true;
 
   // Complete GC-MS & UV-Vis 735 nm Microplate Standard vs Blank-Subtracted Dataset from .xlsx (Linear Range 0-100 ppm)
@@ -4527,6 +4585,24 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   window.addEventListener('DOMContentLoaded', async function () {
     initControls();
+    if (window.innerWidth < 640) {
+      const btnCloseVec = document.getElementById('btnCloseSensorVectorBox');
+      if (btnCloseVec) btnCloseVec.click();
+    }
+    window.addEventListener('resize', function () {
+      const plotEl = document.getElementById('plotly3dContainer');
+      if (plotEl && window.Plotly && Plotly.Plots) {
+        Plotly.Plots.resize(plotEl);
+      }
+    });
+    window.addEventListener('orientationchange', function () {
+      setTimeout(function () {
+        const plotEl = document.getElementById('plotly3dContainer');
+        if (plotEl && window.Plotly && Plotly.Plots) {
+          Plotly.Plots.resize(plotEl);
+        }
+      }, 200);
+    });
     renderClassificationSummary();
     renderSpmeSummaryTables();
     renderSpmeTeaExplorer();
