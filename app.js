@@ -1801,7 +1801,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   let lastRadarOverrideIds = null;
 
-  // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610) — 2X Expanded Scale
+  // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610) — 1.5X Expanded Scale (960px Desktop)
   function renderRadarChart(overrideIds) {
     if (overrideIds !== undefined) {
       lastRadarOverrideIds = overrideIds;
@@ -1821,10 +1821,10 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         data: vals,
         borderColor: s.color,
         backgroundColor: s.color + '24',
-        borderWidth: s.is_suspect ? (isMobile ? 2.8 : 3.8) : (isMobile ? 2.2 : 3.2),
+        borderWidth: s.is_suspect ? (isMobile ? 2.6 : 3.5) : (isMobile ? 2.0 : 3.0),
         borderDash: s.is_suspect ? [6, 4] : [],
-        pointRadius: isMobile ? 3.5 : 5.5,
-        pointHoverRadius: isMobile ? 6 : 8.5,
+        pointRadius: isMobile ? 3.5 : 5,
+        pointHoverRadius: isMobile ? 5.5 : 8,
         pointBackgroundColor: s.color,
         pointBorderColor: '#FFFFFF',
         pointBorderWidth: 1.5
@@ -1847,10 +1847,10 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         maintainAspectRatio: false,
         layout: {
           padding: {
-            top: isMobile ? 4 : 8,
-            bottom: isMobile ? 4 : 8,
-            left: isMobile ? 4 : 8,
-            right: isMobile ? 4 : 8
+            top: isMobile ? 2 : 6,
+            bottom: isMobile ? 2 : 6,
+            left: isMobile ? 2 : 6,
+            right: isMobile ? 2 : 6
           }
         },
         plugins: {
@@ -1859,7 +1859,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
           },
           tooltip: {
             titleFont: { size: isMobile ? 12 : 14, weight: 'bold' },
-            bodyFont: { size: isMobile ? 11.5 : 13.5 },
+            bodyFont: { size: isMobile ? 11.5 : 13 },
             padding: 10,
             callbacks: {
               label: function (c) {
@@ -1879,23 +1879,23 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
               backdropPadding: 3,
               color: '#0369A1',
               font: {
-                size: isMobile ? 10 : 13,
+                size: isMobile ? 10 : 12.5,
                 weight: 'bold',
                 family: 'JetBrains Mono, monospace'
               }
             },
             grid: {
               color: '#BAE6FD',
-              lineWidth: isMobile ? 1.1 : 1.5
+              lineWidth: isMobile ? 1.1 : 1.4
             },
             angleLines: {
               color: '#7DD3FC',
-              lineWidth: isMobile ? 1.2 : 1.6
+              lineWidth: isMobile ? 1.2 : 1.5
             },
             pointLabels: {
-              padding: isMobile ? 4 : 8,
+              padding: isMobile ? 4 : 6,
               font: {
-                size: isMobile ? 11.5 : 16,
+                size: isMobile ? 11.5 : 15,
                 weight: 'bold',
                 family: 'JetBrains Mono, Inter, sans-serif'
               },
@@ -1906,7 +1906,14 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       }
     });
 
-    // Populate External Interactive HTML Legend (#radarCustomLegend) so 100% of canvas height goes to the 2x Radar Web
+    // Ensure Chart.js re-measures the 1.5x container immediately after subtab display toggle
+    setTimeout(function () {
+      if (chartRadarInstance) {
+        chartRadarInstance.resize();
+      }
+    }, 30);
+
+    // Populate External Interactive HTML Legend (#radarCustomLegend) so 100% of canvas height goes to the 1.5x Radar Web
     const legendContainer = document.getElementById('radarCustomLegend');
     if (legendContainer) {
       legendContainer.innerHTML = '';

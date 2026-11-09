@@ -287,8 +287,8 @@ a {
   }
 
   #radarChartContainerWrap {
-    height: 560px !important;
-    min-height: 520px !important;
+    height: 690px !important;
+    min-height: 650px !important;
     padding: 0.25rem !important;
   }
 
@@ -414,27 +414,27 @@ body.modal-open-lock {
   color: #FFFFFF !important;
 }
 
-/* 2X Extra-Large Odor Footprint Radar Chart Box for Computer & Mobile */
+/* 1.5X Expanded Odor Footprint Radar Chart Box for Computer & Mobile (640px -> 960px Desktop, 560px -> 840px Tablet, 460px -> 690px Mobile) */
 #radarChartContainerWrap.radar-chart-large-box {
-  height: 1120px !important;
-  min-height: 1080px !important;
+  height: 960px !important;
+  min-height: 920px !important;
   width: 100% !important;
-  max-width: 100% !important;
+  max-width: 72rem !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
 @media (max-width: 1024px) {
   #radarChartContainerWrap.radar-chart-large-box {
-    height: 820px !important;
-    min-height: 780px !important;
+    height: 840px !important;
+    min-height: 800px !important;
   }
 }
 
 @media (max-width: 640px) {
   #radarChartContainerWrap.radar-chart-large-box {
-    height: 560px !important;
-    min-height: 520px !important;
+    height: 690px !important;
+    min-height: 650px !important;
     padding: 0.25rem !important;
   }
 }

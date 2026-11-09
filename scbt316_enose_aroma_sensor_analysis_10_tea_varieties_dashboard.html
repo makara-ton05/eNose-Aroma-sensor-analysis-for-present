@@ -329,8 +329,8 @@ a {
   }
 
   #radarChartContainerWrap {
-    height: 560px !important;
-    min-height: 520px !important;
+    height: 690px !important;
+    min-height: 650px !important;
     padding: 0.25rem !important;
   }
 
@@ -456,27 +456,27 @@ body.modal-open-lock {
   color: #FFFFFF !important;
 }
 
-/* 2X Extra-Large Odor Footprint Radar Chart Box for Computer & Mobile */
+/* 1.5X Expanded Odor Footprint Radar Chart Box for Computer & Mobile (640px -> 960px Desktop, 560px -> 840px Tablet, 460px -> 690px Mobile) */
 #radarChartContainerWrap.radar-chart-large-box {
-  height: 1120px !important;
-  min-height: 1080px !important;
+  height: 960px !important;
+  min-height: 920px !important;
   width: 100% !important;
-  max-width: 100% !important;
+  max-width: 72rem !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
 @media (max-width: 1024px) {
   #radarChartContainerWrap.radar-chart-large-box {
-    height: 820px !important;
-    min-height: 780px !important;
+    height: 840px !important;
+    min-height: 800px !important;
   }
 }
 
 @media (max-width: 640px) {
   #radarChartContainerWrap.radar-chart-large-box {
-    height: 560px !important;
-    min-height: 520px !important;
+    height: 690px !important;
+    min-height: 650px !important;
     padding: 0.25rem !important;
   }
 }
@@ -1110,12 +1110,12 @@ body.modal-open-lock {
             </div>
           </div>
 
-          <!-- 2X Extra-Large Radar Chart Card (Full-Width 1120px Height on Computer + Custom Interactive Legend) -->
-          <div class="bg-white p-3 sm:p-6 lg:p-8 rounded-2xl border border-sky-200 shadow-sm space-y-4">
+          <!-- 1.5X Expanded Radar Chart Card (960px Height on Computer, 840px on Tablet, 690px on Mobile + Custom Interactive Legend) -->
+          <div class="bg-white p-3 sm:p-6 lg:p-7 rounded-2xl border border-sky-200 shadow-sm space-y-4">
             <div id="radarCustomLegend" class="flex flex-wrap items-center justify-center gap-2 pb-3 border-b border-sky-100">
-              <!-- Populated via app.js so 100% of canvas area is dedicated to the 2x Radar Web -->
+              <!-- Populated via app.js so 100% of canvas area is dedicated to the 1.5x Radar Web -->
             </div>
-            <div id="radarChartContainerWrap" class="radar-chart-large-box relative h-[560px] sm:h-[820px] lg:h-[1120px] w-full max-w-none mx-auto">
+            <div id="radarChartContainerWrap" class="radar-chart-large-box relative h-[690px] sm:h-[840px] lg:h-[960px] w-full max-w-6xl mx-auto">
               <canvas id="chartRadar"></canvas>
             </div>
           </div>
@@ -3838,7 +3838,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   let lastRadarOverrideIds = null;
 
-  // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610) — 2X Expanded Scale
+  // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610) — 1.5X Expanded Scale (960px Desktop)
   function renderRadarChart(overrideIds) {
     if (overrideIds !== undefined) {
       lastRadarOverrideIds = overrideIds;
@@ -3858,10 +3858,10 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         data: vals,
         borderColor: s.color,
         backgroundColor: s.color + '24',
-        borderWidth: s.is_suspect ? (isMobile ? 2.8 : 3.8) : (isMobile ? 2.2 : 3.2),
+        borderWidth: s.is_suspect ? (isMobile ? 2.6 : 3.5) : (isMobile ? 2.0 : 3.0),
         borderDash: s.is_suspect ? [6, 4] : [],
-        pointRadius: isMobile ? 3.5 : 5.5,
-        pointHoverRadius: isMobile ? 6 : 8.5,
+        pointRadius: isMobile ? 3.5 : 5,
+        pointHoverRadius: isMobile ? 5.5 : 8,
         pointBackgroundColor: s.color,
         pointBorderColor: '#FFFFFF',
         pointBorderWidth: 1.5
@@ -3884,10 +3884,10 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         maintainAspectRatio: false,
         layout: {
           padding: {
-            top: isMobile ? 4 : 8,
-            bottom: isMobile ? 4 : 8,
-            left: isMobile ? 4 : 8,
-            right: isMobile ? 4 : 8
+            top: isMobile ? 2 : 6,
+            bottom: isMobile ? 2 : 6,
+            left: isMobile ? 2 : 6,
+            right: isMobile ? 2 : 6
           }
         },
         plugins: {
@@ -3896,7 +3896,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
           },
           tooltip: {
             titleFont: { size: isMobile ? 12 : 14, weight: 'bold' },
-            bodyFont: { size: isMobile ? 11.5 : 13.5 },
+            bodyFont: { size: isMobile ? 11.5 : 13 },
             padding: 10,
             callbacks: {
               label: function (c) {
@@ -3916,23 +3916,23 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
               backdropPadding: 3,
               color: '#0369A1',
               font: {
-                size: isMobile ? 10 : 13,
+                size: isMobile ? 10 : 12.5,
                 weight: 'bold',
                 family: 'JetBrains Mono, monospace'
               }
             },
             grid: {
               color: '#BAE6FD',
-              lineWidth: isMobile ? 1.1 : 1.5
+              lineWidth: isMobile ? 1.1 : 1.4
             },
             angleLines: {
               color: '#7DD3FC',
-              lineWidth: isMobile ? 1.2 : 1.6
+              lineWidth: isMobile ? 1.2 : 1.5
             },
             pointLabels: {
-              padding: isMobile ? 4 : 8,
+              padding: isMobile ? 4 : 6,
               font: {
-                size: isMobile ? 11.5 : 16,
+                size: isMobile ? 11.5 : 15,
                 weight: 'bold',
                 family: 'JetBrains Mono, Inter, sans-serif'
               },
@@ -3943,7 +3943,14 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       }
     });
 
-    // Populate External Interactive HTML Legend (#radarCustomLegend) so 100% of canvas height goes to the 2x Radar Web
+    // Ensure Chart.js re-measures the 1.5x container immediately after subtab display toggle
+    setTimeout(function () {
+      if (chartRadarInstance) {
+        chartRadarInstance.resize();
+      }
+    }, 30);
+
+    // Populate External Interactive HTML Legend (#radarCustomLegend) so 100% of canvas height goes to the 1.5x Radar Web
     const legendContainer = document.getElementById('radarCustomLegend');
     if (legendContainer) {
       legendContainer.innerHTML = '';
