@@ -1801,6 +1801,104 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   let lastRadarOverrideIds = null;
 
+  // Create a crisp offscreen canvas marker matching getShapeSvg(shape, color) for Chart.js pointStyle
+  function createSamplePointCanvas(shape, color, sizePx) {
+    const sz = sizePx || 12;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cnv = document.createElement('canvas');
+    cnv.width = sz * dpr;
+    cnv.height = sz * dpr;
+    const c = cnv.getContext('2d');
+    c.scale(dpr, dpr);
+    const scale = sz / 16.0;
+    c.scale(scale, scale);
+
+    function drawPoly(pts) {
+      c.beginPath();
+      pts.forEach(function (pt, i) {
+        if (i === 0) c.moveTo(pt[0], pt[1]);
+        else c.lineTo(pt[0], pt[1]);
+      });
+      c.closePath();
+      c.fillStyle = color;
+      c.fill();
+      c.lineWidth = 1.4;
+      c.strokeStyle = '#FFFFFF';
+      c.stroke();
+    }
+
+    switch (shape) {
+      case 'circle':
+        c.beginPath();
+        c.arc(8, 8, 5.8, 0, Math.PI * 2);
+        c.fillStyle = color;
+        c.fill();
+        c.lineWidth = 1.4;
+        c.strokeStyle = '#FFFFFF';
+        c.stroke();
+        break;
+      case 'square':
+        drawPoly([[2.5, 2.5], [13.5, 2.5], [13.5, 13.5], [2.5, 13.5]]);
+        break;
+      case 'diamond':
+        drawPoly([[8, 1.3], [14.7, 8], [8, 14.7], [1.3, 8]]);
+        break;
+      case 'triangle':
+        drawPoly([[8, 1.8], [14.6, 13.6], [1.4, 13.6]]);
+        break;
+      case 'hexagon':
+        drawPoly([[8, 1.5], [13.8, 4.8], [13.8, 11.2], [8, 14.5], [2.2, 11.2], [2.2, 4.8]]);
+        break;
+      case 'star':
+        drawPoly([[8, 1.2], [10, 5.6], [14.8, 6.2], [11.2, 9.5], [12.2, 14.2], [8, 11.8], [3.8, 14.2], [4.8, 9.5], [1.2, 6.2], [6, 5.6]]);
+        break;
+      case 'pentagon':
+        drawPoly([[8, 1.5], [14.5, 6.2], [12, 13.8], [4, 13.8], [1.5, 6.2]]);
+        break;
+      case 'octagon':
+        drawPoly([[5.2, 1.5], [10.8, 1.5], [14.5, 5.2], [14.5, 10.8], [10.8, 14.5], [5.2, 14.5], [1.5, 10.8], [1.5, 5.2]]);
+        break;
+      case 'x':
+        c.beginPath();
+        c.moveTo(3, 3);
+        c.lineTo(13, 13);
+        c.moveTo(13, 3);
+        c.lineTo(3, 13);
+        c.lineCap = 'round';
+        c.lineWidth = 4.2;
+        c.strokeStyle = '#FFFFFF';
+        c.stroke();
+        c.lineWidth = 2.8;
+        c.strokeStyle = color;
+        c.stroke();
+        break;
+      case 'cross':
+        c.beginPath();
+        c.moveTo(8, 2);
+        c.lineTo(8, 14);
+        c.moveTo(2, 8);
+        c.lineTo(14, 8);
+        c.lineCap = 'round';
+        c.lineWidth = 4.2;
+        c.strokeStyle = '#FFFFFF';
+        c.stroke();
+        c.lineWidth = 2.8;
+        c.strokeStyle = color;
+        c.stroke();
+        break;
+      default:
+        c.beginPath();
+        c.arc(8, 8, 5.8, 0, Math.PI * 2);
+        c.fillStyle = color;
+        c.fill();
+        c.lineWidth = 1.4;
+        c.strokeStyle = '#FFFFFF';
+        c.stroke();
+        break;
+    }
+    return cnv;
+  }
+
   // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610) — Scaled Down 1.75X (548px Desktop)
   function renderRadarChart(overrideIds) {
     if (overrideIds !== undefined) {
@@ -1816,15 +1914,18 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     appData.samples.forEach(function (s) {
       if (!targetIds.has(s.id)) return;
       const vals = sensors.map(function (g) { return sourceMap[s.id][g]; });
+      const ptStyleCanvas = createSamplePointCanvas(s.ui_shape, s.color, isMobile ? 10 : 12);
       datasets.push({
         label: s.id + ': ' + s.name,
+        uiShape: s.ui_shape,
         data: vals,
         borderColor: s.color,
         backgroundColor: s.color + '22',
         borderWidth: s.is_suspect ? (isMobile ? 2.2 : 2.6) : (isMobile ? 1.8 : 2.2),
         borderDash: s.is_suspect ? [5, 3] : [],
-        pointRadius: isMobile ? 2.8 : 3.8,
-        pointHoverRadius: isMobile ? 4.5 : 6,
+        pointStyle: ptStyleCanvas,
+        pointRadius: isMobile ? 4.5 : 5.5,
+        pointHoverRadius: isMobile ? 6.5 : 7.5,
         pointBackgroundColor: s.color,
         pointBorderColor: '#FFFFFF',
         pointBorderWidth: 1.2
@@ -1922,7 +2023,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         btn.type = 'button';
         btn.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-sky-200 bg-sky-50/60 hover:bg-sky-100 text-[11px] sm:text-xs font-bold text-slate-800 transition cursor-pointer shadow-sm';
         btn.innerHTML =
-          '<span class="w-3 h-3 rounded-sm shrink-0" style="background-color:' + ds.borderColor + '; border: 1.5px solid ' + ds.borderColor + ';"></span>' +
+          getShapeSvg(ds.uiShape, ds.borderColor) +
           '<span>' + ds.label + '</span>';
         btn.addEventListener('click', function () {
           const isVisible = chartRadarInstance.isDatasetVisible(idx);
@@ -3047,16 +3148,26 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
                 data: sensAttrs.map(function (a) { return clearMap[a] || 0; }),
                 borderColor: '#0284C7',
                 backgroundColor: 'rgba(2, 132, 199, 0.20)',
-                borderWidth: 2,
-                pointRadius: 3
+                borderWidth: 2.2,
+                pointStyle: 'triangle',
+                pointRadius: 5.5,
+                pointHoverRadius: 7.5,
+                pointBackgroundColor: '#0284C7',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 1.2
               },
               {
                 label: '🥛 Latte (Overall ⭐ ' + (latteMap['Overall'] || 0) + ')',
                 data: sensAttrs.map(function (a) { return latteMap[a] || 0; }),
                 borderColor: '#D97706',
                 backgroundColor: 'rgba(217, 119, 6, 0.20)',
-                borderWidth: 2,
-                pointRadius: 3
+                borderWidth: 2.2,
+                pointStyle: 'circle',
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#D97706',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 1.2
               }
             ]
           },
@@ -3064,7 +3175,14 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-              legend: { position: 'top', labels: { boxWidth: 11, font: { size: 10 } } }
+              legend: {
+                position: 'top',
+                labels: {
+                  usePointStyle: true,
+                  boxWidth: 11,
+                  font: { size: 10.5, weight: '600' }
+                }
+              }
             },
             scales: {
               r: {
