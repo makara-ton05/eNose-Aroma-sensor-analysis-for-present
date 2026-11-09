@@ -336,22 +336,30 @@ a {
 
 
 /* ==========================================================================
-   Executive Summary Splash Screen (Full-Screen 100vh Intro Modal)
+   Executive Summary Splash Screen (Light Soft Ice-Blue Theme Matching Main Site)
+   & 5-Section Separation Navigation (Cross-Platform Mobile & Desktop)
    ========================================================================== */
 body.modal-open-lock {
   overflow: hidden !important;
 }
 
 .intro-splash-overlay {
-  background: radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.20), transparent 45%),
-              radial-gradient(circle at 80% 15%, rgba(245, 158, 11, 0.14), transparent 40%),
-              rgba(15, 23, 42, 0.78);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  height: 100vh;
+  height: 100dvh;
+  background: radial-gradient(circle at 18% 18%, rgba(186, 230, 253, 0.55), transparent 48%),
+              radial-gradient(circle at 82% 15%, rgba(254, 243, 199, 0.50), transparent 45%),
+              rgba(240, 247, 255, 0.86);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.42s cubic-bezier(0.4, 0, 0.2, 1),
-              visibility 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-overflow-scrolling: touch;
+  padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+  padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+  padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+  transition: opacity 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.38s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .intro-splash-overlay.splash-hidden {
@@ -361,52 +369,85 @@ body.modal-open-lock {
 }
 
 .intro-bento-shell {
-  background: linear-gradient(160deg, rgba(15, 23, 42, 0.90) 0%, rgba(12, 74, 110, 0.84) 55%, rgba(15, 23, 42, 0.92) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 25px 60px -12px rgba(2, 6, 23, 0.75),
-              0 0 0 1px rgba(56, 189, 248, 0.22) inset;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.97) 0%, rgba(240, 247, 255, 0.95) 55%, rgba(255, 255, 255, 0.98) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px -12px rgba(2, 132, 199, 0.18),
+              0 4px 16px -2px rgba(15, 23, 42, 0.06),
+              0 0 0 1px rgba(186, 230, 253, 0.85) inset;
   transform: scale(1) translateY(0);
-  transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 1024px) and (min-height: 760px) {
+  .intro-bento-shell {
+    max-height: 94dvh;
+    overflow-y: auto;
+  }
 }
 
 .intro-splash-overlay.splash-hidden .intro-bento-shell {
-  transform: scale(0.96) translateY(12px);
+  transform: scale(0.97) translateY(10px);
 }
 
 .intro-bento-card {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
 }
 
 .intro-bento-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(56, 189, 248, 0.55);
-  box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.25);
+  border-color: #7DD3FC;
+  box-shadow: 0 8px 20px -4px rgba(2, 132, 199, 0.14);
 }
 
 .intro-cta-main-btn {
   background: linear-gradient(90deg, #0284C7 0%, #0EA5E9 50%, #0369A1 100%);
-  border: 1px solid rgba(125, 211, 252, 0.6);
-  box-shadow: 0 10px 28px -4px rgba(14, 165, 233, 0.55);
+  border: 1px solid #38BDF8;
+  box-shadow: 0 8px 22px -4px rgba(2, 132, 199, 0.42);
 }
 
 .intro-cta-main-btn:hover {
   background: linear-gradient(90deg, #0369A1 0%, #0284C7 50%, #075985 100%);
-  transform: translateY(-1px) scale(1.01);
-  box-shadow: 0 14px 32px -4px rgba(14, 165, 233, 0.7);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px -4px rgba(2, 132, 199, 0.55);
 }
 
 .floating-overview-btn {
-  background: linear-gradient(135deg, #0F172A 0%, #0C4A6E 100%);
-  border: 1px solid rgba(56, 189, 248, 0.55);
-  box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.45);
+  background: linear-gradient(135deg, #FFFFFF 0%, #E0F2FE 100%);
+  border: 1.5px solid #38BDF8;
+  box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.25);
 }
 
 .floating-overview-btn:hover {
   background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  color: #FFFFFF !important;
+  border-color: #0284C7;
   transform: translateY(-2px);
+}
+
+/* 5-Section Selector Buttons */
+.section-tab-btn {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section-tab-btn:hover {
+  border-color: #38BDF8;
+  background-color: #F0F7FF;
+  transform: translateY(-1px);
+}
+
+.section-tab-btn.section-tab-btn-active {
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%) !important;
+  color: #FFFFFF !important;
+  border-color: #0284C7 !important;
+  box-shadow: 0 6px 16px -3px rgba(2, 132, 199, 0.35);
+}
+
+.section-tab-btn.section-tab-btn-active span {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+  color: #FFFFFF !important;
 }
 
 </style>
@@ -414,165 +455,173 @@ body.modal-open-lock {
 <body class="min-h-screen antialiased selection:bg-sky-200 selection:text-sky-900 flex flex-col modal-open-lock">
 
   <!-- ===================================================================== -->
-  <!-- EXECUTIVE SUMMARY SPLASH SCREEN (FULL-SCREEN 100vh INTRO MODAL)        -->
+  <!-- EXECUTIVE SUMMARY SPLASH SCREEN (LIGHT SOFT ICE-BLUE INTRO MODAL)      -->
   <!-- ===================================================================== -->
-  <div id="introSplashModal" role="dialog" aria-modal="true" aria-labelledby="splashMainTitle" class="intro-splash-overlay fixed inset-0 z-50 w-screen h-screen overflow-y-auto lg:overflow-hidden flex items-center justify-center p-3 sm:p-5 lg:p-6 select-none">
-    <!-- Subtle Ambient Scientific Glow Effects -->
+  <div id="introSplashModal" role="dialog" aria-modal="true" aria-labelledby="splashMainTitle" class="intro-splash-overlay fixed inset-0 z-50 w-screen h-screen overflow-y-auto flex items-start lg:items-center justify-center p-2.5 sm:p-4 lg:p-6 select-none">
+    <!-- Subtle Light Ice-Blue Ambient Scientific Glow Effects -->
     <div class="pointer-events-none fixed inset-0 overflow-hidden">
-      <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-sky-500/20 blur-3xl"></div>
-      <div class="absolute top-1/4 -right-24 w-96 h-96 rounded-full bg-cyan-400/15 blur-3xl"></div>
-      <div class="absolute -bottom-24 left-1/3 w-96 h-96 rounded-full bg-amber-500/15 blur-3xl"></div>
+      <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-sky-200/45 blur-3xl"></div>
+      <div class="absolute top-1/4 -right-24 w-96 h-96 rounded-full bg-cyan-200/35 blur-3xl"></div>
+      <div class="absolute -bottom-24 left-1/3 w-96 h-96 rounded-full bg-amber-100/45 blur-3xl"></div>
     </div>
 
-    <!-- Main Single-Screen Bento Container -->
-    <div class="intro-bento-shell relative z-10 w-full max-w-7xl lg:h-full lg:max-h-[94vh] flex flex-col justify-between rounded-3xl p-4 sm:p-6 lg:p-7 text-slate-100 shadow-2xl border border-sky-400/30">
+    <!-- Main Responsive Bento Container (Light Theme matching Main Website) -->
+    <div class="intro-bento-shell relative z-10 w-full max-w-7xl my-auto rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 text-slate-900 shadow-2xl border border-sky-200 flex flex-col justify-between gap-3 lg:gap-3.5">
 
-      <!-- 1. HEADER: Academic Affiliation, Title & Researcher -->
-      <header class="flex flex-col items-center text-center space-y-1.5 lg:space-y-2 border-b border-slate-700/70 pb-3 lg:pb-4 shrink-0">
-        <div class="inline-flex flex-wrap items-center justify-center gap-2 px-3.5 py-1 rounded-full bg-sky-500/15 border border-sky-400/40 text-sky-300 text-[11px] sm:text-xs font-bold tracking-wide uppercase shadow-sm">
+      <!-- 1. HEADER: Academic Affiliation & Title (Removed Author / ผู้จัดทำ) -->
+      <header class="flex flex-col items-center text-center space-y-1.5 border-b border-sky-200/80 pb-2.5 lg:pb-3 shrink-0">
+        <div class="inline-flex flex-wrap items-center justify-center gap-2 px-3.5 py-1 rounded-full bg-sky-100/90 border border-sky-200 text-sky-800 text-[11px] sm:text-xs font-bold tracking-wide uppercase shadow-sm">
           <span>🏛️ Department of Biotechnology • Faculty of Science • Mahidol University</span>
         </div>
-        <h1 id="splashMainTitle" class="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-extrabold tracking-tight text-white leading-tight">
-          Electronic Nose Aroma Sensor &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-cyan-200 to-amber-300">GC-MS Chemical Analytics</span>
+        <h1 id="splashMainTitle" class="text-lg sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-900 leading-snug">
+          Electronic Nose Aroma Sensor &amp; <span class="text-sky-700">GC-MS Chemical Analytics</span>
         </h1>
-        <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs sm:text-sm text-slate-300 font-medium">
-          <span class="font-mono text-sky-200 font-semibold">ผู้วิจัย: Makara Aiamkham (ID: 6705245)</span>
-          <span class="hidden sm:inline text-slate-500">•</span>
-          <span class="text-slate-300">SCBT316 Medicinal Plants &amp; Industrial Processing</span>
-          <span class="hidden md:inline text-slate-500">•</span>
-          <span class="text-slate-400 text-xs">10 Tea Varieties Multi-Modal Chemometrics (PCA • FFT • GC-MS / MEA)</span>
-        </div>
+        <p class="text-xs sm:text-sm text-slate-600 font-medium">
+          SCBT316 Medicinal Plants &amp; Industrial Processing • การวิเคราะห์กลิ่นใบชา 10 ชนิดเชิงบูรณาการ (3D PCA • FFT • GC-MS / 735 nm • HS-SPME-GC-MS &amp; OAV)
+        </p>
       </header>
 
-      <!-- 2. ROW 1: 4 KEY HIGHLIGHTS (KPI BENTO CARDS) -->
-      <section aria-label="Key Research Highlights" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 lg:gap-3.5 my-2.5 lg:my-3 shrink-0">
+      <!-- 2. ROW 1: 4 KEY HIGHLIGHTS (KPI BENTO CARDS - LIGHT THEME) -->
+      <section aria-label="Key Research Highlights" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 lg:gap-3 shrink-0">
         <!-- KPI 1: Protocol -->
-        <div class="intro-bento-card rounded-2xl p-3 lg:p-3.5 border border-sky-400/25 bg-slate-900/65 flex flex-col justify-between">
+        <div class="intro-bento-card rounded-2xl p-3 border border-sky-200 bg-white/95 flex flex-col justify-between shadow-sm">
           <div class="flex items-center justify-between gap-2">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-sky-300">1. Protocol การวัดสัญญาณ</span>
-            <span class="px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-400/30 text-sky-200 font-mono text-[10px] font-bold">190s × 7 Cycles</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-sky-700">1. Protocol การวัดสัญญาณ</span>
+            <span class="px-2 py-0.5 rounded-md bg-sky-50 border border-sky-200 text-sky-800 font-mono text-[10px] font-bold">190s × 7 Cycles</span>
           </div>
-          <p class="text-base lg:text-lg font-extrabold font-mono text-white mt-1">R10-S120-P60-F200</p>
-          <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">Resting 10s • Sampling 120s • Purging 60s ที่อัตราการไหล 200 mL/min (190s × 7 Cycles)</p>
+          <p class="text-base lg:text-lg font-extrabold font-mono text-slate-900 mt-1">R10-S120-P60-F200</p>
+          <p class="text-[11px] text-slate-600 mt-0.5 leading-snug">Resting 10s • Sampling 120s • Purging 60s ที่อัตราการไหล 200 mL/min (190s × 7 Cycles)</p>
         </div>
 
         <!-- KPI 2: Sensor Screening -->
-        <div class="intro-bento-card rounded-2xl p-3 lg:p-3.5 border border-rose-400/25 bg-slate-900/65 flex flex-col justify-between">
+        <div class="intro-bento-card rounded-2xl p-3 border border-rose-200 bg-white/95 flex flex-col justify-between shadow-sm">
           <div class="flex items-center justify-between gap-2">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-rose-300">2. Sensor Screening</span>
-            <span class="px-2 py-0.5 rounded-md bg-rose-500/20 border border-rose-400/30 text-rose-200 font-mono text-[10px] font-bold">Variance Filter</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-rose-700">2. Sensor Screening</span>
+            <span class="px-2 py-0.5 rounded-md bg-rose-50 border border-rose-200 text-rose-700 font-mono text-[10px] font-bold">-3 Inactive</span>
           </div>
-          <p class="text-base lg:text-lg font-extrabold font-mono text-white mt-1">12/15 Active MOS Sensors</p>
-          <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">Auto-removed <span class="text-rose-300 font-semibold font-mono">MQ-136, MQ-3, TGS-2620</span> at Variance = 0 อัตโนมัติ</p>
+          <p class="text-base lg:text-lg font-extrabold font-mono text-slate-900 mt-1">12/15 Active MOS Sensors</p>
+          <p class="text-[11px] text-slate-600 mt-0.5 leading-snug">ตัด <span class="text-rose-600 font-semibold font-mono">MQ-136, MQ-3, TGS-2620</span> (Variance = 0) ออกอัตโนมัติ</p>
         </div>
 
         <!-- KPI 3: PCA Variance -->
-        <div class="intro-bento-card rounded-2xl p-3 lg:p-3.5 border border-cyan-400/25 bg-slate-900/65 flex flex-col justify-between">
+        <div class="intro-bento-card rounded-2xl p-3 border border-sky-200 bg-white/95 flex flex-col justify-between shadow-sm">
           <div class="flex items-center justify-between gap-2">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-300">3. PCA Variance (Mid Cycle 3-5)</span>
-            <span class="px-2 py-0.5 rounded-md bg-cyan-500/20 border border-cyan-400/30 text-cyan-200 font-mono text-[10px] font-bold">PC1–PC3</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-sky-700">3. PCA Variance (Mid Cycle 3-5)</span>
+            <span class="px-2 py-0.5 rounded-md bg-sky-50 border border-sky-200 text-sky-800 font-mono text-[10px] font-bold">PC1–PC3</span>
           </div>
-          <p class="text-base lg:text-lg font-extrabold font-mono text-cyan-200 mt-1">93.02% (PC1–PC3)</p>
-          <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">PC1 (59.56%) + PC2 (21.63%) + PC3 (11.83%) ในช่วงสมดุลไดนามิก Mid-Cycle</p>
+          <p class="text-base lg:text-lg font-extrabold font-mono text-sky-700 mt-1">93.02% (PC1–PC3)</p>
+          <p class="text-[11px] text-slate-600 mt-0.5 leading-snug">PC1 (59.56%) + PC2 (21.63%) + PC3 (11.83%) ในช่วงสมดุลไดนามิก Mid-Cycle</p>
         </div>
 
         <!-- KPI 4: Classification Accuracy -->
-        <div class="intro-bento-card rounded-2xl p-3 lg:p-3.5 border border-emerald-400/25 bg-slate-900/65 flex flex-col justify-between">
+        <div class="intro-bento-card rounded-2xl p-3 border border-emerald-200 bg-white/95 flex flex-col justify-between shadow-sm">
           <div class="flex items-center justify-between gap-2">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-300">4. Classification Accuracy</span>
-            <span class="px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 font-mono text-[10px] font-bold">Fisher 8.45</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">4. Classification Accuracy</span>
+            <span class="px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[10px] font-bold">Fisher 8.45</span>
           </div>
-          <p class="text-base lg:text-lg font-extrabold font-mono text-emerald-300 mt-1">100.0% Zero-Overlap</p>
-          <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">จำแนกใบชา 10 ชนิดแม่นยำ 100% โดยไม่ซ้อนทับ (Fisher Separation Ratio = 8.45)</p>
+          <p class="text-base lg:text-lg font-extrabold font-mono text-emerald-700 mt-1">100.0% Zero-Overlap</p>
+          <p class="text-[11px] text-slate-600 mt-0.5 leading-snug">จำแนกใบชา 10 ชนิดแม่นยำ 100% โดยไม่ซ้อนทับ (Fisher Separation Ratio = 8.45)</p>
         </div>
       </section>
 
-      <!-- 3. ROW 2: 3-PILLAR SUMMARY (3 คอลัมน์สรุปแก่นงานวิจัย) -->
-      <section aria-label="3-Pillar Research Summary" class="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4 my-1 lg:my-2 flex-1 min-h-0">
+      <!-- 3. ROW 2: 3-PILLAR SUMMARY (3 คอลัมน์สรุปแก่นงานวิจัย - LIGHT THEME) -->
+      <section aria-label="3-Pillar Research Summary" class="grid grid-cols-1 lg:grid-cols-3 gap-2.5 lg:gap-3.5 shrink-0">
         <!-- Pillar 1: Qualitative 3D PCA -->
-        <div class="intro-bento-card rounded-2xl p-3.5 lg:p-4 border border-sky-400/30 bg-gradient-to-b from-slate-900/80 to-slate-900/55 flex flex-col justify-between">
-          <div class="space-y-1.5">
+        <div class="intro-bento-card rounded-2xl p-3.5 border border-sky-200 bg-gradient-to-b from-white to-sky-50/60 flex flex-col justify-between shadow-sm">
+          <div class="space-y-1">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 border border-sky-400/40 text-sky-300 text-[11px] font-bold">Pillar 1 • Qualitative 3D PCA</span>
-              <span class="text-lg">🧭</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-sky-100 border border-sky-200 text-sky-800 text-[11px] font-bold">Pillar 1 • Qualitative 3D PCA</span>
+              <span class="text-base">🧭</span>
             </div>
-            <h2 class="text-sm sm:text-base font-bold text-white leading-snug">
+            <h2 class="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
               การจำแนกพื้นที่กลิ่น 3 มิติของใบชา 10 ชนิด และความเสถียรของสัญญาณในรอบกลาง (Cycle 3–5)
             </h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              วิเคราะห์ 3D PCA Score &amp; Sensor Loading Vectors จากเซ็นเซอร์ MOS 12 ตัว เปรียบเทียบโหมดรอบการวัด Early (1–3), Mid (3–5) และ Late (5–7) พบว่าช่วง <strong class="text-sky-300">Mid-Cycle (Cycle 3–5)</strong> ปราศจาก First-Cycle Conditioning Effect และให้การแยกกลุ่มคลัสเตอร์ชัดเจนที่สุด
+            <p class="text-[11px] sm:text-xs text-slate-600 leading-relaxed">
+              วิเคราะห์ 3D PCA Score &amp; Sensor Loading Vectors จากเซ็นเซอร์ MOS 12 ตัว เปรียบเทียบโหมดรอบการวัด Early (1–3), Mid (3–5) และ Late (5–7) พบว่าช่วง <strong class="text-sky-700">Mid-Cycle (Cycle 3–5)</strong> ปราศจาก First-Cycle Conditioning Effect และให้การแยกกลุ่มคลัสเตอร์ชัดเจนที่สุด
             </p>
           </div>
-          <div class="mt-2.5 pt-2 border-t border-slate-700/70 flex flex-wrap items-center justify-between gap-1 text-[11px] font-mono text-sky-200">
+          <div class="mt-2 pt-1.5 border-t border-sky-100 flex flex-wrap items-center justify-between gap-1 text-[10px] sm:text-[11px] font-mono text-sky-800 font-semibold">
             <span>• 10 Tea Clusters + 95% Ellipsoids</span>
             <span>• 12 Sensor Biplot Vectors</span>
           </div>
         </div>
 
         <!-- Pillar 2: Quantitative FFT -->
-        <div class="intro-bento-card rounded-2xl p-3.5 lg:p-4 border border-cyan-400/30 bg-gradient-to-b from-slate-900/80 to-slate-900/55 flex flex-col justify-between">
-          <div class="space-y-1.5">
+        <div class="intro-bento-card rounded-2xl p-3.5 border border-sky-200 bg-gradient-to-b from-white to-sky-50/60 flex flex-col justify-between shadow-sm">
+          <div class="space-y-1">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 text-[11px] font-bold">Pillar 2 • Quantitative FFT</span>
-              <span class="text-lg">📈</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-cyan-100 border border-cyan-200 text-cyan-900 text-[11px] font-bold">Pillar 2 • Quantitative FFT</span>
+              <span class="text-base">📈</span>
             </div>
-            <h2 class="text-sm sm:text-base font-bold text-white leading-snug">
+            <h2 class="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
               การวิเคราะห์สเปกตรัมความถี่ (190s) และการชดเชยค่า Baseline (Ambient &amp; Plate Blanks)
             </h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              แปลงสัญญาณคาบการวัด 190 วินาทีด้วย <strong class="text-cyan-300">Hanning-Windowed Discrete Fourier Transform (FFT)</strong> สกัดพลังงานความถี่หลัก <span class="font-mono">f₁ = 0.0053 Hz</span> พร้อมหักลบสัญญาณพื้นหลัง <span class="font-mono">Blank_12Oct / Blank_14Oct</span> และ <span class="font-mono">Plate Blank (735 nm)</span> ให้ค่า SNR สูงถึง <span class="font-mono">+20.3 ถึง +38.1 dB</span>
+            <p class="text-[11px] sm:text-xs text-slate-600 leading-relaxed">
+              แปลงสัญญาณคาบการวัด 190 วินาทีด้วย <strong class="text-sky-700">Hanning-Windowed Discrete Fourier Transform (FFT)</strong> สกัดพลังงานความถี่หลัก <span class="font-mono">f₁ = 0.0053 Hz</span> พร้อมหักลบสัญญาณพื้นหลัง <span class="font-mono">Blank_12Oct / Blank_14Oct</span> และ <span class="font-mono">Plate Blank (735 nm)</span> ให้ค่า SNR สูงถึง <span class="font-mono">+20.3 ถึง +38.1 dB</span>
             </p>
           </div>
-          <div class="mt-2.5 pt-2 border-t border-slate-700/70 flex flex-wrap items-center justify-between gap-1 text-[11px] font-mono text-cyan-200">
+          <div class="mt-2 pt-1.5 border-t border-sky-100 flex flex-wrap items-center justify-between gap-1 text-[10px] sm:text-[11px] font-mono text-cyan-800 font-semibold">
             <span>• Fundamental f₁ = 0.0053 Hz</span>
             <span>• Dual Blank Compensation</span>
           </div>
         </div>
 
         <!-- Pillar 3: GC-MS & Anomaly Detection -->
-        <div class="intro-bento-card rounded-2xl p-3.5 lg:p-4 border border-amber-400/35 bg-gradient-to-b from-slate-900/80 to-slate-900/55 flex flex-col justify-between">
-          <div class="space-y-1.5">
+        <div class="intro-bento-card rounded-2xl p-3.5 border border-amber-200 bg-gradient-to-b from-white to-amber-50/50 flex flex-col justify-between shadow-sm">
+          <div class="space-y-1">
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-bold">Pillar 3 • GC-MS &amp; Anomaly Detection</span>
-              <span class="text-lg">🔬</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-100 border border-amber-200 text-amber-900 text-[11px] font-bold">Pillar 3 • GC-MS &amp; Anomaly Detection</span>
+              <span class="text-base">🔬</span>
             </div>
-            <h2 class="text-sm sm:text-base font-bold text-white leading-snug">
+            <h2 class="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
               การเชื่อมโยงผลสารเคมีและการตรวจจับชาต้องสงสัย (Suspect Hojicha [EF] &amp; Suspect Inome [DF])
             </h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              บูรณาการกราฟมาตรฐาน 735 nm (10x/100x, R² &gt; 0.999) และฐานข้อมูล <strong class="text-amber-300">HS-SPME-GC-MS (OAV Proxy &amp; Sensory)</strong> ตรวจพบ <strong class="text-rose-300">Suspect Hojicha [EF]</strong> เบี่ยงไปทาง <span class="font-mono">MQ-4 / MQ-5</span> (Δd = 4.650) และ <strong class="text-rose-300">Suspect Inome [DF]</strong> พุ่งสูงที่ <span class="font-mono">TGS-813</span> (Δd = 4.401)
+            <p class="text-[11px] sm:text-xs text-slate-600 leading-relaxed">
+              บูรณาการกราฟมาตรฐาน 735 nm (10x/100x, R² &gt; 0.999) และฐานข้อมูล <strong class="text-amber-800">HS-SPME-GC-MS (OAV Proxy &amp; Sensory ชา A–H)</strong> ตรวจพบ <strong class="text-rose-700">Suspect Hojicha [EF]</strong> เบี่ยงไปทาง <span class="font-mono">MQ-4 / MQ-5</span> (Δd = 4.650) และ <strong class="text-rose-700">Suspect Inome [DF]</strong> พุ่งสูงที่ <span class="font-mono">TGS-813</span> (Δd = 4.401)
             </p>
           </div>
-          <div class="mt-2.5 pt-2 border-t border-slate-700/70 flex flex-wrap items-center justify-between gap-1 text-[11px] font-mono text-amber-200">
+          <div class="mt-2 pt-1.5 border-t border-amber-100 flex flex-wrap items-center justify-between gap-1 text-[10px] sm:text-[11px] font-mono text-amber-900 font-semibold">
             <span>• EF → MQ-4/MQ-5 (Δd = 4.650)</span>
             <span>• DF → TGS-813 (Δd = 4.401)</span>
           </div>
         </div>
       </section>
 
-      <!-- 4. FOOTER: INTERACTIVE CALL-TO-ACTION & 4 QUICK-JUMP SHORTCUTS -->
-      <footer class="pt-3 lg:pt-3.5 border-t border-slate-700/70 flex flex-col items-center space-y-2.5 shrink-0">
+      <!-- 4. FOOTER: INTERACTIVE CALL-TO-ACTION & 5 SECTION QUICK-JUMP BUTTONS -->
+      <footer class="pt-2.5 lg:pt-3 border-t border-sky-200/80 flex flex-col items-center space-y-2.5 shrink-0">
         <!-- Primary CTA Button -->
-        <button id="btnEnterDashboardMain" type="button" class="intro-cta-main-btn group relative inline-flex items-center justify-center gap-3 px-7 sm:px-9 py-2.5 sm:py-3 rounded-2xl font-bold text-sm sm:text-base text-white shadow-xl transition-all duration-200 cursor-pointer">
+        <button id="btnEnterDashboardMain" type="button" class="intro-cta-main-btn group relative inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-2.5 rounded-2xl font-bold text-xs sm:text-sm lg:text-base text-white shadow-lg transition-all duration-200 cursor-pointer">
           <span>🚀 เข้าสู่ Interactive Dashboard (Explore Full Data)</span>
-          <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/20 text-xs group-hover:translate-x-1 transition-transform">→</span>
+          <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-white/25 text-xs group-hover:translate-x-1 transition-transform">→</span>
         </button>
 
-        <!-- 4 Section Quick-Jump Shortcut Buttons -->
-        <div class="w-full flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
-          <span class="text-[11px] text-slate-400 font-medium mr-1 hidden sm:inline">ทางลัดเข้าสู่หมวดหมู่:</span>
-          <button type="button" data-splash-jump="#sec-qualitative" class="splash-jump-btn px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-sky-600/90 text-sky-200 hover:text-white border border-sky-400/30 text-xs font-semibold transition cursor-pointer">
-            1. เชิงคุณภาพ 3D PCA (#sec-qualitative)
-          </button>
-          <button type="button" data-splash-jump="#sec-quantitative" class="splash-jump-btn px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-cyan-600/90 text-cyan-200 hover:text-white border border-cyan-400/30 text-xs font-semibold transition cursor-pointer">
-            2. เชิงปริมาณ FFT (#sec-quantitative)
-          </button>
-          <button type="button" data-splash-jump="#sec-gcms-chemical" class="splash-jump-btn px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-amber-600/90 text-amber-200 hover:text-white border border-amber-400/30 text-xs font-semibold transition cursor-pointer">
-            3. วิเคราะห์สารเคมี GC-MS &amp; MEA (#sec-gcms-chemical)
-          </button>
-          <button type="button" data-splash-jump="#sec-executive" class="splash-jump-btn px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-emerald-600/90 text-emerald-200 hover:text-white border border-emerald-400/30 text-xs font-semibold transition cursor-pointer">
-            4. บทสรุปผู้บริหาร (#sec-executive)
-          </button>
+        <!-- 5 Section Quick-Jump Shortcut Buttons (Responsive Grid for Mobile & Desktop) -->
+        <div class="w-full space-y-1.5">
+          <div class="text-center text-[11px] font-bold text-sky-800 uppercase tracking-wider">
+            คลิกเลือกเข้าสู่แต่ละส่วนของเว็บไซต์โดยตรง (5 ส่วนหลัก):
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5 sm:gap-2">
+            <button type="button" data-splash-jump="sec-qualitative" class="splash-jump-btn px-2.5 py-2 rounded-xl bg-sky-50 hover:bg-sky-600 text-sky-900 hover:text-white border border-sky-200 text-[11px] font-bold transition cursor-pointer text-left flex items-center gap-1.5 shadow-sm">
+              <span class="px-1.5 py-0.5 rounded bg-sky-200/80 text-sky-900 font-mono text-[10px] shrink-0">ส่วนที่ 1</span>
+              <span class="line-clamp-2 leading-tight">ข้อมูลเชิงคุณภาพ — 3D Interactive PCA &amp; Active Sensor Vectors</span>
+            </button>
+            <button type="button" data-splash-jump="sec-quantitative" class="splash-jump-btn px-2.5 py-2 rounded-xl bg-sky-50 hover:bg-sky-600 text-sky-900 hover:text-white border border-sky-200 text-[11px] font-bold transition cursor-pointer text-left flex items-center gap-1.5 shadow-sm">
+              <span class="px-1.5 py-0.5 rounded bg-sky-200/80 text-sky-900 font-mono text-[10px] shrink-0">ส่วนที่ 2</span>
+              <span class="line-clamp-2 leading-tight">ข้อมูลเชิงปริมาณ — กราฟ FFT Spectral Analysis (190s) &amp; การจำแนกใบชา 10 ชนิด</span>
+            </button>
+            <button type="button" data-splash-jump="sec-gcms-chemical" class="splash-jump-btn px-2.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-600 text-amber-900 hover:text-white border border-amber-200 text-[11px] font-bold transition cursor-pointer text-left flex items-center gap-1.5 shadow-sm">
+              <span class="px-1.5 py-0.5 rounded bg-amber-200/80 text-amber-900 font-mono text-[10px] shrink-0">ส่วนที่ 3</span>
+              <span class="line-clamp-2 leading-tight">การวิเคราะห์สารเคมี (GC-MS / 735 nm Calibration) — Hojicha [E] vs Suspect [EF]</span>
+            </button>
+            <button type="button" data-splash-jump="sec-spme-gcms" class="splash-jump-btn px-2.5 py-2 rounded-xl bg-teal-50 hover:bg-teal-600 text-teal-900 hover:text-white border border-teal-200 text-[11px] font-bold transition cursor-pointer text-left flex items-center gap-1.5 shadow-sm">
+              <span class="px-1.5 py-0.5 rounded bg-teal-200/80 text-teal-900 font-mono text-[10px] shrink-0">ส่วนที่ 4 / 5</span>
+              <span class="line-clamp-2 leading-tight">การวิเคราะห์สารให้กลิ่นระเหยด้วย HS-SPME-GC-MS, ค่า OAV Proxy และผลประเมินทางประสาทสัมผัส (ชา A–H)</span>
+            </button>
+            <button type="button" data-splash-jump="sec-executive" class="splash-jump-btn px-2.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-600 text-emerald-900 hover:text-white border border-emerald-200 text-[11px] font-bold transition cursor-pointer text-left flex items-center gap-1.5 shadow-sm sm:col-span-2 lg:col-span-1">
+              <span class="px-1.5 py-0.5 rounded bg-emerald-200/80 text-emerald-900 font-mono text-[10px] shrink-0">บทสรุป</span>
+              <span class="line-clamp-2 leading-tight">บทสรุปผลการวิเคราะห์บูรณาการ (Executive Summary Card)</span>
+            </button>
+          </div>
         </div>
       </footer>
 
@@ -580,60 +629,56 @@ body.modal-open-lock {
   </div>
 
   <!-- Floating Re-open Overview Slide Button (Bottom-Right) -->
-  <button id="btnFloatingOverviewSlide" type="button" title="เปิดหน้าภาพรวมงานวิจัย (Executive Summary Splash Screen)" class="floating-overview-btn fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 px-4 py-2.5 rounded-full font-bold text-xs sm:text-sm text-white shadow-xl cursor-pointer transition-all duration-200">
+  <button id="btnFloatingOverviewSlide" type="button" title="เปิดหน้าภาพรวมงานวิจัย (Executive Summary Splash Screen)" class="floating-overview-btn fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-40 inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm text-sky-900 shadow-xl cursor-pointer transition-all duration-200">
     <span>📊</span>
     <span>ภาพรวมงานวิจัย (Overview Slide)</span>
   </button>
 
 
   <!-- ===================================================================== -->
-  <!-- TOP ACADEMIC HEADER (Matching enosearoma-sensor-analysis reference)   -->
+  <!-- TOP ACADEMIC HEADER                                                   -->
   <!-- ===================================================================== -->
-  <header class="academic-top-header w-full py-5 px-4 sm:px-6 lg:px-8 text-center">
+  <header class="academic-top-header w-full py-4 sm:py-5 px-4 sm:px-6 lg:px-8 text-center">
     <div class="max-w-5xl mx-auto flex flex-col items-center justify-center space-y-1.5">
       <p class="academic-affiliation text-xs sm:text-sm md:text-base tracking-wide">
-        Department of Biotechnology • Faculty of Science • Mahidol university
+        Department of Biotechnology • Faculty of Science • Mahidol University
       </p>
       <h1 class="academic-protocol text-sm sm:text-base md:text-lg text-slate-900">
         Protocol : Gas-Solid Adsorption and Sorbent Regeneration (R10-S120-P60-F200)
       </h1>
-      <p class="academic-author text-xs sm:text-sm text-slate-600 pt-0.5">
-        Author : Makara Aiamkham SCBT &nbsp;&nbsp;&nbsp;&nbsp; student id : 6705245
-      </p>
     </div>
   </header>
 
   <!-- Main Content Container -->
-  <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8 flex-1">
+  <main class="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-6 space-y-6 flex-1">
 
-    <!-- Central Dashboard Hero Banner & Section Quick-Jump -->
-    <section class="sci-card rounded-2xl p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="space-y-1.5 text-center md:text-left">
+    <!-- Central Dashboard Hero Banner -->
+    <section class="sci-card rounded-2xl p-4 sm:p-6 flex flex-col lg:flex-row items-center justify-between gap-4">
+      <div class="space-y-1.5 text-center lg:text-left">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100/90 border border-sky-200 text-sky-800 text-xs font-bold">
           <span id="dataSourceBadge">● SCBT316 eNose 3D • Aroma Sensor &amp; GC-MS Chemical Analytics</span>
         </div>
-        <h2 class="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight">
+        <h2 class="text-base sm:text-xl lg:text-2xl font-bold text-slate-900 tracking-tight">
           Electronic Nose Aroma Sensor Dashboard — การจำแนกกลิ่นใบชา 10 ชนิดเชิงคุณภาพ ปริมาณ และสารเคมี (PCA • FFT • GC-MS / MEA)
         </h2>
         <p class="text-xs sm:text-sm text-slate-600">
-          วิเคราะห์โปรไฟล์สารระเหยใบชา 10 ชนิดด้วย 12 Active MOS Sensors (MQ-9 ถึง TGS-2610; ตัด MQ-136, MQ-3, TGS-2620 ที่ Variance = 0 อัตโนมัติ) เชื่อมโยงผลวิเคราะห์สารเคมี Hojicha vs Suspect Hojicha (Standard &amp; Standard - Blank)
+          วิเคราะห์โปรไฟล์สารระเหยใบชา 10 ชนิดด้วย 12 Active MOS Sensors (MQ-9 ถึง TGS-2610; ตัด MQ-136, MQ-3, TGS-2620 ที่ Variance = 0 อัตโนมัติ) เชื่อมโยงผลวิเคราะห์สารเคมี Hojicha vs Suspect Hojicha และฐานข้อมูล HS-SPME-GC-MS (ชา A–H)
         </p>
       </div>
 
-      <nav class="flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-semibold shrink-0">
-        <button id="btnNavOverviewSlide" type="button" class="px-3.5 py-2 rounded-xl bg-slate-900 text-sky-200 border border-sky-400/50 hover:bg-sky-700 hover:text-white transition shadow-sm flex items-center gap-1.5 cursor-pointer">
+      <div class="flex flex-wrap items-center justify-center gap-2 shrink-0">
+        <button id="btnNavOverviewSlide" type="button" class="px-4 py-2.5 rounded-xl bg-sky-600 text-white border border-sky-500 hover:bg-sky-700 transition shadow-sm flex items-center gap-2 text-xs sm:text-sm font-bold cursor-pointer">
           <span>📊</span>
           <span>ภาพรวมงานวิจัย (Overview Slide)</span>
         </button>
-        <a href="#sec-qualitative" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-600 hover:text-white transition">1. เชิงคุณภาพ (3D PCA)</a>
-        <a href="#sec-quantitative" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-600 hover:text-white transition">2. เชิงปริมาณ (FFT)</a>
-        <a href="#sec-gcms-chemical" class="px-3.5 py-2 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-600 hover:text-white transition">3. วิเคราะห์สารเคมี GC-MS &amp; PCA/MEA</a>
-        <a href="#sec-executive" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-600 hover:text-white transition">4. บทสรุปผู้บริหาร</a>
-      </nav>
+        <button id="btnShowAllSections" type="button" data-section-btn="all" class="section-tab-btn px-3.5 py-2.5 rounded-xl bg-white text-slate-700 border border-sky-200 hover:bg-sky-50 transition shadow-sm text-xs sm:text-sm font-bold cursor-pointer">
+          📑 แสดงรวมทั้ง 5 ส่วน
+        </button>
+      </div>
     </section>
 
     <!-- Protocol & Sensor Status KPI Cards -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
       <div class="sci-card rounded-2xl p-4 flex items-start justify-between">
         <div>
           <p class="text-xs font-semibold uppercase tracking-wider text-sky-700">Protocol การวัดสัญญาณ</p>
@@ -672,9 +717,81 @@ body.modal-open-lock {
     </section>
 
     <!-- =================================================================== -->
+    <!-- 5-SECTION NAVIGATION SELECTOR BAR (แยกการแสดงผลเป็น 5 ส่วนหลัก)        -->
+    <!-- =================================================================== -->
+    <section id="mainSectionSelectorBar" aria-label="เลือกส่วนการแสดงผลข้อมูล 5 ส่วน" class="sci-card rounded-2xl p-3.5 sm:p-4 space-y-2.5 sticky top-2 z-30">
+      <div class="flex flex-wrap items-center justify-between gap-2 px-1">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-sky-600"></span>
+          <span class="text-xs sm:text-sm font-bold text-slate-900">เลือกส่วนการแสดงผลข้อมูล (แบ่งเป็น 5 ส่วนแยกกัน — คลิกปุ่มเพื่อสลับดูแต่ละส่วน):</span>
+        </div>
+        <span id="currentSectionStatusBadge" class="text-[11px] font-mono font-bold text-sky-800 bg-sky-50 px-2.5 py-0.5 rounded-lg border border-sky-200">
+          กำลังแสดง: ส่วนที่ 1 / 5
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
+        <!-- Section 1 Button -->
+        <button type="button" data-section-btn="sec-qualitative" class="section-tab-btn section-tab-btn-active p-2.5 rounded-xl border border-sky-200 bg-white text-slate-800 text-left transition flex flex-col justify-between gap-1 cursor-pointer">
+          <div class="flex items-center justify-between gap-1">
+            <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-sky-100 text-sky-900">ส่วนที่ 1</span>
+            <span class="text-xs">🧭</span>
+          </div>
+          <div class="text-xs font-bold leading-snug">
+            ส่วนที่ 1: ข้อมูลเชิงคุณภาพ — 3D Interactive PCA &amp; Active Sensor Vectors
+          </div>
+        </button>
+
+        <!-- Section 2 Button -->
+        <button type="button" data-section-btn="sec-quantitative" class="section-tab-btn p-2.5 rounded-xl border border-sky-200 bg-white text-slate-800 text-left transition flex flex-col justify-between gap-1 cursor-pointer">
+          <div class="flex items-center justify-between gap-1">
+            <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-sky-100 text-sky-900">ส่วนที่ 2</span>
+            <span class="text-xs">📈</span>
+          </div>
+          <div class="text-xs font-bold leading-snug">
+            ส่วนที่ 2: ข้อมูลเชิงปริมาณ — กราฟ FFT Spectral Analysis (190s) &amp; การจำแนกใบชา 10 ชนิด
+          </div>
+        </button>
+
+        <!-- Section 3 Button -->
+        <button type="button" data-section-btn="sec-gcms-chemical" class="section-tab-btn p-2.5 rounded-xl border border-sky-200 bg-white text-slate-800 text-left transition flex flex-col justify-between gap-1 cursor-pointer">
+          <div class="flex items-center justify-between gap-1">
+            <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-amber-100 text-amber-900">ส่วนที่ 3</span>
+            <span class="text-xs">🧪</span>
+          </div>
+          <div class="text-xs font-bold leading-snug">
+            ส่วนที่ 3: การวิเคราะห์สารเคมี (GC-MS / 735 nm Calibration) — Hojicha [E] vs Suspect Hojicha [EF] เชื่อมโยงกับ PCA &amp; MEA
+          </div>
+        </button>
+
+        <!-- Section 4 Button -->
+        <button type="button" data-section-btn="sec-spme-gcms" class="section-tab-btn p-2.5 rounded-xl border border-sky-200 bg-white text-slate-800 text-left transition flex flex-col justify-between gap-1 cursor-pointer">
+          <div class="flex items-center justify-between gap-1">
+            <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-teal-100 text-teal-900">ส่วนที่ 4</span>
+            <span class="text-xs">🔬</span>
+          </div>
+          <div class="text-xs font-bold leading-snug">
+            ฐานข้อมูลการวิเคราะห์สารให้กลิ่นระเหยด้วย HS-SPME-GC-MS, ค่า OAV Proxy และผลประเมินทางประสาทสัมผัส (ชา A–H)
+          </div>
+        </button>
+
+        <!-- Section 5 Button -->
+        <button type="button" data-section-btn="sec-executive" class="section-tab-btn p-2.5 rounded-xl border border-sky-200 bg-white text-slate-800 text-left transition flex flex-col justify-between gap-1 cursor-pointer sm:col-span-2 lg:col-span-1">
+          <div class="flex items-center justify-between gap-1">
+            <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-900">ส่วนที่ 5</span>
+            <span class="text-xs">🏆</span>
+          </div>
+          <div class="text-xs font-bold leading-snug">
+            บทสรุปผลการวิเคราะห์บูรณาการ (Executive Summary Card)
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
     <!-- SECTION 1: QUALITATIVE ANALYSIS (3D PCA + Controls + 3 Sub-Tabs)    -->
     <!-- =================================================================== -->
-    <section id="sec-qualitative" class="space-y-6">
+    <section id="sec-qualitative" class="main-dashboard-section space-y-6">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
           <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Part 01 • Qualitative Odor Space Analysis</span>
@@ -1005,12 +1122,19 @@ body.modal-open-lock {
           </div>
         </div>
       </div>
+      <!-- Section 1 Footer Navigation -->
+      <div class="sci-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <span class="text-xs font-semibold text-slate-500">จบส่วนที่ 1: ข้อมูลเชิงคุณภาพ — 3D Interactive PCA &amp; Active Sensor Vectors</span>
+        <button type="button" data-section-btn="sec-quantitative" class="px-4 py-2 rounded-xl bg-sky-600 text-white text-xs font-bold hover:bg-sky-700 transition cursor-pointer shadow-sm">
+          ไปยัง ส่วนที่ 2: ข้อมูลเชิงปริมาณ (FFT &amp; การจำแนกใบชา 10 ชนิด) →
+        </button>
+      </div>
     </section>
 
     <!-- =================================================================== -->
     <!-- SECTION 2: QUANTITATIVE ANALYSIS (190s FFT & Zero-Overlap Summary)  -->
     <!-- =================================================================== -->
-    <section id="sec-quantitative" class="space-y-6">
+    <section id="sec-quantitative" class="main-dashboard-section hidden space-y-6">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
           <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Part 02 • Quantitative Spectral &amp; Classification Analysis</span>
@@ -1112,12 +1236,21 @@ body.modal-open-lock {
           </table>
         </div>
       </div>
+      <!-- Section 2 Footer Navigation -->
+      <div class="sci-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <button type="button" data-section-btn="sec-qualitative" class="px-4 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 text-xs font-bold hover:bg-sky-100 transition cursor-pointer">
+          ← ย้อนกลับ ส่วนที่ 1: ข้อมูลเชิงคุณภาพ (3D PCA)
+        </button>
+        <button type="button" data-section-btn="sec-gcms-chemical" class="px-4 py-2 rounded-xl bg-sky-600 text-white text-xs font-bold hover:bg-sky-700 transition cursor-pointer shadow-sm">
+          ไปยัง ส่วนที่ 3: การวิเคราะห์สารเคมี (GC-MS / 735 nm Calibration) →
+        </button>
+      </div>
     </section>
 
     <!-- =================================================================== -->
     <!-- SECTION 3: GC-MS / UV-VIS 735 nm CHEMICAL ASSAY & PCA / MEA LINK    -->
     <!-- =================================================================== -->
-    <section id="sec-gcms-chemical" class="space-y-6">
+    <section id="sec-gcms-chemical" class="main-dashboard-section hidden space-y-6">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
           <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Part 03 • GC-MS &amp; Spectrophotometric Chemical Analysis Coupled with PCA &amp; MEA</span>
@@ -1430,10 +1563,33 @@ body.modal-open-lock {
         </div>
       </div>
 
-      <!-- ================================================================= -->
-      <!-- INTERACTIVE HS-SPME-GC-MS, OAV & SENSORY EXPLORER (TEAS A–H)      -->
-      <!-- Updated from HS-SPME-GC-MS Analysis Report .xlsx                  -->
-      <!-- ================================================================= -->
+      <!-- Section 3 Footer Navigation -->
+      <div class="sci-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <button type="button" data-section-btn="sec-quantitative" class="px-4 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 text-xs font-bold hover:bg-sky-100 transition cursor-pointer">
+          ← ย้อนกลับ ส่วนที่ 2: ข้อมูลเชิงปริมาณ (FFT)
+        </button>
+        <button type="button" data-section-btn="sec-spme-gcms" class="px-4 py-2 rounded-xl bg-sky-600 text-white text-xs font-bold hover:bg-sky-700 transition cursor-pointer shadow-sm">
+          ไปยัง ส่วนที่ 4: ฐานข้อมูลการวิเคราะห์สารให้กลิ่นระเหยด้วย HS-SPME-GC-MS (ชา A–H) →
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SECTION 4: HS-SPME-GC-MS, OAV PROXY & SENSORY EVALUATION (TEAS A–H) -->
+    <!-- =================================================================== -->
+    <section id="sec-spme-gcms" class="main-dashboard-section hidden space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-teal-700">Part 04 • HS-SPME-GC-MS Volatile Profiling, OAV Proxy &amp; Sensory Evaluation (Teas A–H)</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">
+            ฐานข้อมูลการวิเคราะห์สารให้กลิ่นระเหยด้วย HS-SPME-GC-MS, ค่า OAV Proxy และผลประเมินทางประสาทสัมผัส (ชา A–H)
+          </h2>
+        </div>
+        <span class="px-3 py-1 text-xs font-semibold rounded-xl bg-teal-50 text-teal-800 border border-teal-200">
+          Match Quality ≥ 80 • Library: W10N14.L • Sensory Scale 0–5
+        </span>
+      </div>
+
       <div id="spmeGcmsExplorerCard" class="sci-card rounded-2xl overflow-hidden">
         <div class="sci-card-header px-5 py-4 flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -1697,15 +1853,25 @@ body.modal-open-lock {
           </div>
         </div>
       </div>
+
+      <!-- Section 4 Footer Navigation -->
+      <div class="sci-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <button type="button" data-section-btn="sec-gcms-chemical" class="px-4 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 text-xs font-bold hover:bg-sky-100 transition cursor-pointer">
+          ← ย้อนกลับ ส่วนที่ 3: การวิเคราะห์สารเคมี (GC-MS / 735 nm Calibration)
+        </button>
+        <button type="button" data-section-btn="sec-executive" class="px-4 py-2 rounded-xl bg-sky-600 text-white text-xs font-bold hover:bg-sky-700 transition cursor-pointer shadow-sm">
+          ไปยัง ส่วนที่ 5: บทสรุปผลการวิเคราะห์บูรณาการ (Executive Summary Card) →
+        </button>
+      </div>
     </section>
 
     <!-- =================================================================== -->
-    <!-- SECTION 4: EXECUTIVE SUMMARY CARD (Chemical Insights & Anomalies)   -->
+    <!-- SECTION 5: EXECUTIVE SUMMARY CARD (Chemical Insights & Anomalies)   -->
     <!-- =================================================================== -->
-    <section id="sec-executive" class="space-y-6 pb-8">
+    <section id="sec-executive" class="main-dashboard-section hidden space-y-6 pb-8">
       <div>
-        <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Part 04 • Executive Summary &amp; Multi-Modal Chemical Aroma Insights</span>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">ส่วนที่ 4: บทสรุปผลการวิเคราะห์บูรณาการ (Executive Summary Card)</h2>
+        <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Part 05 • Executive Summary &amp; Multi-Modal Chemical Aroma Insights</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900">บทสรุปผลการวิเคราะห์บูรณาการ (Executive Summary Card)</h2>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -1771,6 +1937,16 @@ body.modal-open-lock {
             </p>
           </div>
         </div>
+      </div>
+
+      <!-- Section 5 Footer Navigation -->
+      <div class="sci-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <button type="button" data-section-btn="sec-spme-gcms" class="px-4 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 text-xs font-bold hover:bg-sky-100 transition cursor-pointer">
+          ← ย้อนกลับ ส่วนที่ 4: ฐานข้อมูล HS-SPME-GC-MS, ค่า OAV Proxy และ Sensory (ชา A–H)
+        </button>
+        <button type="button" data-section-btn="sec-qualitative" class="px-4 py-2 rounded-xl bg-sky-600 text-white text-xs font-bold hover:bg-sky-700 transition cursor-pointer shadow-sm">
+          ↺ กลับไปยัง ส่วนที่ 1: ข้อมูลเชิงคุณภาพ (3D Interactive PCA)
+        </button>
       </div>
     </section>
 
@@ -3106,10 +3282,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     if (btnJumpPcaHojichaPair) {
       btnJumpPcaHojichaPair.addEventListener('click', function () {
         setSampleSelection(['A', 'E', 'EF']);
-        const secQual = document.getElementById('sec-qualitative');
-        if (secQual) {
-          secQual.scrollIntoView({ behavior: 'smooth' });
-        }
+        switchMainSection('sec-qualitative', true);
       });
     }
 
@@ -4835,6 +5008,96 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     renderChemMeaCorrelationChart();
   }
 
+  const SECTION_METADATA = {
+    'sec-qualitative': 'กำลังแสดง: ส่วนที่ 1 / 5 — ข้อมูลเชิงคุณภาพ (3D Interactive PCA)',
+    'sec-quantitative': 'กำลังแสดง: ส่วนที่ 2 / 5 — ข้อมูลเชิงปริมาณ (FFT Spectral Analysis)',
+    'sec-gcms-chemical': 'กำลังแสดง: ส่วนที่ 3 / 5 — การวิเคราะห์สารเคมี (GC-MS / 735 nm)',
+    'sec-spme-gcms': 'กำลังแสดง: ส่วนที่ 4 / 5 — ฐานข้อมูล HS-SPME-GC-MS, OAV & Sensory (ชา A–H)',
+    'sec-executive': 'กำลังแสดง: ส่วนที่ 5 / 5 — บทสรุปผลการวิเคราะห์บูรณาการ',
+    'all': 'กำลังแสดง: ทั้งหมด 5 ส่วนพร้อมกัน (Full View)'
+  };
+
+  let activeMainSection = 'sec-qualitative';
+
+  function refreshVisibleSectionCharts(sectionId) {
+    setTimeout(function () {
+      const pcaState = getCurrentPcaState();
+      if (sectionId === 'sec-qualitative' || sectionId === 'all') {
+        render3dPca(pcaState);
+        updateSubTabs();
+        const plotEl = document.getElementById('plotly3dContainer');
+        if (plotEl && window.Plotly && Plotly.Plots) {
+          Plotly.Plots.resize(plotEl);
+        }
+      }
+      if (sectionId === 'sec-quantitative' || sectionId === 'all') {
+        renderFftChart();
+        renderClassificationSummary();
+      }
+      if (sectionId === 'sec-gcms-chemical' || sectionId === 'all') {
+        renderChemCalibrationCharts();
+        renderChemConcBarChart();
+        renderChemMeaCorrelationChart();
+      }
+      if (sectionId === 'sec-spme-gcms' || sectionId === 'all') {
+        renderSpmeTeaExplorer();
+        renderSpmeSummaryTables();
+        renderSpmeExcludedTable();
+      }
+    }, 60);
+  }
+
+  function switchMainSection(sectionId, shouldScroll) {
+    const cleanId = (sectionId || 'sec-qualitative').replace(/^#/, '');
+    activeMainSection = cleanId;
+
+    const allSections = document.querySelectorAll('.main-dashboard-section');
+    allSections.forEach(function (sec) {
+      if (cleanId === 'all' || sec.id === cleanId) {
+        sec.classList.remove('hidden');
+      } else {
+        sec.classList.add('hidden');
+      }
+    });
+
+    const sectionBtns = document.querySelectorAll('[data-section-btn]');
+    sectionBtns.forEach(function (btn) {
+      const target = btn.getAttribute('data-section-btn');
+      if (target === cleanId) {
+        btn.classList.add('section-tab-btn-active');
+      } else {
+        btn.classList.remove('section-tab-btn-active');
+      }
+    });
+
+    const statusBadge = document.getElementById('currentSectionStatusBadge');
+    if (statusBadge && SECTION_METADATA[cleanId]) {
+      statusBadge.textContent = SECTION_METADATA[cleanId];
+    }
+
+    refreshVisibleSectionCharts(cleanId);
+
+    if (shouldScroll) {
+      setTimeout(function () {
+        const navBar = document.getElementById('mainSectionSelectorBar');
+        const targetEl = cleanId === 'all' ? navBar : document.getElementById(cleanId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 90);
+    }
+  }
+
+  function initSectionNavigation() {
+    const sectionBtns = document.querySelectorAll('[data-section-btn]');
+    sectionBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const targetId = btn.getAttribute('data-section-btn');
+        switchMainSection(targetId, true);
+      });
+    });
+  }
+
   function initIntroSplashModal() {
     const modal = document.getElementById('introSplashModal');
     const btnMainEnter = document.getElementById('btnEnterDashboardMain');
@@ -4849,22 +5112,15 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       document.body.classList.add('modal-open-lock');
     }
 
-    function closeSplashModal(targetSelector) {
+    function closeSplashModal(targetSectionId) {
       modal.classList.add('splash-hidden');
       document.body.classList.remove('modal-open-lock');
 
-      setTimeout(function () {
-        const plotEl = document.getElementById('plotly3dContainer');
-        if (plotEl && window.Plotly && Plotly.Plots) {
-          Plotly.Plots.resize(plotEl);
-        }
-        if (targetSelector) {
-          const targetEl = document.querySelector(targetSelector);
-          if (targetEl) {
-            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }
-      }, 180);
+      if (targetSectionId) {
+        switchMainSection(targetSectionId, true);
+      } else {
+        refreshVisibleSectionCharts(activeMainSection);
+      }
     }
 
     // Always display Intro Modal on initial website load
@@ -4878,8 +5134,8 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
     jumpBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        const targetSelector = btn.getAttribute('data-splash-jump');
-        closeSplashModal(targetSelector);
+        const targetSectionId = btn.getAttribute('data-splash-jump');
+        closeSplashModal(targetSectionId);
       });
     });
 
@@ -4903,6 +5159,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
   }
 
   window.addEventListener('DOMContentLoaded', async function () {
+    initSectionNavigation();
     initIntroSplashModal();
     initControls();
     if (window.innerWidth < 640) {
@@ -4917,10 +5174,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     });
     window.addEventListener('orientationchange', function () {
       setTimeout(function () {
-        const plotEl = document.getElementById('plotly3dContainer');
-        if (plotEl && window.Plotly && Plotly.Plots) {
-          Plotly.Plots.resize(plotEl);
-        }
+        refreshVisibleSectionCharts(activeMainSection);
       }, 200);
     });
     renderClassificationSummary();
@@ -4928,6 +5182,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     renderSpmeTeaExplorer();
     renderSpmeExcludedTable();
     updateDashboard();
+    switchMainSection('sec-qualitative', false);
     await trySyncExternalJson();
   });
 })();

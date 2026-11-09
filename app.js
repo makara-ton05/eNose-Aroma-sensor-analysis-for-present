@@ -1313,10 +1313,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     if (btnJumpPcaHojichaPair) {
       btnJumpPcaHojichaPair.addEventListener('click', function () {
         setSampleSelection(['A', 'E', 'EF']);
-        const secQual = document.getElementById('sec-qualitative');
-        if (secQual) {
-          secQual.scrollIntoView({ behavior: 'smooth' });
-        }
+        switchMainSection('sec-qualitative', true);
       });
     }
 
@@ -3042,6 +3039,96 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     renderChemMeaCorrelationChart();
   }
 
+  const SECTION_METADATA = {
+    'sec-qualitative': 'กำลังแสดง: ส่วนที่ 1 / 5 — ข้อมูลเชิงคุณภาพ (3D Interactive PCA)',
+    'sec-quantitative': 'กำลังแสดง: ส่วนที่ 2 / 5 — ข้อมูลเชิงปริมาณ (FFT Spectral Analysis)',
+    'sec-gcms-chemical': 'กำลังแสดง: ส่วนที่ 3 / 5 — การวิเคราะห์สารเคมี (GC-MS / 735 nm)',
+    'sec-spme-gcms': 'กำลังแสดง: ส่วนที่ 4 / 5 — ฐานข้อมูล HS-SPME-GC-MS, OAV & Sensory (ชา A–H)',
+    'sec-executive': 'กำลังแสดง: ส่วนที่ 5 / 5 — บทสรุปผลการวิเคราะห์บูรณาการ',
+    'all': 'กำลังแสดง: ทั้งหมด 5 ส่วนพร้อมกัน (Full View)'
+  };
+
+  let activeMainSection = 'sec-qualitative';
+
+  function refreshVisibleSectionCharts(sectionId) {
+    setTimeout(function () {
+      const pcaState = getCurrentPcaState();
+      if (sectionId === 'sec-qualitative' || sectionId === 'all') {
+        render3dPca(pcaState);
+        updateSubTabs();
+        const plotEl = document.getElementById('plotly3dContainer');
+        if (plotEl && window.Plotly && Plotly.Plots) {
+          Plotly.Plots.resize(plotEl);
+        }
+      }
+      if (sectionId === 'sec-quantitative' || sectionId === 'all') {
+        renderFftChart();
+        renderClassificationSummary();
+      }
+      if (sectionId === 'sec-gcms-chemical' || sectionId === 'all') {
+        renderChemCalibrationCharts();
+        renderChemConcBarChart();
+        renderChemMeaCorrelationChart();
+      }
+      if (sectionId === 'sec-spme-gcms' || sectionId === 'all') {
+        renderSpmeTeaExplorer();
+        renderSpmeSummaryTables();
+        renderSpmeExcludedTable();
+      }
+    }, 60);
+  }
+
+  function switchMainSection(sectionId, shouldScroll) {
+    const cleanId = (sectionId || 'sec-qualitative').replace(/^#/, '');
+    activeMainSection = cleanId;
+
+    const allSections = document.querySelectorAll('.main-dashboard-section');
+    allSections.forEach(function (sec) {
+      if (cleanId === 'all' || sec.id === cleanId) {
+        sec.classList.remove('hidden');
+      } else {
+        sec.classList.add('hidden');
+      }
+    });
+
+    const sectionBtns = document.querySelectorAll('[data-section-btn]');
+    sectionBtns.forEach(function (btn) {
+      const target = btn.getAttribute('data-section-btn');
+      if (target === cleanId) {
+        btn.classList.add('section-tab-btn-active');
+      } else {
+        btn.classList.remove('section-tab-btn-active');
+      }
+    });
+
+    const statusBadge = document.getElementById('currentSectionStatusBadge');
+    if (statusBadge && SECTION_METADATA[cleanId]) {
+      statusBadge.textContent = SECTION_METADATA[cleanId];
+    }
+
+    refreshVisibleSectionCharts(cleanId);
+
+    if (shouldScroll) {
+      setTimeout(function () {
+        const navBar = document.getElementById('mainSectionSelectorBar');
+        const targetEl = cleanId === 'all' ? navBar : document.getElementById(cleanId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 90);
+    }
+  }
+
+  function initSectionNavigation() {
+    const sectionBtns = document.querySelectorAll('[data-section-btn]');
+    sectionBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const targetId = btn.getAttribute('data-section-btn');
+        switchMainSection(targetId, true);
+      });
+    });
+  }
+
   function initIntroSplashModal() {
     const modal = document.getElementById('introSplashModal');
     const btnMainEnter = document.getElementById('btnEnterDashboardMain');
@@ -3056,22 +3143,15 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       document.body.classList.add('modal-open-lock');
     }
 
-    function closeSplashModal(targetSelector) {
+    function closeSplashModal(targetSectionId) {
       modal.classList.add('splash-hidden');
       document.body.classList.remove('modal-open-lock');
 
-      setTimeout(function () {
-        const plotEl = document.getElementById('plotly3dContainer');
-        if (plotEl && window.Plotly && Plotly.Plots) {
-          Plotly.Plots.resize(plotEl);
-        }
-        if (targetSelector) {
-          const targetEl = document.querySelector(targetSelector);
-          if (targetEl) {
-            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }
-      }, 180);
+      if (targetSectionId) {
+        switchMainSection(targetSectionId, true);
+      } else {
+        refreshVisibleSectionCharts(activeMainSection);
+      }
     }
 
     // Always display Intro Modal on initial website load
@@ -3085,8 +3165,8 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
     jumpBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        const targetSelector = btn.getAttribute('data-splash-jump');
-        closeSplashModal(targetSelector);
+        const targetSectionId = btn.getAttribute('data-splash-jump');
+        closeSplashModal(targetSectionId);
       });
     });
 
@@ -3110,6 +3190,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
   }
 
   window.addEventListener('DOMContentLoaded', async function () {
+    initSectionNavigation();
     initIntroSplashModal();
     initControls();
     if (window.innerWidth < 640) {
@@ -3124,10 +3205,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     });
     window.addEventListener('orientationchange', function () {
       setTimeout(function () {
-        const plotEl = document.getElementById('plotly3dContainer');
-        if (plotEl && window.Plotly && Plotly.Plots) {
-          Plotly.Plots.resize(plotEl);
-        }
+        refreshVisibleSectionCharts(activeMainSection);
       }, 200);
     });
     renderClassificationSummary();
@@ -3135,6 +3213,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     renderSpmeTeaExplorer();
     renderSpmeExcludedTable();
     updateDashboard();
+    switchMainSection('sec-qualitative', false);
     await trySyncExternalJson();
   });
 })();
