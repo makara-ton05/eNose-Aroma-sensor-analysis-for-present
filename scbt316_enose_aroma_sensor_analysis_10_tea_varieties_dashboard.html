@@ -329,8 +329,8 @@ a {
   }
 
   #radarChartContainerWrap {
-    height: 690px !important;
-    min-height: 650px !important;
+    height: 394px !important;
+    min-height: 375px !important;
     padding: 0.25rem !important;
   }
 
@@ -456,27 +456,29 @@ body.modal-open-lock {
   color: #FFFFFF !important;
 }
 
-/* 1.5X Expanded Odor Footprint Radar Chart Box for Computer & Mobile (640px -> 960px Desktop, 560px -> 840px Tablet, 460px -> 690px Mobile) */
+/* Balanced Odor Footprint Radar Chart Box (Scaled Down 1.75x: 960px -> 548px Desktop, 840px -> 480px Tablet, 690px -> 394px Mobile) */
 #radarChartContainerWrap.radar-chart-large-box {
-  height: 960px !important;
-  min-height: 920px !important;
+  height: 548px !important;
+  min-height: 520px !important;
   width: 100% !important;
-  max-width: 72rem !important;
+  max-width: 560px !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
 @media (max-width: 1024px) {
   #radarChartContainerWrap.radar-chart-large-box {
-    height: 840px !important;
-    min-height: 800px !important;
+    height: 480px !important;
+    min-height: 450px !important;
+    max-width: 500px !important;
   }
 }
 
 @media (max-width: 640px) {
   #radarChartContainerWrap.radar-chart-large-box {
-    height: 690px !important;
-    min-height: 650px !important;
+    height: 394px !important;
+    min-height: 375px !important;
+    max-width: 100% !important;
     padding: 0.25rem !important;
   }
 }
@@ -1110,12 +1112,12 @@ body.modal-open-lock {
             </div>
           </div>
 
-          <!-- 1.5X Expanded Radar Chart Card (960px Height on Computer, 840px on Tablet, 690px on Mobile + Custom Interactive Legend) -->
-          <div class="bg-white p-3 sm:p-6 lg:p-7 rounded-2xl border border-sky-200 shadow-sm space-y-4">
-            <div id="radarCustomLegend" class="flex flex-wrap items-center justify-center gap-2 pb-3 border-b border-sky-100">
-              <!-- Populated via app.js so 100% of canvas area is dedicated to the 1.5x Radar Web -->
+          <!-- Balanced Radar Chart Card (Scaled Down 1.75x: 548px Desktop, 480px Tablet, 394px Mobile + Custom Interactive Legend) -->
+          <div class="bg-white p-3 sm:p-5 lg:p-6 rounded-2xl border border-sky-200 shadow-sm space-y-3">
+            <div id="radarCustomLegend" class="flex flex-wrap items-center justify-center gap-1.5 pb-2.5 border-b border-sky-100">
+              <!-- Populated via app.js -->
             </div>
-            <div id="radarChartContainerWrap" class="radar-chart-large-box relative h-[690px] sm:h-[840px] lg:h-[960px] w-full max-w-6xl mx-auto">
+            <div id="radarChartContainerWrap" class="radar-chart-large-box relative h-[394px] sm:h-[480px] lg:h-[548px] w-full max-w-[560px] mx-auto">
               <canvas id="chartRadar"></canvas>
             </div>
           </div>
@@ -3838,7 +3840,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   let lastRadarOverrideIds = null;
 
-  // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610) — 1.5X Expanded Scale (960px Desktop)
+  // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610) — Scaled Down 1.75X (548px Desktop)
   function renderRadarChart(overrideIds) {
     if (overrideIds !== undefined) {
       lastRadarOverrideIds = overrideIds;
@@ -3857,14 +3859,14 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         label: s.id + ': ' + s.name,
         data: vals,
         borderColor: s.color,
-        backgroundColor: s.color + '24',
-        borderWidth: s.is_suspect ? (isMobile ? 2.6 : 3.5) : (isMobile ? 2.0 : 3.0),
-        borderDash: s.is_suspect ? [6, 4] : [],
-        pointRadius: isMobile ? 3.5 : 5,
-        pointHoverRadius: isMobile ? 5.5 : 8,
+        backgroundColor: s.color + '22',
+        borderWidth: s.is_suspect ? (isMobile ? 2.2 : 2.6) : (isMobile ? 1.8 : 2.2),
+        borderDash: s.is_suspect ? [5, 3] : [],
+        pointRadius: isMobile ? 2.8 : 3.8,
+        pointHoverRadius: isMobile ? 4.5 : 6,
         pointBackgroundColor: s.color,
         pointBorderColor: '#FFFFFF',
-        pointBorderWidth: 1.5
+        pointBorderWidth: 1.2
       });
     });
 
@@ -3884,10 +3886,10 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         maintainAspectRatio: false,
         layout: {
           padding: {
-            top: isMobile ? 2 : 6,
-            bottom: isMobile ? 2 : 6,
-            left: isMobile ? 2 : 6,
-            right: isMobile ? 2 : 6
+            top: isMobile ? 4 : 6,
+            bottom: isMobile ? 4 : 6,
+            left: isMobile ? 4 : 6,
+            right: isMobile ? 4 : 6
           }
         },
         plugins: {
@@ -3895,9 +3897,9 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             display: false
           },
           tooltip: {
-            titleFont: { size: isMobile ? 12 : 14, weight: 'bold' },
-            bodyFont: { size: isMobile ? 11.5 : 13 },
-            padding: 10,
+            titleFont: { size: isMobile ? 11 : 12.5, weight: 'bold' },
+            bodyFont: { size: isMobile ? 10.5 : 12 },
+            padding: 8,
             callbacks: {
               label: function (c) {
                 const unit = radarScaleMode === 'norm' ? '%' : ' ΔAUC';
@@ -3912,27 +3914,27 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             suggestedMax: radarScaleMode === 'norm' ? 100 : undefined,
             ticks: {
               stepSize: radarScaleMode === 'norm' ? 20 : undefined,
-              backdropColor: 'rgba(255, 255, 255, 0.90)',
-              backdropPadding: 3,
+              backdropColor: 'rgba(255, 255, 255, 0.88)',
+              backdropPadding: 2,
               color: '#0369A1',
               font: {
-                size: isMobile ? 10 : 12.5,
+                size: isMobile ? 9 : 10.5,
                 weight: 'bold',
                 family: 'JetBrains Mono, monospace'
               }
             },
             grid: {
               color: '#BAE6FD',
-              lineWidth: isMobile ? 1.1 : 1.4
+              lineWidth: isMobile ? 1.0 : 1.2
             },
             angleLines: {
               color: '#7DD3FC',
-              lineWidth: isMobile ? 1.2 : 1.5
+              lineWidth: isMobile ? 1.0 : 1.2
             },
             pointLabels: {
-              padding: isMobile ? 4 : 6,
+              padding: isMobile ? 3 : 5,
               font: {
-                size: isMobile ? 11.5 : 15,
+                size: isMobile ? 10 : 12,
                 weight: 'bold',
                 family: 'JetBrains Mono, Inter, sans-serif'
               },
@@ -3943,23 +3945,23 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       }
     });
 
-    // Ensure Chart.js re-measures the 1.5x container immediately after subtab display toggle
+    // Ensure Chart.js re-measures the container immediately after subtab display toggle
     setTimeout(function () {
       if (chartRadarInstance) {
         chartRadarInstance.resize();
       }
     }, 30);
 
-    // Populate External Interactive HTML Legend (#radarCustomLegend) so 100% of canvas height goes to the 1.5x Radar Web
+    // Populate External Interactive HTML Legend (#radarCustomLegend) above canvas
     const legendContainer = document.getElementById('radarCustomLegend');
     if (legendContainer) {
       legendContainer.innerHTML = '';
       datasets.forEach(function (ds, idx) {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-sky-200 bg-sky-50/60 hover:bg-sky-100 text-xs sm:text-sm font-bold text-slate-800 transition cursor-pointer shadow-sm';
+        btn.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-sky-200 bg-sky-50/60 hover:bg-sky-100 text-[11px] sm:text-xs font-bold text-slate-800 transition cursor-pointer shadow-sm';
         btn.innerHTML =
-          '<span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background-color:' + ds.borderColor + '; border: 2px solid ' + ds.borderColor + ';"></span>' +
+          '<span class="w-3 h-3 rounded-sm shrink-0" style="background-color:' + ds.borderColor + '; border: 1.5px solid ' + ds.borderColor + ';"></span>' +
           '<span>' + ds.label + '</span>';
         btn.addEventListener('click', function () {
           const isVisible = chartRadarInstance.isDatasetVisible(idx);

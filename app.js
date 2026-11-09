@@ -1801,7 +1801,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   let lastRadarOverrideIds = null;
 
-  // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610) — 1.5X Expanded Scale (960px Desktop)
+  // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610) — Scaled Down 1.75X (548px Desktop)
   function renderRadarChart(overrideIds) {
     if (overrideIds !== undefined) {
       lastRadarOverrideIds = overrideIds;
@@ -1820,14 +1820,14 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         label: s.id + ': ' + s.name,
         data: vals,
         borderColor: s.color,
-        backgroundColor: s.color + '24',
-        borderWidth: s.is_suspect ? (isMobile ? 2.6 : 3.5) : (isMobile ? 2.0 : 3.0),
-        borderDash: s.is_suspect ? [6, 4] : [],
-        pointRadius: isMobile ? 3.5 : 5,
-        pointHoverRadius: isMobile ? 5.5 : 8,
+        backgroundColor: s.color + '22',
+        borderWidth: s.is_suspect ? (isMobile ? 2.2 : 2.6) : (isMobile ? 1.8 : 2.2),
+        borderDash: s.is_suspect ? [5, 3] : [],
+        pointRadius: isMobile ? 2.8 : 3.8,
+        pointHoverRadius: isMobile ? 4.5 : 6,
         pointBackgroundColor: s.color,
         pointBorderColor: '#FFFFFF',
-        pointBorderWidth: 1.5
+        pointBorderWidth: 1.2
       });
     });
 
@@ -1847,10 +1847,10 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         maintainAspectRatio: false,
         layout: {
           padding: {
-            top: isMobile ? 2 : 6,
-            bottom: isMobile ? 2 : 6,
-            left: isMobile ? 2 : 6,
-            right: isMobile ? 2 : 6
+            top: isMobile ? 4 : 6,
+            bottom: isMobile ? 4 : 6,
+            left: isMobile ? 4 : 6,
+            right: isMobile ? 4 : 6
           }
         },
         plugins: {
@@ -1858,9 +1858,9 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             display: false
           },
           tooltip: {
-            titleFont: { size: isMobile ? 12 : 14, weight: 'bold' },
-            bodyFont: { size: isMobile ? 11.5 : 13 },
-            padding: 10,
+            titleFont: { size: isMobile ? 11 : 12.5, weight: 'bold' },
+            bodyFont: { size: isMobile ? 10.5 : 12 },
+            padding: 8,
             callbacks: {
               label: function (c) {
                 const unit = radarScaleMode === 'norm' ? '%' : ' ΔAUC';
@@ -1875,27 +1875,27 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             suggestedMax: radarScaleMode === 'norm' ? 100 : undefined,
             ticks: {
               stepSize: radarScaleMode === 'norm' ? 20 : undefined,
-              backdropColor: 'rgba(255, 255, 255, 0.90)',
-              backdropPadding: 3,
+              backdropColor: 'rgba(255, 255, 255, 0.88)',
+              backdropPadding: 2,
               color: '#0369A1',
               font: {
-                size: isMobile ? 10 : 12.5,
+                size: isMobile ? 9 : 10.5,
                 weight: 'bold',
                 family: 'JetBrains Mono, monospace'
               }
             },
             grid: {
               color: '#BAE6FD',
-              lineWidth: isMobile ? 1.1 : 1.4
+              lineWidth: isMobile ? 1.0 : 1.2
             },
             angleLines: {
               color: '#7DD3FC',
-              lineWidth: isMobile ? 1.2 : 1.5
+              lineWidth: isMobile ? 1.0 : 1.2
             },
             pointLabels: {
-              padding: isMobile ? 4 : 6,
+              padding: isMobile ? 3 : 5,
               font: {
-                size: isMobile ? 11.5 : 15,
+                size: isMobile ? 10 : 12,
                 weight: 'bold',
                 family: 'JetBrains Mono, Inter, sans-serif'
               },
@@ -1906,23 +1906,23 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       }
     });
 
-    // Ensure Chart.js re-measures the 1.5x container immediately after subtab display toggle
+    // Ensure Chart.js re-measures the container immediately after subtab display toggle
     setTimeout(function () {
       if (chartRadarInstance) {
         chartRadarInstance.resize();
       }
     }, 30);
 
-    // Populate External Interactive HTML Legend (#radarCustomLegend) so 100% of canvas height goes to the 1.5x Radar Web
+    // Populate External Interactive HTML Legend (#radarCustomLegend) above canvas
     const legendContainer = document.getElementById('radarCustomLegend');
     if (legendContainer) {
       legendContainer.innerHTML = '';
       datasets.forEach(function (ds, idx) {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-sky-200 bg-sky-50/60 hover:bg-sky-100 text-xs sm:text-sm font-bold text-slate-800 transition cursor-pointer shadow-sm';
+        btn.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-sky-200 bg-sky-50/60 hover:bg-sky-100 text-[11px] sm:text-xs font-bold text-slate-800 transition cursor-pointer shadow-sm';
         btn.innerHTML =
-          '<span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background-color:' + ds.borderColor + '; border: 2px solid ' + ds.borderColor + ';"></span>' +
+          '<span class="w-3 h-3 rounded-sm shrink-0" style="background-color:' + ds.borderColor + '; border: 1.5px solid ' + ds.borderColor + ';"></span>' +
           '<span>' + ds.label + '</span>';
         btn.addEventListener('click', function () {
           const isVisible = chartRadarInstance.isDatasetVisible(idx);
