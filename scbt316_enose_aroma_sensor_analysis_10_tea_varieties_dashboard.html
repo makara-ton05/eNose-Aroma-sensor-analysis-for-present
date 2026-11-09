@@ -456,6 +456,20 @@ body.modal-open-lock {
   color: #FFFFFF !important;
 }
 
+/* Large Odor Footprint Radar Chart Box for Computer & Mobile */
+.radar-chart-large-box {
+  height: 700px;
+  min-height: 660px;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .radar-chart-large-box {
+    height: 600px;
+    min-height: 560px;
+  }
+}
+
 </style>
 </head>
 <body class="min-h-screen antialiased selection:bg-sky-200 selection:text-sky-900 flex flex-col modal-open-lock">
@@ -1037,48 +1051,72 @@ body.modal-open-lock {
           </div>
         </div>
 
-        <!-- Sub-Tab 2: Odor Radar Chart (Expanded for Mobile & Desktop Readability) -->
-        <div id="subtab-panel-radar" class="p-3 sm:p-5 hidden grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
-          <div class="lg:col-span-8 flex flex-col items-center">
-            <div class="w-full flex flex-col sm:flex-row items-center justify-between gap-2.5 mb-3 text-center sm:text-left">
-              <h4 class="text-sm sm:text-base font-bold text-slate-900">Odor Footprint Radar Chart (เปรียบเทียบโปรไฟล์กลิ่น 12 เซ็นเซอร์)</h4>
-              <div class="flex flex-wrap items-center justify-center gap-1.5">
-                <button type="button" id="btnRadarNorm" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-sky-600 text-white cursor-pointer">สเกลสัมพัทธ์ (0–100%)</button>
-                <button type="button" id="btnRadarRaw" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-sky-50 cursor-pointer">ค่าจริงหลังหัก Blank (ΔAUC)</button>
-              </div>
+        <!-- Sub-Tab 2: Odor Radar Chart (Full-Width Large Display for Computer & Mobile Readability) -->
+        <div id="subtab-panel-radar" class="p-4 sm:p-6 hidden space-y-5">
+          <!-- Header & Scale Mode Buttons -->
+          <div class="flex flex-col md:flex-row items-center justify-between gap-3 pb-3 border-b border-sky-100 text-center md:text-left">
+            <div>
+              <h4 class="text-base sm:text-lg lg:text-xl font-bold text-slate-900">
+                Odor Footprint Radar Chart (เปรียบเทียบโปรไฟล์กลิ่น 12 เซ็นเซอร์)
+              </h4>
+              <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+                แสดงโปรไฟล์การตอบสนองของเซ็นเซอร์ MOS ทั้ง 12 ตัวแบบขยายใหญ่เพื่อการอ่านค่าที่ชัดเจนทั้งบนหน้าจอคอมพิวเตอร์และมือถือ
+              </p>
             </div>
-            <div id="radarChartContainerWrap" class="relative h-[460px] sm:h-[520px] lg:h-[560px] w-full bg-white p-1.5 sm:p-4 rounded-2xl border border-sky-100 shadow-inner flex items-center justify-center">
-              <canvas id="chartRadar" class="mx-auto"></canvas>
+            <div class="flex flex-wrap items-center justify-center gap-2 shrink-0">
+              <button type="button" id="btnRadarNorm" class="px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl bg-sky-600 text-white shadow-sm cursor-pointer transition">
+                สเกลสัมพัทธ์ (0–100%)
+              </button>
+              <button type="button" id="btnRadarRaw" class="px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl bg-slate-100 text-slate-700 hover:bg-sky-50 cursor-pointer transition">
+                ค่าจริงหลังหัก Blank (ΔAUC)
+              </button>
             </div>
           </div>
-          <div class="lg:col-span-4 space-y-4">
-            <div class="bg-sky-50/70 p-4 rounded-xl border border-sky-100 space-y-2.5">
-              <h4 class="text-sm font-bold text-slate-900">ชุดเปรียบเทียบโปรไฟล์กลิ่นด่วน (Quick Aroma Comparisons)</h4>
-              <p class="text-xs text-slate-600">คลิกปุ่มด้านล่างเพื่อเปรียบเทียบรูปแบบการตอบสนองของเซ็นเซอร์ทั้ง 12 ตัวระหว่างกลุ่มตัวอย่างสำคัญ:</p>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                <button type="button" id="presetRadarHojichaVsMatcha" class="px-3 py-2 text-xs font-semibold rounded-xl bg-white border border-sky-200 text-slate-800 hover:bg-sky-100 text-left transition">
-                  🔥 Hojicha vs พรีเมียม Matcha
-                  <span class="block text-[10px] text-slate-500">Original/Karigana vs Asahi/Super Premium</span>
-                </button>
-                <button type="button" id="presetRadarInomeSuspect" class="px-3 py-2 text-xs font-semibold rounded-xl bg-white border border-rose-200 text-rose-800 hover:bg-rose-50 text-left transition">
-                  ⚠️ Inome แท้ vs Inome (Suspect)
-                  <span class="block text-[10px] text-rose-600">ตรวจจับการพุ่งผิดปกติของเซ็นเซอร์ TGS-813</span>
-                </button>
-                <button type="button" id="presetRadarHojichaSuspect" class="px-3 py-2 text-xs font-semibold rounded-xl bg-white border border-rose-200 text-rose-800 hover:bg-rose-50 text-left transition">
-                  ⚠️ Original Hojicha vs Suspect
-                  <span class="block text-[10px] text-rose-600">เปรียบเทียบการเบี่ยงเบนที่ MQ-4, MQ-5 และ TGS-2600</span>
-                </button>
-                <button type="button" id="presetRadarAllSelected" class="px-3 py-2 text-xs font-semibold rounded-xl bg-white border border-sky-200 text-slate-800 hover:bg-sky-100 text-left transition">
-                  🔄 แสดงตามที่เลือกไว้ในข้อ 2
-                  <span class="block text-[10px] text-slate-500">ซิงค์กับแผงตัวกรองหลักด้านบน</span>
-                </button>
-              </div>
+
+          <!-- Quick Aroma Comparison Preset Bar (4 Buttons across top of Radar Chart) -->
+          <div class="bg-sky-50/80 p-3.5 sm:p-4 rounded-2xl border border-sky-200/80 space-y-2.5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h5 class="text-xs sm:text-sm font-bold text-sky-900">⚡ ชุดเปรียบเทียบโปรไฟล์กลิ่นด่วน (Quick Aroma Comparisons — คลิกเพื่อกรองกราฟ Radar ทันที):</h5>
+              <span class="text-[11px] font-mono text-sky-700 font-semibold">คลิกที่ชื่อใบชาด้านล่างกราฟเพื่อซ่อน/แสดงเฉพาะสายพันธุ์ได้</span>
             </div>
-            <div class="bg-white p-4 rounded-xl border border-sky-100 space-y-2 text-xs text-slate-700 leading-relaxed">
-              <div class="font-bold text-slate-900">จุดสังเกตสำคัญจาก Radar Profile (Mid: Cycle 3–5):</div>
-              <p>• <strong>กลุ่ม Hojicha (E, A):</strong> โดดเด่นที่เซ็นเซอร์ <span class="font-semibold text-amber-700">MQ-2, TGS-2600 และ MQ-7</span> ซึ่งไวต่อสารระเหยจากการคั่วใบชาและก้านชา</p>
-              <p>• <strong>Inome (Suspect) [DF]:</strong> มีค่าตอบสนองที่ <span class="font-semibold text-rose-600">TGS-813 สูงถึง 76.8</span> (สูงกว่า Inome แท้หลายเท่า) บ่งชี้สารไฮโดรคาร์บอนเบา/อัลดีไฮด์จากการออกซิเดชันหรือกลิ่นผิดปกติ</p>
-              <p>• <strong>Original Hojicha (Suspect) [EF]:</strong> สูญเสียสมดุล TGS-2600/MQ-7 ของชาคั่วแท้ และเบี่ยงไปมีค่าสูงที่ <span class="font-semibold text-rose-600">MQ-4 (183.3) และ MQ-5 (133.2)</span></p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+              <button type="button" id="presetRadarHojichaVsMatcha" class="px-3.5 py-2.5 text-xs sm:text-sm font-bold rounded-xl bg-white border border-sky-200 text-slate-800 hover:bg-sky-100 hover:border-sky-400 text-left transition shadow-sm cursor-pointer">
+                🔥 Hojicha vs พรีเมียม Matcha
+                <span class="block text-[11px] font-normal text-slate-500 mt-0.5">Original/Karigana vs Asahi/Super Premium</span>
+              </button>
+              <button type="button" id="presetRadarInomeSuspect" class="px-3.5 py-2.5 text-xs sm:text-sm font-bold rounded-xl bg-white border border-rose-200 text-rose-800 hover:bg-rose-50 hover:border-rose-400 text-left transition shadow-sm cursor-pointer">
+                ⚠️ Inome แท้ vs Inome (Suspect)
+                <span class="block text-[11px] font-normal text-rose-600 mt-0.5">ตรวจจับการพุ่งผิดปกติของเซ็นเซอร์ TGS-813</span>
+              </button>
+              <button type="button" id="presetRadarHojichaSuspect" class="px-3.5 py-2.5 text-xs sm:text-sm font-bold rounded-xl bg-white border border-rose-200 text-rose-800 hover:bg-rose-50 hover:border-rose-400 text-left transition shadow-sm cursor-pointer">
+                ⚠️ Original Hojicha vs Suspect
+                <span class="block text-[11px] font-normal text-rose-600 mt-0.5">เปรียบเทียบการเบี่ยงเบนที่ MQ-4, MQ-5 และ TGS-2600</span>
+              </button>
+              <button type="button" id="presetRadarAllSelected" class="px-3.5 py-2.5 text-xs sm:text-sm font-bold rounded-xl bg-white border border-sky-200 text-slate-800 hover:bg-sky-100 hover:border-sky-400 text-left transition shadow-sm cursor-pointer">
+                🔄 แสดงตามที่เลือกไว้ในข้อ 2
+                <span class="block text-[11px] font-normal text-slate-500 mt-0.5">ซิงค์กับแผงตัวกรองหลักด้านบน</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Large Full-Width Radar Chart Canvas Box (Block container for 100% Chart.js expansion) -->
+          <div id="radarChartContainerWrap" class="radar-chart-large-box relative w-full bg-white p-2 sm:p-5 lg:p-6 rounded-2xl border border-sky-200 shadow-sm">
+            <canvas id="chartRadar"></canvas>
+          </div>
+
+          <!-- Key Observations Cards below the Radar Chart -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs sm:text-sm text-slate-700 leading-relaxed">
+            <div class="bg-amber-50/70 p-4 rounded-xl border border-amber-200">
+              <div class="font-bold text-amber-900 mb-1">🔥 1. กลุ่มชาคั่ว Hojicha (รหัส E, A)</div>
+              <p>โดดเด่นที่เซ็นเซอร์ <strong class="text-amber-800">MQ-2 (222.4), TGS-2600 (141.2) และ MQ-7 (104.4–124.4)</strong> ซึ่งไวต่อสารระเหย Pyrazines และ Furans จากปฏิกิริยา Maillard ในการคั่วใบชาและก้านชา</p>
+            </div>
+            <div class="bg-rose-50/70 p-4 rounded-xl border border-rose-200">
+              <div class="font-bold text-rose-900 mb-1">⚠️ 2. Inome (Suspect) [รหัส DF]</div>
+              <p>มีค่าการตอบสนองที่เซ็นเซอร์ <strong class="text-rose-700">TGS-813 พุ่งสูงถึง 76.8</strong> (สูงกว่า Inome แท้รหัส D ที่ 15.6 ถึงเกือบ 5 เท่า) บ่งชี้สารไฮโดรคาร์บอนเบา/อัลดีไฮด์จากการออกซิเดชัน</p>
+            </div>
+            <div class="bg-sky-50/80 p-4 rounded-xl border border-sky-200">
+              <div class="font-bold text-sky-900 mb-1">🔍 3. Original Hojicha (Suspect) [รหัส EF]</div>
+              <p>สูญเสียสมดุลเซ็นเซอร์ชาคั่วแท้ (TGS-2600 ลดลงเหลือ 115.0) และเบี่ยงไปมีค่าสูงผิดปกติที่ <strong class="text-rose-700">MQ-4 (183.3) และ MQ-5 (133.2)</strong></p>
             </div>
           </div>
         </div>
@@ -1518,8 +1556,8 @@ body.modal-open-lock {
           </div>
 
           <div class="p-4 sm:p-5 flex-1 flex flex-col items-center justify-between space-y-4 text-center">
-            <div class="relative h-72 sm:h-80 w-full mx-auto bg-white p-2.5 sm:p-3 rounded-xl border border-sky-100 flex items-center justify-center">
-              <canvas id="chartChemConcBar" class="mx-auto"></canvas>
+            <div class="relative h-72 sm:h-80 w-full mx-auto bg-white p-2.5 sm:p-3 rounded-xl border border-sky-100">
+              <canvas id="chartChemConcBar"></canvas>
             </div>
             <div class="w-full bg-amber-50/70 rounded-xl p-3 border border-amber-200/80 text-xs text-slate-700 leading-relaxed space-y-1.5 text-center">
               <div class="font-bold text-amber-900 text-center">ข้อค้นพบสำคัญจากระดับการเจือจาง 10x vs 100x:</div>
@@ -3784,6 +3822,22 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   let lastRadarOverrideIds = null;
 
+  // Short gas role hints for Computer Radar Chart labels
+  const SENSOR_SHORT_HINTS = {
+    'MQ-9': 'CO / Combustible',
+    'MQ-4': 'CH₄ / Natural Gas',
+    'MQ-138': 'Aldehydes / Ketones',
+    'MQ-137': 'NH₃ / Amines',
+    'MQ-135': 'Air Pollutants / Amines',
+    'MQ-2': 'Pyrazines / Smoke',
+    'MQ-7': 'CO / Roasted Gas',
+    'MQ-5': 'LPG / Hydrocarbons',
+    'TGS-2602': 'VOCs / Odors',
+    'TGS-813': 'Light Hydrocarbons',
+    'TGS-2600': 'Smoke / Iso-butane',
+    'TGS-2610': 'LP Gas / Butane'
+  };
+
   // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610)
   function renderRadarChart(overrideIds) {
     if (overrideIds !== undefined) {
@@ -3794,6 +3848,14 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     const sourceMap = radarScaleMode === 'norm' ? modeObj.radar_norm : modeObj.radar_raw;
     const targetIds = lastRadarOverrideIds ? new Set(lastRadarOverrideIds) : selectedSampleIds;
     const isMobile = window.innerWidth < 640;
+    const isDesktop = window.innerWidth >= 1024;
+
+    const radarLabels = sensors.map(function (sName) {
+      if (isDesktop && SENSOR_SHORT_HINTS[sName]) {
+        return [sName, '(' + SENSOR_SHORT_HINTS[sName] + ')'];
+      }
+      return sName;
+    });
 
     const datasets = [];
     appData.samples.forEach(function (s) {
@@ -3804,13 +3866,13 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         data: vals,
         borderColor: s.color,
         backgroundColor: s.color + '24',
-        borderWidth: s.is_suspect ? (isMobile ? 2.8 : 3.2) : (isMobile ? 2.2 : 2.5),
-        borderDash: s.is_suspect ? [5, 3] : [],
-        pointRadius: isMobile ? 3.5 : 4,
-        pointHoverRadius: isMobile ? 5.5 : 6.5,
+        borderWidth: s.is_suspect ? (isMobile ? 2.8 : 3.6) : (isMobile ? 2.2 : 3.0),
+        borderDash: s.is_suspect ? [6, 4] : [],
+        pointRadius: isMobile ? 3.5 : 5,
+        pointHoverRadius: isMobile ? 6 : 8,
         pointBackgroundColor: s.color,
         pointBorderColor: '#FFFFFF',
-        pointBorderWidth: 1
+        pointBorderWidth: 1.5
       });
     });
 
@@ -3820,7 +3882,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     chartRadarInstance = new Chart(ctx, {
       type: 'radar',
       data: {
-        labels: sensors,
+        labels: radarLabels,
         datasets: datasets
       },
       options: {
@@ -3828,10 +3890,10 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         maintainAspectRatio: false,
         layout: {
           padding: {
-            top: isMobile ? 6 : 12,
-            bottom: isMobile ? 4 : 8,
-            left: isMobile ? 4 : 12,
-            right: isMobile ? 4 : 12
+            top: isMobile ? 6 : 16,
+            bottom: isMobile ? 6 : 12,
+            left: isMobile ? 4 : 20,
+            right: isMobile ? 4 : 20
           }
         },
         plugins: {
@@ -3839,20 +3901,26 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             position: 'bottom',
             align: 'center',
             labels: {
-              boxWidth: isMobile ? 10 : 13,
-              padding: isMobile ? 8 : 12,
+              boxWidth: isMobile ? 11 : 16,
+              boxHeight: isMobile ? 11 : 12,
+              padding: isMobile ? 8 : 16,
+              color: '#0F172A',
               font: {
-                size: isMobile ? 10.5 : 11.5,
-                weight: '600',
+                size: isMobile ? 10.5 : 13,
+                weight: 'bold',
                 family: 'Inter, Noto Sans Thai, sans-serif'
               }
             }
           },
           tooltip: {
+            titleFont: { size: 13, weight: 'bold' },
+            bodyFont: { size: 12.5 },
+            padding: 10,
             callbacks: {
               label: function (c) {
                 const unit = radarScaleMode === 'norm' ? '%' : ' ΔAUC';
-                return c.dataset.label + ' (' + c.label + '): ' + Number(c.raw).toFixed(1) + unit;
+                const sensorCode = sensors[c.dataIndex] || '';
+                return c.dataset.label + ' [' + sensorCode + ']: ' + Number(c.raw).toFixed(1) + unit;
               }
             }
           }
@@ -3863,27 +3931,27 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             suggestedMax: radarScaleMode === 'norm' ? 100 : undefined,
             angleLines: {
               color: '#7DD3FC',
-              lineWidth: 1.2
+              lineWidth: isMobile ? 1.2 : 1.6
             },
             grid: {
               color: '#BAE6FD',
-              lineWidth: 1.1
+              lineWidth: isMobile ? 1.1 : 1.4
             },
             ticks: {
               stepSize: radarScaleMode === 'norm' ? 20 : undefined,
-              backdropColor: 'rgba(255, 255, 255, 0.88)',
-              backdropPadding: 2,
-              color: '#475569',
+              backdropColor: 'rgba(255, 255, 255, 0.92)',
+              backdropPadding: isMobile ? 2 : 4,
+              color: '#0369A1',
               font: {
-                size: isMobile ? 9.5 : 10.5,
-                weight: '600',
+                size: isMobile ? 9.5 : 12,
+                weight: 'bold',
                 family: 'JetBrains Mono, monospace'
               }
             },
             pointLabels: {
-              padding: isMobile ? 5 : 10,
+              padding: isMobile ? 5 : 12,
               font: {
-                size: isMobile ? 11.5 : 13,
+                size: isMobile ? 11.5 : 13.5,
                 weight: 'bold',
                 family: 'JetBrains Mono, Inter, sans-serif'
               },

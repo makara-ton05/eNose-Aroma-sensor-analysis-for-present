@@ -413,3 +413,17 @@ body.modal-open-lock {
   background-color: rgba(255, 255, 255, 0.22) !important;
   color: #FFFFFF !important;
 }
+
+/* Large Odor Footprint Radar Chart Box for Computer & Mobile */
+.radar-chart-large-box {
+  height: 700px;
+  min-height: 660px;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .radar-chart-large-box {
+    height: 600px;
+    min-height: 560px;
+  }
+}

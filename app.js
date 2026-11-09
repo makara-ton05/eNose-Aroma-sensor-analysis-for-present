@@ -1801,6 +1801,22 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   let lastRadarOverrideIds = null;
 
+  // Short gas role hints for Computer Radar Chart labels
+  const SENSOR_SHORT_HINTS = {
+    'MQ-9': 'CO / Combustible',
+    'MQ-4': 'CH₄ / Natural Gas',
+    'MQ-138': 'Aldehydes / Ketones',
+    'MQ-137': 'NH₃ / Amines',
+    'MQ-135': 'Air Pollutants / Amines',
+    'MQ-2': 'Pyrazines / Smoke',
+    'MQ-7': 'CO / Roasted Gas',
+    'MQ-5': 'LPG / Hydrocarbons',
+    'TGS-2602': 'VOCs / Odors',
+    'TGS-813': 'Light Hydrocarbons',
+    'TGS-2600': 'Smoke / Iso-butane',
+    'TGS-2610': 'LP Gas / Butane'
+  };
+
   // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610)
   function renderRadarChart(overrideIds) {
     if (overrideIds !== undefined) {
@@ -1811,6 +1827,14 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     const sourceMap = radarScaleMode === 'norm' ? modeObj.radar_norm : modeObj.radar_raw;
     const targetIds = lastRadarOverrideIds ? new Set(lastRadarOverrideIds) : selectedSampleIds;
     const isMobile = window.innerWidth < 640;
+    const isDesktop = window.innerWidth >= 1024;
+
+    const radarLabels = sensors.map(function (sName) {
+      if (isDesktop && SENSOR_SHORT_HINTS[sName]) {
+        return [sName, '(' + SENSOR_SHORT_HINTS[sName] + ')'];
+      }
+      return sName;
+    });
 
     const datasets = [];
     appData.samples.forEach(function (s) {
@@ -1821,13 +1845,13 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         data: vals,
         borderColor: s.color,
         backgroundColor: s.color + '24',
-        borderWidth: s.is_suspect ? (isMobile ? 2.8 : 3.2) : (isMobile ? 2.2 : 2.5),
-        borderDash: s.is_suspect ? [5, 3] : [],
-        pointRadius: isMobile ? 3.5 : 4,
-        pointHoverRadius: isMobile ? 5.5 : 6.5,
+        borderWidth: s.is_suspect ? (isMobile ? 2.8 : 3.6) : (isMobile ? 2.2 : 3.0),
+        borderDash: s.is_suspect ? [6, 4] : [],
+        pointRadius: isMobile ? 3.5 : 5,
+        pointHoverRadius: isMobile ? 6 : 8,
         pointBackgroundColor: s.color,
         pointBorderColor: '#FFFFFF',
-        pointBorderWidth: 1
+        pointBorderWidth: 1.5
       });
     });
 
@@ -1837,7 +1861,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     chartRadarInstance = new Chart(ctx, {
       type: 'radar',
       data: {
-        labels: sensors,
+        labels: radarLabels,
         datasets: datasets
       },
       options: {
@@ -1845,10 +1869,10 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         maintainAspectRatio: false,
         layout: {
           padding: {
-            top: isMobile ? 6 : 12,
-            bottom: isMobile ? 4 : 8,
-            left: isMobile ? 4 : 12,
-            right: isMobile ? 4 : 12
+            top: isMobile ? 6 : 16,
+            bottom: isMobile ? 6 : 12,
+            left: isMobile ? 4 : 20,
+            right: isMobile ? 4 : 20
           }
         },
         plugins: {
@@ -1856,20 +1880,26 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             position: 'bottom',
             align: 'center',
             labels: {
-              boxWidth: isMobile ? 10 : 13,
-              padding: isMobile ? 8 : 12,
+              boxWidth: isMobile ? 11 : 16,
+              boxHeight: isMobile ? 11 : 12,
+              padding: isMobile ? 8 : 16,
+              color: '#0F172A',
               font: {
-                size: isMobile ? 10.5 : 11.5,
-                weight: '600',
+                size: isMobile ? 10.5 : 13,
+                weight: 'bold',
                 family: 'Inter, Noto Sans Thai, sans-serif'
               }
             }
           },
           tooltip: {
+            titleFont: { size: 13, weight: 'bold' },
+            bodyFont: { size: 12.5 },
+            padding: 10,
             callbacks: {
               label: function (c) {
                 const unit = radarScaleMode === 'norm' ? '%' : ' ΔAUC';
-                return c.dataset.label + ' (' + c.label + '): ' + Number(c.raw).toFixed(1) + unit;
+                const sensorCode = sensors[c.dataIndex] || '';
+                return c.dataset.label + ' [' + sensorCode + ']: ' + Number(c.raw).toFixed(1) + unit;
               }
             }
           }
@@ -1880,27 +1910,27 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             suggestedMax: radarScaleMode === 'norm' ? 100 : undefined,
             angleLines: {
               color: '#7DD3FC',
-              lineWidth: 1.2
+              lineWidth: isMobile ? 1.2 : 1.6
             },
             grid: {
               color: '#BAE6FD',
-              lineWidth: 1.1
+              lineWidth: isMobile ? 1.1 : 1.4
             },
             ticks: {
               stepSize: radarScaleMode === 'norm' ? 20 : undefined,
-              backdropColor: 'rgba(255, 255, 255, 0.88)',
-              backdropPadding: 2,
-              color: '#475569',
+              backdropColor: 'rgba(255, 255, 255, 0.92)',
+              backdropPadding: isMobile ? 2 : 4,
+              color: '#0369A1',
               font: {
-                size: isMobile ? 9.5 : 10.5,
-                weight: '600',
+                size: isMobile ? 9.5 : 12,
+                weight: 'bold',
                 family: 'JetBrains Mono, monospace'
               }
             },
             pointLabels: {
-              padding: isMobile ? 5 : 10,
+              padding: isMobile ? 5 : 12,
               font: {
-                size: isMobile ? 11.5 : 13,
+                size: isMobile ? 11.5 : 13.5,
                 weight: 'bold',
                 family: 'JetBrains Mono, Inter, sans-serif'
               },
