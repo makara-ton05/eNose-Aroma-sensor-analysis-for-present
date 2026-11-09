@@ -203,7 +203,7 @@
               <span class="line-clamp-2 leading-tight">การวิเคราะห์สารเคมี (GC-MS / 735 nm Calibration) — Hojicha [E] vs Suspect [EF]</span>
             </button>
             <button type="button" data-splash-jump="sec-spme-gcms" class="splash-jump-btn px-2.5 py-2 rounded-xl bg-teal-50 hover:bg-teal-600 text-teal-900 hover:text-white border border-teal-200 text-[11px] font-bold transition cursor-pointer text-left flex items-center gap-1.5 shadow-sm">
-              <span class="px-1.5 py-0.5 rounded bg-teal-200/80 text-teal-900 font-mono text-[10px] shrink-0">ส่วนที่ 4 / 5</span>
+              <span class="px-1.5 py-0.5 rounded bg-teal-200/80 text-teal-900 font-mono text-[10px] shrink-0">ส่วนที่ 4</span>
               <span class="line-clamp-2 leading-tight">การวิเคราะห์สารให้กลิ่นระเหยด้วย HS-SPME-GC-MS, ค่า OAV Proxy และผลประเมินทางประสาทสัมผัส (ชา A–H)</span>
             </button>
             <button type="button" data-splash-jump="sec-executive" class="splash-jump-btn px-2.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-600 text-emerald-900 hover:text-white border border-emerald-200 text-[11px] font-bold transition cursor-pointer text-left flex items-center gap-1.5 shadow-sm sm:col-span-2 lg:col-span-1">
@@ -791,19 +791,24 @@
         </div>
       </div>
 
-      <!-- 10 Tea Varieties Classification Summary Table -->
+      <!-- 10 Tea Varieties Classification Summary Table (Collapsible, Default Closed) -->
       <div class="sci-card rounded-2xl overflow-hidden">
         <div class="sci-card-header px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
           <div>
             <h3 class="text-sm font-bold text-slate-900">ตารางสรุปการจำแนกชนิดใบชา 10 ชนิดเชิงปริมาณ (10-Tea Quantitative Classification Summary)</h3>
             <p class="text-xs text-slate-500">แสดงค่าเด่นเชิงปริมาณจาก FFT, เซ็นเซอร์จำแนกหลัก 3 อันดับแรก (MQ/TGS), ระยะห่างระหว่างกลุ่ม และสถานะ Zero-Overlap ในโหมด Mid (Cycle 3–5)</p>
           </div>
-          <span class="text-xs font-bold text-sky-700 bg-sky-50 px-3 py-1 rounded-lg border border-sky-200">
-            Accuracy: 100.0% (Mid-Cycle: Cycle 3–5)
-          </span>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-bold text-sky-700 bg-sky-50 px-3 py-1 rounded-lg border border-sky-200">
+              Accuracy: 100.0% (Mid-Cycle: Cycle 3–5)
+            </span>
+            <button type="button" id="btnToggleClassSummaryTable" aria-expanded="false" class="vector-box-toggle-btn btn-box-closed px-3 py-1.5 text-xs font-bold rounded-xl border transition cursor-pointer">
+              ▶ เปิดตารางสรุปการจำแนกใบชา 10 ชนิด
+            </button>
+          </div>
         </div>
 
-        <div class="overflow-x-auto custom-scrollbar">
+        <div id="classificationTableCollapseWrap" class="hidden overflow-x-auto custom-scrollbar border-t border-sky-100">
           <table class="w-full text-left border-collapse text-xs">
             <thead class="bg-sky-50/90 text-slate-700 border-b border-sky-100">
               <tr>
@@ -1079,28 +1084,28 @@
       <!-- Bar Chart Comparison (10x & 100x) + Multi-Modal Correlation with PCA & MEA -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <!-- Left 5 cols: Quantitative Concentration Bar Chart (10x vs 100x) -->
-        <div class="lg:col-span-5 sci-card rounded-2xl overflow-hidden flex flex-col">
-          <div class="sci-card-header px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
-            <div>
+        <div id="chemConcBarCard" class="lg:col-span-5 sci-card rounded-2xl overflow-hidden flex flex-col">
+          <div class="sci-card-header px-4 sm:px-5 py-3.5 flex flex-col items-center justify-center gap-2.5 text-center">
+            <div class="w-full text-center">
               <h3 class="text-sm font-bold text-slate-900">เปรียบเทียบความเข้มข้นสารสำคัญ (10x vs 100x)</h3>
               <p class="text-xs text-slate-500">เทียบผลคำนวณจากสมการ Standard และสมการหักลบ Blank (ppm / μg/mL)</p>
             </div>
-            <div class="flex items-center gap-1">
-              <button type="button" id="btnChemBarDiluted" class="chem-view-btn-active px-2.5 py-1 text-[11px] font-semibold rounded-lg border border-sky-200 bg-white text-slate-700">
+            <div class="flex flex-wrap items-center justify-center gap-1.5 w-full">
+              <button type="button" id="btnChemBarDiluted" class="chem-view-btn-active px-3 py-1 text-[11px] font-semibold rounded-lg border border-sky-200 bg-white text-slate-700 cursor-pointer">
                 สุทธิ (คูณ Dilution)
               </button>
-              <button type="button" id="btnChemBarRawX" class="px-2.5 py-1 text-[11px] font-semibold rounded-lg border border-sky-200 bg-white text-slate-700">
+              <button type="button" id="btnChemBarRawX" class="px-3 py-1 text-[11px] font-semibold rounded-lg border border-sky-200 bg-white text-slate-700 cursor-pointer">
                 ค่า x ในสมการ
               </button>
             </div>
           </div>
 
-          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-            <div class="relative h-72 sm:h-80 w-full bg-white p-3 rounded-xl border border-sky-100">
-              <canvas id="chartChemConcBar"></canvas>
+          <div class="p-4 sm:p-5 flex-1 flex flex-col items-center justify-between space-y-4 text-center">
+            <div class="relative h-72 sm:h-80 w-full mx-auto bg-white p-2.5 sm:p-3 rounded-xl border border-sky-100 flex items-center justify-center">
+              <canvas id="chartChemConcBar" class="mx-auto"></canvas>
             </div>
-            <div class="bg-amber-50/70 rounded-xl p-3 border border-amber-200/80 text-xs text-slate-700 leading-relaxed space-y-1">
-              <div class="font-bold text-amber-900">ข้อค้นพบสำคัญจากระดับการเจือจาง 10x vs 100x:</div>
+            <div class="w-full bg-amber-50/70 rounded-xl p-3 border border-amber-200/80 text-xs text-slate-700 leading-relaxed space-y-1.5 text-center">
+              <div class="font-bold text-amber-900 text-center">ข้อค้นพบสำคัญจากระดับการเจือจาง 10x vs 100x:</div>
               <p>
                 • <strong>ที่ความเข้มข้นหลัก 10x (อยู่ในช่วงกลางกราฟมาตรฐาน Abs ≈ 0.51–0.55):</strong> <strong>Hojicha แท้ (E)</strong> มีความเข้มข้นสารสำคัญสูงกว่า Suspect Hojicha (EF) ทั้งในสมการ Standard (<code class="font-mono font-bold">1,055.18 vs 947.60 ppm</code>, สูงกว่า +11.35%) และสมการหักลบ Blank (<code class="font-mono font-bold">1,163.85 vs 1,100.15 ppm</code>)
               </p>
@@ -1545,9 +1550,12 @@
   <!-- BOTTOM ACADEMIC FOOTER (Matching enosearoma-sensor-analysis reference)-->
   <!-- ===================================================================== -->
   <footer class="academic-footer w-full py-6 px-4 sm:px-6 lg:px-8 text-center mt-auto">
-    <div class="max-w-4xl mx-auto flex flex-col items-center justify-center space-y-1">
+    <div class="max-w-4xl mx-auto flex flex-col items-center justify-center space-y-1.5">
       <p class="text-sm sm:text-base font-bold text-slate-900">
         SCBT316 Medicinal plants &amp; Industrial processing
+      </p>
+      <p class="text-xs sm:text-sm font-semibold text-slate-800 font-mono">
+        Makara Aiamkham&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student id : 6705245
       </p>
       <p class="text-xs sm:text-sm text-slate-600">
         Submitted to Asst. Prof. Dr. Sutthichai Boonprasop (Mahidol University)

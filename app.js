@@ -1317,6 +1317,35 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       });
     }
 
+    // Section 2: 10-Tea Quantitative Classification Summary Table Open/Close Toggle (Always Closed on Load)
+    const btnToggleClassSummaryTable = document.getElementById('btnToggleClassSummaryTable');
+    const classificationTableCollapseWrap = document.getElementById('classificationTableCollapseWrap');
+    if (btnToggleClassSummaryTable && classificationTableCollapseWrap) {
+      let classSummaryTableOpen = false;
+      classificationTableCollapseWrap.classList.add('hidden');
+      btnToggleClassSummaryTable.classList.remove('btn-box-open');
+      btnToggleClassSummaryTable.classList.add('btn-box-closed');
+      btnToggleClassSummaryTable.setAttribute('aria-expanded', 'false');
+      btnToggleClassSummaryTable.textContent = '▶ เปิดตารางสรุปการจำแนกใบชา 10 ชนิด';
+
+      btnToggleClassSummaryTable.addEventListener('click', function () {
+        classSummaryTableOpen = !classSummaryTableOpen;
+        if (classSummaryTableOpen) {
+          classificationTableCollapseWrap.classList.remove('hidden');
+          btnToggleClassSummaryTable.classList.add('btn-box-open');
+          btnToggleClassSummaryTable.classList.remove('btn-box-closed');
+          btnToggleClassSummaryTable.setAttribute('aria-expanded', 'true');
+          btnToggleClassSummaryTable.textContent = '▼ ซ่อนตารางสรุปการจำแนกใบชา 10 ชนิด';
+        } else {
+          classificationTableCollapseWrap.classList.add('hidden');
+          btnToggleClassSummaryTable.classList.remove('btn-box-open');
+          btnToggleClassSummaryTable.classList.add('btn-box-closed');
+          btnToggleClassSummaryTable.setAttribute('aria-expanded', 'false');
+          btnToggleClassSummaryTable.textContent = '▶ เปิดตารางสรุปการจำแนกใบชา 10 ชนิด';
+        }
+      });
+    }
+
     // Section 3: Interactive HS-SPME-GC-MS, OAV & Sensory Explorer Controls (Teas A-H)
     const btnSpmeTabSummary = document.getElementById('btnSpmeTabSummary');
     const btnSpmeTabExplorer = document.getElementById('btnSpmeTabExplorer');
@@ -2509,10 +2538,11 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     const hoj = GCMS_CHEMICAL_DATA.hojicha;
     const susp = GCMS_CHEMICAL_DATA.suspect;
     const isDiluted = chemBarScaleMode === 'diluted';
+    const isMobile = window.innerWidth < 640;
 
     const labels = isDiluted
-      ? ['Sample 10x → คิดย้อนกลับ (dilute 10)', 'Sample 100x → คิดย้อนกลับ (dilute 100)']
-      : ['Sample 10x (ค่า x จากสมการโดยตรง)', 'Sample 100x (ค่า x จากสมการโดยตรง)'];
+      ? [['Sample 10x', '(คิดย้อนกลับ ×10)'], ['Sample 100x', '(คิดย้อนกลับ ×100)']]
+      : [['Sample 10x', '(ค่า x โดยตรง)'], ['Sample 100x', '(ค่า x โดยตรง)']];
 
     const hojStdVals = isDiluted
       ? [hoj.samples.d10x.diluteStd, hoj.samples.d100x.diluteStd]
@@ -2572,10 +2602,18 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        layout: {
+          padding: { left: 6, right: 6, top: 4, bottom: 4 }
+        },
         plugins: {
           legend: {
             position: 'top',
-            labels: { boxWidth: 11, font: { size: 10.5 } }
+            align: 'center',
+            labels: {
+              boxWidth: isMobile ? 10 : 12,
+              padding: isMobile ? 8 : 10,
+              font: { size: isMobile ? 10 : 10.5, family: 'Inter, Noto Sans Thai, sans-serif' }
+            }
           },
           tooltip: {
             callbacks: {
@@ -2590,12 +2628,21 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             beginAtZero: true,
             title: {
               display: true,
-              text: isDiluted ? 'ความเข้มข้นสุทธิ (ppm / μg/mL)' : 'ค่า x จากสมการกราฟมาตรฐาน (ppm / μg/mL)',
-              font: { size: 11, weight: 'bold' }
+              text: isDiluted ? 'ความเข้มข้นสุทธิ (ppm / μg/mL)' : 'ค่า x จากสมการ (ppm / μg/mL)',
+              font: { size: isMobile ? 10 : 11, weight: 'bold', family: 'Inter, Noto Sans Thai, sans-serif' }
+            },
+            ticks: {
+              font: { size: isMobile ? 9.5 : 10.5 }
             },
             grid: { color: '#E0F2FE' }
           },
           x: {
+            ticks: {
+              align: 'center',
+              maxRotation: 0,
+              minRotation: 0,
+              font: { size: isMobile ? 10 : 11, weight: '600', family: 'Inter, Noto Sans Thai, sans-serif' }
+            },
             grid: { display: false }
           }
         }
