@@ -3042,7 +3042,75 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     renderChemMeaCorrelationChart();
   }
 
+  function initIntroSplashModal() {
+    const modal = document.getElementById('introSplashModal');
+    const btnMainEnter = document.getElementById('btnEnterDashboardMain');
+    const btnNavReopen = document.getElementById('btnNavOverviewSlide');
+    const btnFloatingReopen = document.getElementById('btnFloatingOverviewSlide');
+    const jumpBtns = document.querySelectorAll('[data-splash-jump]');
+
+    if (!modal) return;
+
+    function openSplashModal() {
+      modal.classList.remove('splash-hidden');
+      document.body.classList.add('modal-open-lock');
+    }
+
+    function closeSplashModal(targetSelector) {
+      modal.classList.add('splash-hidden');
+      document.body.classList.remove('modal-open-lock');
+
+      setTimeout(function () {
+        const plotEl = document.getElementById('plotly3dContainer');
+        if (plotEl && window.Plotly && Plotly.Plots) {
+          Plotly.Plots.resize(plotEl);
+        }
+        if (targetSelector) {
+          const targetEl = document.querySelector(targetSelector);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }, 180);
+    }
+
+    // Always display Intro Modal on initial website load
+    openSplashModal();
+
+    if (btnMainEnter) {
+      btnMainEnter.addEventListener('click', function () {
+        closeSplashModal(null);
+      });
+    }
+
+    jumpBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const targetSelector = btn.getAttribute('data-splash-jump');
+        closeSplashModal(targetSelector);
+      });
+    });
+
+    if (btnNavReopen) {
+      btnNavReopen.addEventListener('click', function () {
+        openSplashModal();
+      });
+    }
+
+    if (btnFloatingReopen) {
+      btnFloatingReopen.addEventListener('click', function () {
+        openSplashModal();
+      });
+    }
+
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.classList.contains('splash-hidden')) {
+        closeSplashModal(null);
+      }
+    });
+  }
+
   window.addEventListener('DOMContentLoaded', async function () {
+    initIntroSplashModal();
     initControls();
     if (window.innerWidth < 640) {
       const btnCloseVec = document.getElementById('btnCloseSensorVectorBox');
