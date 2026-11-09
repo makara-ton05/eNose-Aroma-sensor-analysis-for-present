@@ -1801,8 +1801,7 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   let lastRadarOverrideIds = null;
 
-  // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610)
-  // Configured with the same clean, maximum-radius geometry as chartSpmeSensory for large computer display
+  // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610) — 2X Expanded Scale
   function renderRadarChart(overrideIds) {
     if (overrideIds !== undefined) {
       lastRadarOverrideIds = overrideIds;
@@ -1821,12 +1820,14 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         label: s.id + ': ' + s.name,
         data: vals,
         borderColor: s.color,
-        backgroundColor: s.color + '22',
-        borderWidth: s.is_suspect ? 2.8 : 2.2,
-        borderDash: s.is_suspect ? [5, 3] : [],
-        pointRadius: isMobile ? 3 : 4,
-        pointHoverRadius: isMobile ? 5 : 7,
-        pointBackgroundColor: s.color
+        backgroundColor: s.color + '24',
+        borderWidth: s.is_suspect ? (isMobile ? 2.8 : 3.8) : (isMobile ? 2.2 : 3.2),
+        borderDash: s.is_suspect ? [6, 4] : [],
+        pointRadius: isMobile ? 3.5 : 5.5,
+        pointHoverRadius: isMobile ? 6 : 8.5,
+        pointBackgroundColor: s.color,
+        pointBorderColor: '#FFFFFF',
+        pointBorderWidth: 1.5
       });
     });
 
@@ -1844,20 +1845,22 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: isMobile ? 4 : 8,
+            bottom: isMobile ? 4 : 8,
+            left: isMobile ? 4 : 8,
+            right: isMobile ? 4 : 8
+          }
+        },
         plugins: {
           legend: {
-            position: 'top',
-            labels: {
-              boxWidth: 12,
-              padding: isMobile ? 6 : 10,
-              font: {
-                size: isMobile ? 10 : 11.5,
-                weight: '600',
-                family: 'Inter, Noto Sans Thai, sans-serif'
-              }
-            }
+            display: false
           },
           tooltip: {
+            titleFont: { size: isMobile ? 12 : 14, weight: 'bold' },
+            bodyFont: { size: isMobile ? 11.5 : 13.5 },
+            padding: 10,
             callbacks: {
               label: function (c) {
                 const unit = radarScaleMode === 'norm' ? '%' : ' ΔAUC';
@@ -1872,17 +1875,27 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
             suggestedMax: radarScaleMode === 'norm' ? 100 : undefined,
             ticks: {
               stepSize: radarScaleMode === 'norm' ? 20 : undefined,
-              backdropColor: 'rgba(255, 255, 255, 0.85)',
+              backdropColor: 'rgba(255, 255, 255, 0.90)',
+              backdropPadding: 3,
+              color: '#0369A1',
               font: {
-                size: isMobile ? 9.5 : 11,
-                weight: '600'
+                size: isMobile ? 10 : 13,
+                weight: 'bold',
+                family: 'JetBrains Mono, monospace'
               }
             },
-            grid: { color: '#E0F2FE' },
-            angleLines: { color: '#BAE6FD' },
+            grid: {
+              color: '#BAE6FD',
+              lineWidth: isMobile ? 1.1 : 1.5
+            },
+            angleLines: {
+              color: '#7DD3FC',
+              lineWidth: isMobile ? 1.2 : 1.6
+            },
             pointLabels: {
+              padding: isMobile ? 4 : 8,
               font: {
-                size: isMobile ? 11 : 13,
+                size: isMobile ? 11.5 : 16,
                 weight: 'bold',
                 family: 'JetBrains Mono, Inter, sans-serif'
               },
@@ -1892,6 +1905,28 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         }
       }
     });
+
+    // Populate External Interactive HTML Legend (#radarCustomLegend) so 100% of canvas height goes to the 2x Radar Web
+    const legendContainer = document.getElementById('radarCustomLegend');
+    if (legendContainer) {
+      legendContainer.innerHTML = '';
+      datasets.forEach(function (ds, idx) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-sky-200 bg-sky-50/60 hover:bg-sky-100 text-xs sm:text-sm font-bold text-slate-800 transition cursor-pointer shadow-sm';
+        btn.innerHTML =
+          '<span class="w-3.5 h-3.5 rounded-sm shrink-0" style="background-color:' + ds.borderColor + '; border: 2px solid ' + ds.borderColor + ';"></span>' +
+          '<span>' + ds.label + '</span>';
+        btn.addEventListener('click', function () {
+          const isVisible = chartRadarInstance.isDatasetVisible(idx);
+          chartRadarInstance.setDatasetVisibility(idx, !isVisible);
+          chartRadarInstance.update();
+          btn.style.opacity = isVisible ? '0.4' : '1';
+          btn.style.textDecoration = isVisible ? 'line-through' : 'none';
+        });
+        legendContainer.appendChild(btn);
+      });
+    }
   }
 
   // Render Sub-Tab 3: Time-Series Response & Baseline Drift 7 Cycles

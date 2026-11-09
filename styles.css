@@ -287,9 +287,9 @@ a {
   }
 
   #radarChartContainerWrap {
-    height: 460px !important;
-    min-height: 440px !important;
-    padding: 0.375rem !important;
+    height: 560px !important;
+    min-height: 520px !important;
+    padding: 0.25rem !important;
   }
 
   table th,
@@ -414,27 +414,27 @@ body.modal-open-lock {
   color: #FFFFFF !important;
 }
 
-/* Large Odor Footprint Radar Chart Box for Computer & Mobile (Matching Sensory Profile Radar Scale) */
+/* 2X Extra-Large Odor Footprint Radar Chart Box for Computer & Mobile */
 #radarChartContainerWrap.radar-chart-large-box {
-  height: 640px !important;
-  min-height: 620px !important;
+  height: 1120px !important;
+  min-height: 1080px !important;
   width: 100% !important;
-  max-width: 56rem !important;
+  max-width: 100% !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
 @media (max-width: 1024px) {
   #radarChartContainerWrap.radar-chart-large-box {
-    height: 560px !important;
-    min-height: 520px !important;
+    height: 820px !important;
+    min-height: 780px !important;
   }
 }
 
 @media (max-width: 640px) {
   #radarChartContainerWrap.radar-chart-large-box {
-    height: 460px !important;
-    min-height: 440px !important;
+    height: 560px !important;
+    min-height: 520px !important;
     padding: 0.25rem !important;
   }
 }

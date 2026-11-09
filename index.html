@@ -39,7 +39,7 @@
       }
     };
   </script>
-  <link rel="stylesheet" href="styles.css?v=20261109r3" />
+  <link rel="stylesheet" href="styles.css?v=20261109r4" />
 </head>
 <body class="min-h-screen antialiased selection:bg-sky-200 selection:text-sky-900 flex flex-col modal-open-lock">
 
@@ -668,9 +668,12 @@
             </div>
           </div>
 
-          <!-- Large Centered Radar Chart Card (Matching Sensory Profile Radar Chart Structure & Scale on Computer) -->
-          <div class="bg-white p-4 sm:p-6 rounded-2xl border border-sky-100 shadow-sm">
-            <div id="radarChartContainerWrap" class="radar-chart-large-box relative h-[480px] sm:h-[580px] lg:h-[640px] w-full max-w-4xl mx-auto">
+          <!-- 2X Extra-Large Radar Chart Card (Full-Width 1120px Height on Computer + Custom Interactive Legend) -->
+          <div class="bg-white p-3 sm:p-6 lg:p-8 rounded-2xl border border-sky-200 shadow-sm space-y-4">
+            <div id="radarCustomLegend" class="flex flex-wrap items-center justify-center gap-2 pb-3 border-b border-sky-100">
+              <!-- Populated via app.js so 100% of canvas area is dedicated to the 2x Radar Web -->
+            </div>
+            <div id="radarChartContainerWrap" class="radar-chart-large-box relative h-[560px] sm:h-[820px] lg:h-[1120px] w-full max-w-none mx-auto">
               <canvas id="chartRadar"></canvas>
             </div>
           </div>
@@ -1589,6 +1592,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20261109r3"></script>
+  <script src="app.js?v=20261109r4"></script>
 </body>
 </html>
