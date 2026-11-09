@@ -620,21 +620,21 @@
           </div>
         </div>
 
-        <!-- Sub-Tab 2: Odor Radar Chart -->
-        <div id="subtab-panel-radar" class="p-5 hidden grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-          <div class="lg:col-span-7">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <h4 class="text-sm font-bold text-slate-800">Odor Footprint Radar Chart (เปรียบเทียบโปรไฟล์กลิ่น 12 เซ็นเซอร์)</h4>
-              <div class="flex items-center gap-1.5">
-                <button type="button" id="btnRadarNorm" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-sky-600 text-white">สเกลสัมพัทธ์ (0–100%)</button>
-                <button type="button" id="btnRadarRaw" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-sky-50">ค่าจริงหลังหัก Blank (ΔAUC)</button>
+        <!-- Sub-Tab 2: Odor Radar Chart (Expanded for Mobile & Desktop Readability) -->
+        <div id="subtab-panel-radar" class="p-3 sm:p-5 hidden grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
+          <div class="lg:col-span-8 flex flex-col items-center">
+            <div class="w-full flex flex-col sm:flex-row items-center justify-between gap-2.5 mb-3 text-center sm:text-left">
+              <h4 class="text-sm sm:text-base font-bold text-slate-900">Odor Footprint Radar Chart (เปรียบเทียบโปรไฟล์กลิ่น 12 เซ็นเซอร์)</h4>
+              <div class="flex flex-wrap items-center justify-center gap-1.5">
+                <button type="button" id="btnRadarNorm" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-sky-600 text-white cursor-pointer">สเกลสัมพัทธ์ (0–100%)</button>
+                <button type="button" id="btnRadarRaw" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-sky-50 cursor-pointer">ค่าจริงหลังหัก Blank (ΔAUC)</button>
               </div>
             </div>
-            <div class="relative h-80 sm:h-96 w-full bg-white p-3 rounded-xl border border-sky-100">
-              <canvas id="chartRadar"></canvas>
+            <div id="radarChartContainerWrap" class="relative h-[460px] sm:h-[520px] lg:h-[560px] w-full bg-white p-1.5 sm:p-4 rounded-2xl border border-sky-100 shadow-inner flex items-center justify-center">
+              <canvas id="chartRadar" class="mx-auto"></canvas>
             </div>
           </div>
-          <div class="lg:col-span-5 space-y-4">
+          <div class="lg:col-span-4 space-y-4">
             <div class="bg-sky-50/70 p-4 rounded-xl border border-sky-100 space-y-2.5">
               <h4 class="text-sm font-bold text-slate-900">ชุดเปรียบเทียบโปรไฟล์กลิ่นด่วน (Quick Aroma Comparisons)</h4>
               <p class="text-xs text-slate-600">คลิกปุ่มด้านล่างเพื่อเปรียบเทียบรูปแบบการตอบสนองของเซ็นเซอร์ทั้ง 12 ตัวระหว่างกลุ่มตัวอย่างสำคัญ:</p>
