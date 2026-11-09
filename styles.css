@@ -414,16 +414,27 @@ body.modal-open-lock {
   color: #FFFFFF !important;
 }
 
-/* Large Odor Footprint Radar Chart Box for Computer & Mobile */
-.radar-chart-large-box {
-  height: 700px;
-  min-height: 660px;
-  width: 100%;
+/* Large Odor Footprint Radar Chart Box for Computer & Mobile (Matching Sensory Profile Radar Scale) */
+#radarChartContainerWrap.radar-chart-large-box {
+  height: 640px !important;
+  min-height: 620px !important;
+  width: 100% !important;
+  max-width: 56rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 @media (max-width: 1024px) {
-  .radar-chart-large-box {
-    height: 600px;
-    min-height: 560px;
+  #radarChartContainerWrap.radar-chart-large-box {
+    height: 560px !important;
+    min-height: 520px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #radarChartContainerWrap.radar-chart-large-box {
+    height: 460px !important;
+    min-height: 440px !important;
+    padding: 0.25rem !important;
   }
 }

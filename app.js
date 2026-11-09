@@ -1801,23 +1801,8 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
 
   let lastRadarOverrideIds = null;
 
-  // Short gas role hints for Computer Radar Chart labels
-  const SENSOR_SHORT_HINTS = {
-    'MQ-9': 'CO / Combustible',
-    'MQ-4': 'CH₄ / Natural Gas',
-    'MQ-138': 'Aldehydes / Ketones',
-    'MQ-137': 'NH₃ / Amines',
-    'MQ-135': 'Air Pollutants / Amines',
-    'MQ-2': 'Pyrazines / Smoke',
-    'MQ-7': 'CO / Roasted Gas',
-    'MQ-5': 'LPG / Hydrocarbons',
-    'TGS-2602': 'VOCs / Odors',
-    'TGS-813': 'Light Hydrocarbons',
-    'TGS-2600': 'Smoke / Iso-butane',
-    'TGS-2610': 'LP Gas / Butane'
-  };
-
   // Render Sub-Tab 2: Odor Radar Chart (12 Active Sensors: MQ-9 to TGS-2610)
+  // Configured with the same clean, maximum-radius geometry as chartSpmeSensory for large computer display
   function renderRadarChart(overrideIds) {
     if (overrideIds !== undefined) {
       lastRadarOverrideIds = overrideIds;
@@ -1827,14 +1812,6 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
     const sourceMap = radarScaleMode === 'norm' ? modeObj.radar_norm : modeObj.radar_raw;
     const targetIds = lastRadarOverrideIds ? new Set(lastRadarOverrideIds) : selectedSampleIds;
     const isMobile = window.innerWidth < 640;
-    const isDesktop = window.innerWidth >= 1024;
-
-    const radarLabels = sensors.map(function (sName) {
-      if (isDesktop && SENSOR_SHORT_HINTS[sName]) {
-        return [sName, '(' + SENSOR_SHORT_HINTS[sName] + ')'];
-      }
-      return sName;
-    });
 
     const datasets = [];
     appData.samples.forEach(function (s) {
@@ -1844,97 +1821,72 @@ window.__ENOSE_PRELOADED__ = {"metadata":{"title":"SCBT316 eNose Tea Aroma Senso
         label: s.id + ': ' + s.name,
         data: vals,
         borderColor: s.color,
-        backgroundColor: s.color + '24',
-        borderWidth: s.is_suspect ? (isMobile ? 2.8 : 3.6) : (isMobile ? 2.2 : 3.0),
-        borderDash: s.is_suspect ? [6, 4] : [],
-        pointRadius: isMobile ? 3.5 : 5,
-        pointHoverRadius: isMobile ? 6 : 8,
-        pointBackgroundColor: s.color,
-        pointBorderColor: '#FFFFFF',
-        pointBorderWidth: 1.5
+        backgroundColor: s.color + '22',
+        borderWidth: s.is_suspect ? 2.8 : 2.2,
+        borderDash: s.is_suspect ? [5, 3] : [],
+        pointRadius: isMobile ? 3 : 4,
+        pointHoverRadius: isMobile ? 5 : 7,
+        pointBackgroundColor: s.color
       });
     });
 
-    const ctx = document.getElementById('chartRadar').getContext('2d');
+    const canvasEl = document.getElementById('chartRadar');
+    if (!canvasEl) return;
+    const ctx = canvasEl.getContext('2d');
     if (chartRadarInstance) chartRadarInstance.destroy();
 
     chartRadarInstance = new Chart(ctx, {
       type: 'radar',
       data: {
-        labels: radarLabels,
+        labels: sensors,
         datasets: datasets
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        layout: {
-          padding: {
-            top: isMobile ? 6 : 16,
-            bottom: isMobile ? 6 : 12,
-            left: isMobile ? 4 : 20,
-            right: isMobile ? 4 : 20
-          }
-        },
         plugins: {
           legend: {
-            position: 'bottom',
-            align: 'center',
+            position: 'top',
             labels: {
-              boxWidth: isMobile ? 11 : 16,
-              boxHeight: isMobile ? 11 : 12,
-              padding: isMobile ? 8 : 16,
-              color: '#0F172A',
+              boxWidth: 12,
+              padding: isMobile ? 6 : 10,
               font: {
-                size: isMobile ? 10.5 : 13,
-                weight: 'bold',
+                size: isMobile ? 10 : 11.5,
+                weight: '600',
                 family: 'Inter, Noto Sans Thai, sans-serif'
               }
             }
           },
           tooltip: {
-            titleFont: { size: 13, weight: 'bold' },
-            bodyFont: { size: 12.5 },
-            padding: 10,
             callbacks: {
               label: function (c) {
                 const unit = radarScaleMode === 'norm' ? '%' : ' ΔAUC';
-                const sensorCode = sensors[c.dataIndex] || '';
-                return c.dataset.label + ' [' + sensorCode + ']: ' + Number(c.raw).toFixed(1) + unit;
+                return c.dataset.label + ' (' + c.label + '): ' + Number(c.raw).toFixed(1) + unit;
               }
             }
           }
         },
         scales: {
           r: {
-            beginAtZero: true,
+            min: 0,
             suggestedMax: radarScaleMode === 'norm' ? 100 : undefined,
-            angleLines: {
-              color: '#7DD3FC',
-              lineWidth: isMobile ? 1.2 : 1.6
-            },
-            grid: {
-              color: '#BAE6FD',
-              lineWidth: isMobile ? 1.1 : 1.4
-            },
             ticks: {
               stepSize: radarScaleMode === 'norm' ? 20 : undefined,
-              backdropColor: 'rgba(255, 255, 255, 0.92)',
-              backdropPadding: isMobile ? 2 : 4,
-              color: '#0369A1',
+              backdropColor: 'rgba(255, 255, 255, 0.85)',
               font: {
-                size: isMobile ? 9.5 : 12,
-                weight: 'bold',
-                family: 'JetBrains Mono, monospace'
+                size: isMobile ? 9.5 : 11,
+                weight: '600'
               }
             },
+            grid: { color: '#E0F2FE' },
+            angleLines: { color: '#BAE6FD' },
             pointLabels: {
-              padding: isMobile ? 5 : 12,
               font: {
-                size: isMobile ? 11.5 : 13.5,
+                size: isMobile ? 11 : 13,
                 weight: 'bold',
                 family: 'JetBrains Mono, Inter, sans-serif'
               },
-              color: '#0C4A6E'
+              color: '#0F172A'
             }
           }
         }
